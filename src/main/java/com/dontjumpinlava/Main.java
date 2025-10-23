@@ -105,7 +105,7 @@ public class Main extends GameApplication {
 
         Globals.tileGrid.add("Bedrock.png");
         for (int i = 1; i < Globals.gridHeight-1; i++) {
-            if (Math.floor(Math.random()) = 0) {
+            if (Math.floor(Math.random()) == 0) {
                 Globals.tileGrid.add("Grass.png");
             }else{
                 Globals.tileGrid.add("Air.png");
@@ -226,11 +226,11 @@ public class Main extends GameApplication {
         if (Globals.cameraY < Globals.oneEighty){ 
             Globals.cameraY= Globals.oneEighty ;
         }
-        if (Globals.cameraX > (Globals.gridWidth*32)-twoForty) { 
-            Globals.cameraX= (Globals.gridWidth*32)-twoForty ;
+        if (Globals.cameraX > (Globals.gridWidth*32)-Globals.twoForty) { 
+            Globals.cameraX= (Globals.gridWidth*32)-Globals.twoForty ;
         }
-        if (Globals.cameraY > (Globals.gridHeight*32)-oneEighty) { 
-            Globals.cameraY = (Globals.gridHeight*32)-twoForty ;
+        if (Globals.cameraY > (Globals.gridHeight*32)-Globals.oneEighty) { 
+            Globals.cameraY = (Globals.gridHeight*32)-Globals.oneEighty ;
         }
     }
 
