@@ -27,6 +27,10 @@ class Globals {
     public static int gridHeight = 20;
 
     public static int tileIndex = 0;
+
+    public static double playerX = 0;
+    public static double playerY = 0;
+
 }
 
 class Block extends Component {
@@ -89,6 +93,54 @@ class Block extends Component {
     }
 }
 
+class Player extends Component {
+    double x; 
+    double y;
+    double size;
+    Entity imageEntity;
+
+    double dx;
+    double dy;
+
+    double scratchX =  0.0;
+    double scratchY = 0.0;
+
+    public Player(double x, double y, double size) {
+        this.x = x;
+        this.y = y;
+        this.size = size;
+     
+
+    }
+    @Override
+    public void onAdded() {
+        this.imageEntity = entity;
+    }
+
+    public void setX(double x) {
+        this.x = x;
+    }
+      
+
+
+    @Override
+    public void onUpdate(double tpf) {
+        this.x += dx;
+        this.y += dy;
+
+        dx *= 0.9;
+        dy *= 0.9;
+
+        Globals.playerX = this.x;
+        Globals.playerY = this.y;
+
+        scratchX = this.x + Globals.width/2 - size/2 ;
+        scratchY = this.y + Globals.height/2 - size/2;
+
+        imageEntity.setX(scratchX - Globals.cameraX);
+        imageEntity.setY(scratchY + Globals.cameraY);
+    }
+}
 
 
 public class Main extends GameApplication {
@@ -146,7 +198,7 @@ public class Main extends GameApplication {
     }
 
     protected void createBlock(double x, double y, double size, String image) {
-        double scratchX = x + Globals.width/2;
+        double scratchX = x+Globals.width/2;
 
         double scratchY = y+Globals.height/2;
 
@@ -213,6 +265,8 @@ public class Main extends GameApplication {
             Globals.tileIndex += (Globals.gridHeight - Globals.cloneCountY);
 
         }
+
+
     }
 
     public void cloneLevelTiles() {
@@ -234,14 +288,34 @@ public class Main extends GameApplication {
         }
     }
 
+    public void resetPlayer() {
+        Globals.cameraX= Globals.twoForty;
+        Globals.cameraY= Globals.oneEighty;
+        
+
+    }
+
     @Override
     protected void initGame() {
         FXGL.getGameScene().setBackgroundColor(javafx.scene.paint.Color.DARKGRAY); // or any color
         // Create an entity and add the ImageView as its view component
         generateLevel();
         cloneLevelTiles();
-        Globals.cameraX= Globals.twoForty;
-        Globals.cameraY= Globals.oneEighty;
+
+        int playerSize = 32;
+        Image playerImage = new Image("player.png");
+        ImageView playerImageView = new ImageView(playerImage);
+        // Set the desired width and height for the ImageView
+        playerImageView.setFitWidth(playerSize);
+        playerImageView.setFitHeight(playerSize);
+        playerImageView.setPreserveRatio(true);
+
+            
+        Entity player = FXGL.entityBuilder()
+                .at(0, 0)
+                .view(playerImageView)
+                .with(new Player(0, 0, 1))
+                .buildAndAttach();
         
     }
 
