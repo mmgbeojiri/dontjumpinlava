@@ -101,9 +101,16 @@ public class Main extends GameApplication {
         }
     }
     public void addBoxColumn() {
+        String[] randomBlocks = {"dirt.png", "grass.png"};
+
         Globals.tileGrid.add("Bedrock.png");
         for (int i = 1; i < Globals.gridHeight-1; i++) {
-            Globals.tileGrid.add("Air.png");
+            if (Math.floor(Math.random()) = 0) {
+                Globals.tileGrid.add("Grass.png");
+            }else{
+                Globals.tileGrid.add("Air.png");
+            }
+
         }
         Globals.tileGrid.add("Bedrock.png");
 
@@ -186,8 +193,6 @@ public class Main extends GameApplication {
         
 
         
-
-        String[] randomBlocks = {"dirt.png", "grass.png"};
         System.out.println(Globals.tileGrid.size());
         System.out.println(Globals.tileGrid);
         tileX = -16;
@@ -221,8 +226,11 @@ public class Main extends GameApplication {
         if (Globals.cameraY < Globals.oneEighty){ 
             Globals.cameraY= Globals.oneEighty ;
         }
-        if (Globals.cameraX > (Globals.width/2)-32){ 
-            Globals.cameraX= (Globals.width/2)-32 ;
+        if (Globals.cameraX > (Globals.gridWidth*32)-twoForty) { 
+            Globals.cameraX= (Globals.gridWidth*32)-twoForty ;
+        }
+        if (Globals.cameraY > (Globals.gridHeight*32)-oneEighty) { 
+            Globals.cameraY = (Globals.gridHeight*32)-twoForty ;
         }
     }
 
