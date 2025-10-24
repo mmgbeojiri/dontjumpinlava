@@ -380,8 +380,8 @@ public class Main extends GameApplication {
         if (Globals.cameraY < Globals.oneEighty){ 
             Globals.cameraY = Globals.oneEighty ;
         }
-        if (Globals.cameraX > ((Globals.gridWidth*(4)))) { 
-            Globals.cameraX = ((Globals.gridWidth*(4)));
+        if (Globals.cameraX > ((Globals.gridWidth*(32))-Globals.twoForty)) { 
+            Globals.cameraX = ((Globals.gridWidth*(32))-Globals.twoForty);
         }
         if (Globals.cameraY > (Globals.gridHeight*32)-Globals.oneEighty) { 
             Globals.cameraY = (Globals.gridHeight*32)-Globals.oneEighty ;
