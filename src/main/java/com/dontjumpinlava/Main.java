@@ -239,17 +239,43 @@ public class Main extends GameApplication {
         }
     };
     
+    UserAction upPressed = new UserAction("Up") {
+        @Override 
+        protected void onAction() {
+            keyUp = 1;
+        }
+         @Override
+        protected void onActionEnd() {
+            keyUp = 0;
+        }
+    };
+    
+    UserAction downPressed = new UserAction("Down") {
+        @Override 
+        protected void onAction() {
+            keyDown = 1;
+        }
+         @Override
+        protected void onActionEnd() {
+            keyDown = 0;
+        }
+    };
     
     @Override
     protected void initInput() {
         Input input = FXGL.getInput();
         input.addAction(rightPressed, KeyCode.RIGHT);
         input.addAction(leftPressed, KeyCode.LEFT);
+        input.addAction(upPressed, KeyCode.UP);
+        input.addAction(downPressed, KeyCode.DOWN);
     }
 
     public void movePlayer() {
         player.getComponent(Player.class).setVelX(
             6*(keyRight - keyLeft)
+        ); 
+        player.getComponent(Player.class).setVelY(
+            6*(keyUp - keyDown)
         ); 
         moveCamera();
 
