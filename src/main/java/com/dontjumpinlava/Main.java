@@ -369,15 +369,19 @@ public class Main extends GameApplication {
     }
 
     public void moveCamera() {
-        
+        Globals.cameraX = Globals.playerX;
+        Globals.cameraY += (Globals.playerY - Globals.cameraY)/4;
+
+        System.out.println(Globals.cameraX);
+        System.out.println("Threshold: " + (Globals.gridWidth*6));
         if (Globals.cameraX < Globals.twoForty){ 
             Globals.cameraX = Globals.twoForty ;
         }
         if (Globals.cameraY < Globals.oneEighty){ 
             Globals.cameraY= Globals.oneEighty ;
         }
-        if (Globals.cameraX > (Globals.gridWidth*32)-Globals.twoForty) { 
-            Globals.cameraX= (Globals.gridWidth*32)-Globals.twoForty ;
+        if (Globals.cameraX > ((Globals.gridWidth*(32/3))-Globals.twoForty)) { 
+            Globals.cameraX = ((Globals.gridWidth*(32/3))-Globals.twoForty);
         }
         if (Globals.cameraY > (Globals.gridHeight*32)-Globals.oneEighty) { 
             Globals.cameraY = (Globals.gridHeight*32)-Globals.oneEighty ;
