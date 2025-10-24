@@ -31,6 +31,8 @@ class Globals {
     public static double playerX = 0;
     public static double playerY = 0;
 
+    
+
 }
 
 class Block extends Component {
@@ -144,7 +146,7 @@ class Player extends Component {
         Globals.playerY = this.y;
 
         scratchX = this.x + Globals.width/2 - size/2 ;
-        scratchY = this.y + Globals.height/2 - size/2;
+        scratchY = -this.y +  Globals.height/2 - size/2;
 
         imageEntity.setX(scratchX - Globals.cameraX);
         imageEntity.setY(scratchY + Globals.cameraY);
@@ -153,8 +155,12 @@ class Player extends Component {
 
 
 public class Main extends GameApplication {
+
+    Entity player;
     
     Globals globals = new Globals();
+
+    
     
     public void addWall() {
         for (int i = 0; i < Globals.gridHeight; i++) {
@@ -301,7 +307,8 @@ public class Main extends GameApplication {
     public void resetPlayer() {
         Globals.cameraX= Globals.twoForty;
         Globals.cameraY= Globals.oneEighty;
-        
+        player.setX(0);
+        player.setY(-32);
 
     }
 
@@ -309,10 +316,7 @@ public class Main extends GameApplication {
     protected void initGame() {
         FXGL.getGameScene().setBackgroundColor(javafx.scene.paint.Color.DARKGRAY); // or any color
         // Create an entity and add the ImageView as its view component
-        generateLevel();
-        cloneLevelTiles();
-        resetPlayer();
-
+        
         int playerSize = 32;
         Image playerImage = new Image("assets/textures/player.png");
         ImageView playerImageView = new ImageView(playerImage);
@@ -320,13 +324,17 @@ public class Main extends GameApplication {
         playerImageView.setFitWidth(playerSize);
         playerImageView.setFitHeight(playerSize);
         playerImageView.setPreserveRatio(true);
-
-            
-        Entity player = FXGL.entityBuilder()
-                .at(0, -32)
-                .view(playerImageView)
-                .with(new Player(0, -32, 1))
-                .buildAndAttach();
+        
+        player = FXGL.entityBuilder()
+        .at(0, 32)
+        .view(playerImageView)
+        .with(new Player(0, 32, 1))
+        .buildAndAttach();
+        
+        generateLevel();
+        cloneLevelTiles();
+        resetPlayer();
+        
         
     }
 
