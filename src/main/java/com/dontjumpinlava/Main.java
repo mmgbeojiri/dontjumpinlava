@@ -6,9 +6,11 @@ import com.almasb.fxgl.app.GameSettings;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.component.Component;
-
+import com.almasb.fxgl.input.Input;
+import javafx.scene.input.KeyCode;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 
 class Globals {
     public static double cameraX = 0;
@@ -132,6 +134,12 @@ class Player extends Component {
         this.y += y;
     }
       
+    public void setVelX(double dx) {
+        this.dx = dx;
+    }
+    public void setVelY(double dy) {
+        this.dy = dy;
+    }
 
 
     @Override
@@ -203,10 +211,19 @@ public class Main extends GameApplication {
         settings.setTitle("Don't Jump in Lava");
     }
 
+    public void movePlayer() {
+        Input input = FXGL.getInput();
+        player.setVelX(
+            input.isHeld(KeyCode.RIGHT)
+        ); 
+
+    }
+
     double memoryWaster = 0;
     @Override
     protected void onUpdate(double tpf) {
-        memoryWaster += tpf;
+        moveCamera();
+
         //Globals.cameraX = Math.sin(memoryWaster)*100;
         //Globals.cameraY = Math.sin(memoryWaster)*100;
         //Globals.cameraY = memoryWaster*100;
