@@ -7,7 +7,8 @@ import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.component.Component;
 import com.almasb.fxgl.input.Input;
-import javafx.scene.input.KeyCode;
+import com.almasb.fxgl.input.UserAction;
+
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -168,6 +169,11 @@ public class Main extends GameApplication {
     
     Globals globals = new Globals();
 
+    int keyRight = 0;
+    int keyLeft = 0;
+    int keyUp = 0;
+    int keyDown = 0;
+
     
     
     public void addWall() {
@@ -211,18 +217,49 @@ public class Main extends GameApplication {
         settings.setTitle("Don't Jump in Lava");
     }
 
-    public void movePlayer() {
+    UserAction rightPressed = new UserAction("Right") {
+        @Override 
+        protected void onAction() {
+            keyRight = 1;
+        }
+         @Override
+        protected void onActionEnd() {
+            keyRight = 0;
+        }
+    };
+
+    UserAction leftPressed = new UserAction("Left") {
+        @Override 
+        protected void onAction() {
+            keyLeft = 1;
+        }
+         @Override
+        protected void onActionEnd() {
+            keyLeft = 0;
+        }
+    };
+    
+    
+    @Override
+    protected void initInput() {
         Input input = FXGL.getInput();
-        player.setVelX(
-            input.isHeld(KeyCode.RIGHT)
+        input.addAction(rightPressed, KeyCode.RIGHT);
+        input.addAction(leftPressed, KeyCode.LEFT);
+    }
+
+    public void movePlayer() {
+        player.getComponent(Player.class).setVelX(
+            6*(keyRight - keyLeft)
         ); 
+        moveCamera();
 
     }
 
     double memoryWaster = 0;
     @Override
     protected void onUpdate(double tpf) {
-        moveCamera();
+        movePlayer();
+        
 
         //Globals.cameraX = Math.sin(memoryWaster)*100;
         //Globals.cameraY = Math.sin(memoryWaster)*100;
