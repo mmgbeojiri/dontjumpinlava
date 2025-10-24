@@ -157,7 +157,7 @@ public class Main extends GameApplication {
 
         Globals.tileGrid.add("Bedrock.png");
         for (int i = 1; i < Globals.gridHeight-1; i++) {
-            if (Math.floor(Math.random()) == 0) {
+            if (Math.floor(Math.random()*10) == 0) {
                 Globals.tileGrid.add("Grass.png");
             }else{
                 Globals.tileGrid.add("Air.png");
@@ -274,8 +274,9 @@ public class Main extends GameApplication {
     }
 
     public void moveCamera() {
+        
         if (Globals.cameraX < Globals.twoForty){ 
-            Globals.cameraX= Globals.twoForty ;
+            Globals.cameraX = Globals.twoForty ;
         }
         if (Globals.cameraY < Globals.oneEighty){ 
             Globals.cameraY= Globals.oneEighty ;
@@ -301,9 +302,10 @@ public class Main extends GameApplication {
         // Create an entity and add the ImageView as its view component
         generateLevel();
         cloneLevelTiles();
+        resetPlayer();
 
         int playerSize = 32;
-        Image playerImage = new Image("player.png");
+        Image playerImage = new Image("assets/textures/player.png");
         ImageView playerImageView = new ImageView(playerImage);
         // Set the desired width and height for the ImageView
         playerImageView.setFitWidth(playerSize);
@@ -312,9 +314,9 @@ public class Main extends GameApplication {
 
             
         Entity player = FXGL.entityBuilder()
-                .at(0, 0)
+                .at(0, -32)
                 .view(playerImageView)
-                .with(new Player(0, 0, 1))
+                .with(new Player(0, -32, 1))
                 .buildAndAttach();
         
     }
