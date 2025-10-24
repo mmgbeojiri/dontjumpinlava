@@ -120,6 +120,15 @@ class Player extends Component {
     public void setX(double x) {
         this.x = x;
     }
+    public void setY(double y) {
+        this.y = y;
+    }
+    public void changeX(double x) {
+        this.x += x;
+    }
+    public void changeY(double y) {
+        this.y += y;
+    }
       
 
 
