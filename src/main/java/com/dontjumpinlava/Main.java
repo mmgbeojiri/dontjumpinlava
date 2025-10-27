@@ -26,7 +26,7 @@ class Globals {
     public static int cloneCountY = (int) Math.ceil(height/32)+1;
 
     public static ArrayList<String> tileGrid = new ArrayList<>();
-    public static int gridWidth = 90;
+    public static int gridWidth = 30;
     public static int gridHeight = 20;
 
     public static int tileIndex = 0;
@@ -185,7 +185,7 @@ public class Main extends GameApplication {
         String[] randomBlocks = {"dirt.png", "grass.png"};
 
         Globals.tileGrid.add("Bedrock.png");
-        for (int i = 1; i < Globals.gridHeight-1; i++) {
+        for (int i = 0; i < Globals.gridHeight-2; i++) {
             if (Math.floor(Math.random()*10) == 0) {
                 Globals.tileGrid.add("Grass.png");
             }else{
@@ -199,7 +199,7 @@ public class Main extends GameApplication {
 
     public void generateLevel() {
         addWall();
-        for (int i = 1; i < Globals.width - 1; i++) {
+        for (int i = 0; i < Globals.gridWidth-2; i++) {
             addBoxColumn();
         }
         addWall();
@@ -373,18 +373,18 @@ public class Main extends GameApplication {
         Globals.cameraY += (Globals.playerY - Globals.cameraY)/4;
 
         System.out.println(Globals.cameraX);
-        System.out.println("Threshold: " + ((Globals.gridWidth*(32))-Globals.twoForty));
+        System.out.println("Threshold: " + ((Globals.gridWidth*(32))-Globals.width/2));
         if (Globals.cameraX < Globals.twoForty){ 
             Globals.cameraX = Globals.twoForty ;
         }
         if (Globals.cameraY < Globals.oneEighty){ 
             Globals.cameraY = Globals.oneEighty ;
         }
-        if (Globals.cameraX > ((Globals.gridWidth*(32))-Globals.twoForty)) { 
-            Globals.cameraX = ((Globals.gridWidth*(32))-Globals.twoForty);
+        if (Globals.cameraX > ((Globals.gridWidth*(32))-Globals.width/2 - 32)) { 
+            Globals.cameraX = ((Globals.gridWidth*(32))-Globals.width/2 - 32);
         }
-        if (Globals.cameraY > (Globals.gridHeight*32)-Globals.oneEighty) { 
-            Globals.cameraY = (Globals.gridHeight*32)-Globals.oneEighty ;
+        if (Globals.cameraY > (Globals.gridHeight*32)-Globals.height/2 - 32) { 
+            Globals.cameraY = (Globals.gridHeight*32)-Globals.height/2 - 32 ;
         }
     }
 
