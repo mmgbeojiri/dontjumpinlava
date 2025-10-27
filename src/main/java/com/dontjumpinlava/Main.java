@@ -26,8 +26,8 @@ class Globals {
     public static int cloneCountY = (int) Math.ceil(height/32)+1;
 
     public static ArrayList<String> tileGrid = new ArrayList<>();
-    public static int gridWidth = 30;
-    public static int gridHeight = 20;
+    public static int gridWidth = 90;
+    public static int gridHeight = 25;
 
     public static int tileIndex = 0;
 
@@ -47,7 +47,8 @@ class Block extends Component {
 
     double scratchX =  0.0;
     double scratchY = 0.0;
-    public Block(double x, double y, double size, String image) {
+
+    public Block(double x, double y, double size,String image) {
         this.x = x;
         this.y = y;
         this.size = size;
@@ -72,7 +73,7 @@ class Block extends Component {
 
     @Override
     public void onUpdate(double tpf) {
-        
+        //Globals.tileGrid.get(Globals.tileIndex)
         if (Math.abs(x - Globals.cameraX) > (Globals.cloneCountX*16)){
             if (x < Globals.cameraX) {
                 loopTileX(Globals.cloneCountX);
@@ -337,21 +338,18 @@ public class Main extends GameApplication {
     public void setup() {
         double tileX = 0.0;
         double tileY = 0.0;
-        
 
-        
         System.out.println(Globals.tileGrid.size());
         System.out.println(Globals.tileGrid);
+
         tileX = -16;
         for (int i = 0; i < Globals.cloneCountX; i++) {
             tileY = 16;
             for (int j = 0; j < Globals.cloneCountY; j++) {
-                if (Globals.tileIndex< Globals.tileGrid.size()){
-                    System.out.println(Globals.tileGrid.get(Globals.tileIndex) + " and tile index is" + Globals.tileIndex);
-                    createBlock(tileX, tileY, 32, 
+                createBlock(tileX, tileY, 32,
                         Globals.tileGrid.get(Globals.tileIndex) // move this to the block class
                     );
-                }
+                
                 
                 tileY += 32;
                 Globals.tileIndex += 1;
@@ -372,8 +370,7 @@ public class Main extends GameApplication {
         Globals.cameraX = Globals.playerX;
         Globals.cameraY += (Globals.playerY - Globals.cameraY)/4;
 
-        System.out.println(Globals.cameraX);
-        System.out.println("Threshold: " + ((Globals.gridWidth*(32))-Globals.width/2));
+       
         if (Globals.cameraX < Globals.twoForty){ 
             Globals.cameraX = Globals.twoForty ;
         }
@@ -383,8 +380,8 @@ public class Main extends GameApplication {
         if (Globals.cameraX > ((Globals.gridWidth*(32))-Globals.width/2 - 32)) { 
             Globals.cameraX = ((Globals.gridWidth*(32))-Globals.width/2 - 32);
         }
-        if (Globals.cameraY > (Globals.gridHeight*32)-Globals.height/2 - 32) { 
-            Globals.cameraY = (Globals.gridHeight*32)-Globals.height/2 - 32 ;
+        if (Globals.cameraY > (Globals.gridHeight*32) - (Globals.height/2) - 32*3) { 
+            Globals.cameraY = (Globals.gridHeight*32) - (Globals.height/2) - 32*3 ;
         }
     }
 
