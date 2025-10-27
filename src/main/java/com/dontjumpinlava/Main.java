@@ -74,6 +74,7 @@ class Block extends Component {
     @Override
     public void onUpdate(double tpf) {
         //Globals.tileGrid.get(Globals.tileIndex)
+        imageEntity.getViewComponent().setTexture(Globals.tileGrid.get(Globals.tileIndex));
         if (Math.abs(x - Globals.cameraX) > (Globals.cloneCountX*16)){
             if (x < Globals.cameraX) {
                 loopTileX(Globals.cloneCountX);
