@@ -42,7 +42,6 @@ class Block extends Component {
     double x; 
     double y;
     double size;
-    String image = "";
     int tileIndex = 0;
     Entity imageEntity;
 
@@ -56,8 +55,8 @@ class Block extends Component {
         this.x = x;
         this.y = y;
         this.size = size;
-        this.image = image;       
         this.tileIndex = Globals.tileIndex;
+        
     }
 
     @Override
@@ -67,7 +66,7 @@ class Block extends Component {
 
     public void loopTileX(int tileSkip) {
         x += tileSkip * 32;
-        Globals.tileIndex += tileSkip * Globals.gridHeight;
+        Globals.tileIndex += (tileSkip * Globals.gridHeight);
 
     }
 
@@ -87,11 +86,11 @@ class Block extends Component {
         if (!texName.equals(currentTextureName)) {
             currentTextureName = texName;
             cachedImageView = new ImageView();
-
-            cachedImageView.setImage(new Image("/assets/textures/" + texName));
+            Image image = new Image(getClass().getResourceAsStream(new Image("/assets/textures/" + texName)));
             cachedImageView.setFitWidth(size);
             cachedImageView.setFitHeight(size);
             cachedImageView.setPreserveRatio(true);
+            cachedImageView.setImage(image);
             imageEntity.getViewComponent().getChildren().clear();
             imageEntity.getViewComponent().getChildren().add(cachedImageView);
         }
@@ -100,7 +99,7 @@ class Block extends Component {
     @Override
     public void onUpdate(double tpf) {
         //Globals.tileGrid.get(Globals.tileIndex)
-        //updateTextureIfNeeded();
+        updateTextureIfNeeded();
         if (Math.abs(x - Globals.cameraX) > (Globals.cloneCountX*16)){
             if (x < Globals.cameraX) {
                 loopTileX(Globals.cloneCountX);
