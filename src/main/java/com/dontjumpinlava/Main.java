@@ -43,17 +43,21 @@ class Block extends Component {
     double y;
     double size;
     String image = "";
+    int tileIndex = 0;
     Entity imageEntity;
 
     double scratchX =  0.0;
     double scratchY = 0.0;
+
+    ImageView cachedImageView = null;
+    String currentTextureName = null;
 
     public Block(double x, double y, double size,String image) {
         this.x = x;
         this.y = y;
         this.size = size;
         this.image = image;       
-
+        this.tileIndex = Globals.tileIndex;
     }
 
     @Override
@@ -62,8 +66,11 @@ class Block extends Component {
     }
 
     public void loopTileX(int tileSkip) {
-        x += tileSkip*32;
+        x += tileSkip * 32;
+        System.out.println("Pre: "+ Globals.tileIndex);
         Globals.tileIndex += tileSkip * Globals.gridHeight;
+        System.out.println("Post:"+ Globals.tileIndex);
+
     }
 
     public void loopTileY(int tileSkip) {
@@ -71,10 +78,31 @@ class Block extends Component {
         Globals.tileIndex += tileSkip;
     }
 
+    private void updateTextureIfNeeded() {
+        if (tileIndex < 0 || tileIndex >= Globals.tileGrid.size()) {
+            return;
+        }
+
+        //String texName = Globals.tileGrid.get(tileIndex);
+        String texName = "dirt.png";
+        if (texName == null) {return;}
+        if (!texName.equals(currentTextureName)) {
+            currentTextureName = texName;
+            cachedImageView = new ImageView();
+
+            cachedImageView.setImage(new Image("/assets/textures/" + texName));
+            cachedImageView.setFitWidth(size);
+            cachedImageView.setFitHeight(size);
+            cachedImageView.setPreserveRatio(true);
+            imageEntity.getViewComponent().getChildren().clear();
+            imageEntity.getViewComponent().getChildren().add(cachedImageView);
+        }
+    }
+
     @Override
     public void onUpdate(double tpf) {
         //Globals.tileGrid.get(Globals.tileIndex)
-        imageEntity.getViewComponent().setTexture(Globals.tileGrid.get(Globals.tileIndex));
+        updateTextureIfNeeded();
         if (Math.abs(x - Globals.cameraX) > (Globals.cloneCountX*16)){
             if (x < Globals.cameraX) {
                 loopTileX(Globals.cloneCountX);
@@ -83,8 +111,8 @@ class Block extends Component {
             }
         }
 
-        if (Math.abs(y + Globals.cameraY) > (Globals.cloneCountY*16)){
-            if (y < -Globals.cameraY) {
+        if (Math.abs(y - Globals.cameraY) > (Globals.cloneCountY*16)){
+            if (y > Globals.cameraY) {
                 loopTileY(Globals.cloneCountY);
 
             } else {
