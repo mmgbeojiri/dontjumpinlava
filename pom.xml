@@ -30,11 +30,6 @@
             <artifactId>javafx-fxml</artifactId>
             <version>17.0.1</version> <!-- Use your desired JavaFX version -->
         </dependency>
-        <dependency>
-      <groupId>com.almasb</groupId>
-      <artifactId>fxgl</artifactId>
-      <version>${fxgl.version}</version>
-    </dependency>
      </dependencies>
 
 </project>
