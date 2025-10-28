@@ -67,9 +67,7 @@ class Block extends Component {
 
     public void loopTileX(int tileSkip) {
         x += tileSkip * 32;
-        System.out.println("Pre: "+ Globals.tileIndex);
         Globals.tileIndex += tileSkip * Globals.gridHeight;
-        System.out.println("Post:"+ Globals.tileIndex);
 
     }
 
@@ -102,7 +100,7 @@ class Block extends Component {
     @Override
     public void onUpdate(double tpf) {
         //Globals.tileGrid.get(Globals.tileIndex)
-        updateTextureIfNeeded();
+        //updateTextureIfNeeded();
         if (Math.abs(x - Globals.cameraX) > (Globals.cloneCountX*16)){
             if (x < Globals.cameraX) {
                 loopTileX(Globals.cloneCountX);
@@ -111,8 +109,8 @@ class Block extends Component {
             }
         }
 
-        if (Math.abs(y - Globals.cameraY) > (Globals.cloneCountY*16)){
-            if (y > Globals.cameraY) {
+        if (Math.abs(y + Globals.cameraY) > (Globals.cloneCountY*16)){
+            if (y < -Globals.cameraY) {
                 loopTileY(Globals.cloneCountY);
 
             } else {
