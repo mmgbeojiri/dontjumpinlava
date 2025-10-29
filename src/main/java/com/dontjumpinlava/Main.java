@@ -13,8 +13,6 @@ import com.almasb.fxgl.input.UserAction;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 
 class Globals {
     public static double cameraX = 0;
@@ -125,17 +123,17 @@ class Block extends Component {
         imageview.setScaleY(1);
         imageview.setRotate(0);
 
-        Rectangle r = new Rectangle(size, size, Color.RED);
-        imageEntity.getViewComponent().getChildren().add(r); 
+        //Rectangle r = new Rectangle(size, size, Color.RED);
+        //imageEntity.getViewComponent().getChildren().add(r); 
 
         System.out.println("img w=" + image.getWidth() + " h=" + image.getHeight() + " err=" + image.isError());
         System.out.println("fitW=" + imageview.getFitWidth() + " fitH=" + imageview.getFitHeight() + " vis=" + imageview.isVisible() + " opacity=" + imageview.getOpacity());
         System.out.println("view component size of children is" + getEntity().getViewComponent().getChildren().size());
         System.out.println("entity pos=" + getEntity().getPosition());
-        Rectangle test = new Rectangle(32, 32, Color.RED);
+        /*Rectangle test = new Rectangle(32, 32, Color.RED);
 test.setTranslateX(getEntity().getX());
 test.setTranslateY(getEntity().getY());
-FXGL.getGameScene().getRoot().getChildren().add(test);
+FXGL.getGameScene().getRoot().getChildren().add(test);*/
     //}
     }
 
