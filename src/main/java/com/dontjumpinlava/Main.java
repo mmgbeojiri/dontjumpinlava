@@ -1,4 +1,5 @@
 package com.dontjumpinlava;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 import com.almasb.fxgl.app.GameApplication;
@@ -50,18 +51,27 @@ class Block extends Component {
 
     ImageView cachedImageView = null;
     String currentTextureName = null;
-
+    ImageView imageview = new ImageView();
     public Block(double x, double y, double size,String image) {
         this.x = x;
         this.y = y;
         this.size = size;
         this.tileIndex = Globals.tileIndex;
         
+        imageview.setFitWidth(size);
+        imageview.setFitHeight(size);
+        imageview.setPreserveRatio(true);
+        // set initial view node once
+        
     }
 
     @Override
     public void onAdded() {
-        this.imageEntity = entity;
+        super.onAdded();
+        imageEntity = getEntity(); // reliable way to get the owner entity
+
+        imageEntity.getViewComponent().getChildren().clear();
+        imageEntity.getViewComponent().getChildren().add(imageview);
     }
 
     public void loopTileX(int tileSkip) {
@@ -76,29 +86,42 @@ class Block extends Component {
     }
 
     private void updateTextureIfNeeded() {
-        if (tileIndex < 0 || tileIndex >= Globals.tileGrid.size()) {
+    if (tileIndex < 0 || tileIndex >= Globals.tileGrid.size()) {
+        return;
+    }
+
+    //String texName = "dirt.png"; // or Globals.tileGrid.get(tileIndex);
+    String texName = Globals.tileGrid.get(tileIndex);
+    if (texName == null) {
+        return;
+    }
+
+    if (!texName.equals(currentTextureName)) {
+        currentTextureName = texName;
+
+        // load image once for this change
+        InputStream is = getClass().getResourceAsStream("/assets/textures/" + texName);
+        if (is == null) {
+            System.err.println("Texture not found: " + texName);
             return;
         }
+        Image image = new Image(is);
 
-        //String texName = Globals.tileGrid.get(tileIndex);
-        String texName = "dirt.png";
-        if (texName == null) {return;}
-        if (!texName.equals(currentTextureName)) {
-            currentTextureName = texName;
-            cachedImageView = new ImageView();
-            Image image = new Image(getClass().getResourceAsStream(new Image("/assets/textures/" + texName)));
-            cachedImageView.setFitWidth(size);
-            cachedImageView.setFitHeight(size);
-            cachedImageView.setPreserveRatio(true);
-            cachedImageView.setImage(image);
-            imageEntity.getViewComponent().getChildren().clear();
-            imageEntity.getViewComponent().getChildren().add(cachedImageView);
-        }
+        // just replace the image on the existing ImageView
+        imageview.setImage(image);
+
+        System.out.println(texName + Math.random());
+
+        // ensure the entity view points to our imageView (safe no-op if already set)
+        imageEntity.getViewComponent().getChildren().clear();
+        imageEntity.getViewComponent().getChildren().add(imageview);
+    }
     }
 
     @Override
     public void onUpdate(double tpf) {
         //Globals.tileGrid.get(Globals.tileIndex)
+        this.tileIndex = Globals.tileIndex;
         updateTextureIfNeeded();
         if (Math.abs(x - Globals.cameraX) > (Globals.cloneCountX*16)){
             if (x < Globals.cameraX) {
@@ -312,7 +335,6 @@ public class Main extends GameApplication {
     @Override
     protected void onUpdate(double tpf) {
         movePlayer();
-        
 
         //Globals.cameraX = Math.sin(memoryWaster)*100;
         //Globals.cameraY = Math.sin(memoryWaster)*100;
