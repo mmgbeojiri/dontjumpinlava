@@ -9,7 +9,9 @@ import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.component.Component;
 import com.almasb.fxgl.input.Input;
 import com.almasb.fxgl.input.UserAction;
-
+import com.almasb.fxgl.texture.Texture;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -58,6 +60,7 @@ class Block extends Component {
         this.size = size;
         this.tileIndex = Globals.tileIndex;
         
+        imageview.setImage(new Image(image));
         imageview.setFitWidth(size);
         imageview.setFitHeight(size);
         imageview.setPreserveRatio(true);
@@ -101,39 +104,28 @@ class Block extends Component {
         currentTextureName = texName;
 
         // load image once for this change
-        InputStream is = getClass().getResourceAsStream("/assets/textures/" + texName);
+        //InputStream is = getClass().getResourceAsStream("/assets/textures/" + texName);
+        InputStream is = getClass().getResourceAsStream("/assets/textures/" + "dirt.png");
         if (is == null) {
             System.err.println("Texture not found: " + texName);
             return;
         }
-        Image image = new Image(is);
+        Image image = new Image("assets/textures/dirt.png");
 
         // just replace the image on the existing ImageView
         imageview.setImage(image);
         
         //System.out.println(imageview);
         imageview.toFront();
-        // ensure the entity view points to our imageView (safe no-op if already set)
-        imageEntity.getViewComponent().getChildren().clear();
-        imageEntity.getViewComponent().getChildren().add(imageview);
-        //imageEntity.getViewComponent().getChildren().forEach(Node::toFront);
-        imageview.setTranslateX(0);
-        imageview.setTranslateY(0);
-        imageview.setScaleX(1);
-        imageview.setScaleY(1);
-        imageview.setRotate(0);
 
-        //Rectangle r = new Rectangle(size, size, Color.RED);
-        //imageEntity.getViewComponent().getChildren().add(r); 
+        
+        imageEntity.getViewComponent().setView(imageview);
+
 
         System.out.println("img w=" + image.getWidth() + " h=" + image.getHeight() + " err=" + image.isError());
         System.out.println("fitW=" + imageview.getFitWidth() + " fitH=" + imageview.getFitHeight() + " vis=" + imageview.isVisible() + " opacity=" + imageview.getOpacity());
-        System.out.println("view component size of children is" + getEntity().getViewComponent().getChildren().size());
+        System.out.println("view component size of children is " + getEntity().getViewComponent().getChildren().size());
         System.out.println("entity pos=" + getEntity().getPosition());
-        /*Rectangle test = new Rectangle(32, 32, Color.RED);
-test.setTranslateX(getEntity().getX());
-test.setTranslateY(getEntity().getY());
-FXGL.getGameScene().getRoot().getChildren().add(test);*/
     //}
     }
 
