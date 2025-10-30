@@ -60,7 +60,6 @@ class Block extends Component {
         this.size = size;
         this.tileIndex = Globals.tileIndex;
         
-        imageview.setImage(new Image(image));
         imageview.setFitWidth(size);
         imageview.setFitHeight(size);
         imageview.setPreserveRatio(true);
@@ -119,7 +118,7 @@ class Block extends Component {
         imageview.toFront();
 
         
-        imageEntity.getViewComponent().setView(imageview);
+        imageEntity.setView(imageview);
 
 
         System.out.println("img w=" + image.getWidth() + " h=" + image.getHeight() + " err=" + image.isError());
