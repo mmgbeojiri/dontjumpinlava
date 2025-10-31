@@ -7,6 +7,7 @@ import com.almasb.fxgl.app.GameSettings;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.component.Component;
+import com.almasb.fxgl.entity.components.ViewComponent;
 import com.almasb.fxgl.input.Input;
 import com.almasb.fxgl.input.UserAction;
 import com.almasb.fxgl.texture.Texture;
@@ -118,7 +119,7 @@ class Block extends Component {
         imageview.toFront();
 
         
-        imageEntity.setView(imageview);
+        imageEntity.getViewComponent().setView(imageview);
 
 
         System.out.println("img w=" + image.getWidth() + " h=" + image.getHeight() + " err=" + image.isError());
