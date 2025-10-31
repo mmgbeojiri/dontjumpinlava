@@ -7,12 +7,9 @@ import com.almasb.fxgl.app.GameSettings;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.component.Component;
-import com.almasb.fxgl.entity.components.ViewComponent;
 import com.almasb.fxgl.input.Input;
 import com.almasb.fxgl.input.UserAction;
-import com.almasb.fxgl.texture.Texture;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -54,13 +51,15 @@ class Block extends Component {
 
     ImageView cachedImageView = null;
     String currentTextureName = null;
+    InputStream is;
     ImageView imageview = new ImageView();
+    Image image;
     public Block(double x, double y, double size,String image) {
         this.x = x;
         this.y = y;
         this.size = size;
         this.tileIndex = Globals.tileIndex;
-        
+        imageview.setImage(new Image("/assets/textures/" + image));
         imageview.setFitWidth(size);
         imageview.setFitHeight(size);
         imageview.setPreserveRatio(true);
@@ -74,8 +73,8 @@ class Block extends Component {
         imageEntity = getEntity(); // reliable way to get the owner entity
 
 
-        imageEntity.getViewComponent().getChildren().clear();
-        imageEntity.getViewComponent().getChildren().add(imageview);
+        imageEntity.getViewComponent().clearChildren();
+        imageEntity.getViewComponent().addChild(imageview);
     }
 
     public void loopTileX(int tileSkip) {
@@ -90,50 +89,54 @@ class Block extends Component {
     }
 
     private void updateTextureIfNeeded() {
+        
     if (tileIndex < 0 || tileIndex >= Globals.tileGrid.size()) {
+        //System.out.print(tileIndex);
         return;
     }
-
-    //String texName = "dirt.png"; // or Globals.tileGrid.get(tileIndex);
+    String[] randomBlocks = {"dirt.png", "grass.png", "bedrock.png"};
+    //String texName = randomBlocks[(int) Math.floor(Math.random()*3)]; // or Globals.tileGrid.get(tileIndex);
     String texName = Globals.tileGrid.get(tileIndex);
+    System.out.println(texName);
     if (texName == null) {
         return;
     }
 
-    //if (!texName.equals(currentTextureName)) {
+    if (!texName.equals(currentTextureName)) {
         currentTextureName = texName;
 
         // load image once for this change
-        //InputStream is = getClass().getResourceAsStream("/assets/textures/" + texName);
-        InputStream is = getClass().getResourceAsStream("/assets/textures/" + "dirt.png");
+        is = getClass().getResourceAsStream("/assets/textures/" + texName);
+        //InputStream is = getClass().getResourceAsStream("/assets/textures/" + "dirt.png");
         if (is == null) {
             System.err.println("Texture not found: " + texName);
             return;
         }
-        Image image = new Image("assets/textures/dirt.png");
+        this.image = new Image(is);
 
         // just replace the image on the existing ImageView
-        imageview.setImage(image);
+        imageview.setImage(this.image);
         
         //System.out.println(imageview);
         imageview.toFront();
 
-        
-        imageEntity.getViewComponent().setView(imageview);
+        imageEntity.getViewComponent().clearChildren();
+        imageEntity.getViewComponent().addChild(imageview);
 
 
         System.out.println("img w=" + image.getWidth() + " h=" + image.getHeight() + " err=" + image.isError());
         System.out.println("fitW=" + imageview.getFitWidth() + " fitH=" + imageview.getFitHeight() + " vis=" + imageview.isVisible() + " opacity=" + imageview.getOpacity());
         System.out.println("view component size of children is " + getEntity().getViewComponent().getChildren().size());
         System.out.println("entity pos=" + getEntity().getPosition());
-    //}
+    }
     }
 
     @Override
     public void onUpdate(double tpf) {
         //Globals.tileGrid.get(Globals.tileIndex)
-        this.tileIndex = Globals.tileIndex;
+        //this.tileIndex = Globals.tileIndex;
         updateTextureIfNeeded();
+        System.out.print(1/tpf);
         if (Math.abs(x - Globals.cameraX) > (Globals.cloneCountX*16)){
             if (x < Globals.cameraX) {
                 loopTileX(Globals.cloneCountX);
