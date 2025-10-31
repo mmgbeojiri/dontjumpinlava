@@ -124,10 +124,7 @@ class Block extends Component {
         imageEntity.getViewComponent().addChild(imageview);
 
 
-        System.out.println("img w=" + image.getWidth() + " h=" + image.getHeight() + " err=" + image.isError());
-        System.out.println("fitW=" + imageview.getFitWidth() + " fitH=" + imageview.getFitHeight() + " vis=" + imageview.isVisible() + " opacity=" + imageview.getOpacity());
-        System.out.println("view component size of children is " + getEntity().getViewComponent().getChildren().size());
-        System.out.println("entity pos=" + getEntity().getPosition());
+
     }
     }
 
