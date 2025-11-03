@@ -54,16 +54,20 @@ class Block extends Component {
     InputStream is;
     ImageView imageview = new ImageView();
     Image image;
+    String texName;
     public Block(double x, double y, double size,String image) {
         this.x = x;
         this.y = y;
         this.size = size;
         this.tileIndex = Globals.tileIndex;
+        currentTextureName = image;
+        imageview.setCache(true);
         imageview.setImage(new Image("/assets/textures/" + image));
         imageview.setFitWidth(size);
         imageview.setFitHeight(size);
         imageview.setPreserveRatio(true);
         // set initial view node once
+        this.texName = image;
         
     }
 
@@ -77,55 +81,75 @@ class Block extends Component {
         imageEntity.getViewComponent().addChild(imageview);
     }
 
+    private void stupid(int ti) {
+        this.tileIndex += ti;
+
+        if (this.tileIndex < 0 || this.tileIndex >= Globals.tileGrid.size()) {
+            //System.out.print(tileIndex);
+            return;
+        }
+        
+        System.out.println("Tile Index: "+this.tileIndex);
+        
+        texName = Globals.tileGrid.get(this.tileIndex);
+        //texName = Globals.tileGrid.get(Globals.tileIndex);
+
+    }
+
     public void loopTileX(int tileSkip) {
         x += tileSkip * 32;
         Globals.tileIndex += (tileSkip * Globals.gridHeight);
+        stupid(tileSkip * Globals.gridHeight);
 
     }
 
     public void loopTileY(int tileSkip) {
         y += tileSkip*32;
         Globals.tileIndex += tileSkip;
+        stupid(tileSkip);
     }
 
     private void updateTextureIfNeeded() {
         
-    if (tileIndex < 0 || tileIndex >= Globals.tileGrid.size()) {
-        //System.out.print(tileIndex);
-        return;
-    }
-    String[] randomBlocks = {"dirt.png", "grass.png", "bedrock.png"};
-    //String texName = randomBlocks[(int) Math.floor(Math.random()*3)]; // or Globals.tileGrid.get(tileIndex);
-    String texName = Globals.tileGrid.get(tileIndex);
-    System.out.println(texName);
-    if (texName == null) {
-        return;
-    }
-
-    if (!texName.equals(currentTextureName)) {
-        currentTextureName = texName;
-
-        // load image once for this change
-        is = getClass().getResourceAsStream("/assets/textures/" + texName);
-        //InputStream is = getClass().getResourceAsStream("/assets/textures/" + "dirt.png");
-        if (is == null) {
-            System.err.println("Texture not found: " + texName);
+        if (this.tileIndex < 0 || this.tileIndex >= Globals.tileGrid.size()) {
+            //System.out.print(tileIndex);
             return;
         }
-        this.image = new Image(is);
-
-        // just replace the image on the existing ImageView
-        imageview.setImage(this.image);
+        String[] randomBlocks = {"dirt.png", "grass.png", "bedrock.png"};
+        //String texName = randomBlocks[(int) Math.floor(Math.random()*3)]; // or Globals.tileGrid.get(tileIndex);
         
-        //System.out.println(imageview);
-        imageview.toFront();
+       
+        
+        System.out.println(texName);
+        if (texName == null) {
+            return;
+        }
+        if (!texName.equals(currentTextureName)) {
+            currentTextureName = texName;
 
-        imageEntity.getViewComponent().clearChildren();
-        imageEntity.getViewComponent().addChild(imageview);
+            // load image once for this change
+            is = getClass().getResourceAsStream("/assets/textures/" + texName);
+            //InputStream is = getClass().getResourceAsStream("/assets/textures/" + "dirt.png");
+            
+            if (is == null) {
+                System.err.println("Texture not found: " + texName);
+                return;
+            }
+            this.image = new Image(is);
+
+            // just replace the image on the existing ImageView
+            imageview.setImage(this.image);
+            
+            //System.out.println(imageview);
+            imageview.toFront();
+
+            imageEntity.getViewComponent().clearChildren();
+            imageEntity.getViewComponent().addChild(imageview);
 
 
 
-    }
+        }
+        
     }
 
     @Override
@@ -401,9 +425,9 @@ public class Main extends GameApplication {
         System.out.println(Globals.tileGrid.size());
         System.out.println(Globals.tileGrid);
 
-        tileX = -16;
+        tileX = -16*3;
         for (int i = 0; i < Globals.cloneCountX; i++) {
-            tileY = 16;
+            tileY = 16*3;
             for (int j = 0; j < Globals.cloneCountY; j++) {
                 createBlock(tileX, tileY, 32,
                         Globals.tileGrid.get(Globals.tileIndex) // move this to the block class
