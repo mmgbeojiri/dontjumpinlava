@@ -125,26 +125,32 @@ class Block extends Component {
         
        
         
-        System.out.println(texName);
+        
         if (texName == null) {
             return;
         }
         if (!texName.equals(currentTextureName)) {
             currentTextureName = texName;
 
-            // load image once for this change
-            is = getClass().getResourceAsStream("/assets/textures/" + texName);
-            //InputStream is = getClass().getResourceAsStream("/assets/textures/" + "dirt.png");
-            
-            if (is == null) {
-                System.err.println("Texture not found: " + texName);
-                return;
+            Image img = IMAGE_CACHE.get(texName);
+            if (img == null) {
+                String resourcePath = "/assets/textures/" + texName;
+                try (InputStream ris = getClass().getResourceAsStream(resourcePath)) {
+                    if (ris == null) {
+                        System.err.println("Texture not found: " + texName);
+                        return;
+                    }
+                    // specify requested width/height to avoid oversized images in memory
+                    img = new Image(ris, (int) size, (int) size, true, true);
+                    IMAGE_CACHE.put(texName, img);
+                } catch (Exception ex) {
+                    System.err.println("Failed to load texture " + texName + ": " + ex.getMessage());
+                    return;
+                }
             }
 
-            this.image = new Image(is);
-
             // just replace the image on the existing ImageView
-            imageview.setImage(this.image);
+            imageview.setImage(img);
             
             //System.out.println(imageview);
             imageview.toFront();
@@ -469,8 +475,8 @@ public class Main extends GameApplication {
         if (Globals.cameraX > ((Globals.gridWidth*(32))-Globals.width/2 - 32)) { 
             Globals.cameraX = ((Globals.gridWidth*(32))-Globals.width/2 - 32);
         }
-        if (Globals.cameraY > (Globals.gridHeight*32) - (Globals.height/2) - 32*3) { 
-            Globals.cameraY = (Globals.gridHeight*32) - (Globals.height/2) - 32*3 ;
+        if (Globals.cameraY > (Globals.gridHeight*32) - (Globals.height/2) - 32) { 
+            Globals.cameraY = (Globals.gridHeight*32) - (Globals.height/2) - 32 ;
         }
     }
 
@@ -488,12 +494,13 @@ public class Main extends GameApplication {
         // Create an entity and add the ImageView as its view component
         
         int playerSize = 32;
-        Image playerImage = new Image("assets/textures/player.png");
+        Image playerImage = new Image("assets/textures/player.png", 64, 64, true, true);
         ImageView playerImageView = new ImageView(playerImage);
         // Set the desired width and height for the ImageView
         playerImageView.setFitWidth(playerSize);
         playerImageView.setFitHeight(playerSize);
         playerImageView.setPreserveRatio(true);
+        playerImageView.setSmooth(false);
         
         player = FXGL.entityBuilder()
         .at(0, 32)
