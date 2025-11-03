@@ -1,6 +1,8 @@
 package com.dontjumpinlava;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
@@ -55,6 +57,9 @@ class Block extends Component {
     ImageView imageview = new ImageView();
     Image image;
     String texName;
+
+     private static final Map<String, Image> IMAGE_CACHE = new HashMap<>();
+
     public Block(double x, double y, double size,String image) {
         this.x = x;
         this.y = y;
@@ -135,6 +140,7 @@ class Block extends Component {
                 System.err.println("Texture not found: " + texName);
                 return;
             }
+
             this.image = new Image(is);
 
             // just replace the image on the existing ImageView
