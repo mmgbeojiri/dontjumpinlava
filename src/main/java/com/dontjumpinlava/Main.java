@@ -169,7 +169,7 @@ class Block extends Component {
         //Globals.tileGrid.get(Globals.tileIndex)
         //this.tileIndex = Globals.tileIndex;
         updateTextureIfNeeded();
-        System.out.print(1/tpf);
+        System.out.println(1/tpf);
         if (Math.abs(x - Globals.cameraX) > (Globals.cloneCountX*16)){
             if (x < Globals.cameraX) {
                 loopTileX(Globals.cloneCountX);
