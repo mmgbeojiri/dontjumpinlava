@@ -171,7 +171,7 @@ class Block extends Component {
         //Globals.tileGrid.get(Globals.tileIndex)
         //this.tileIndex = Globals.tileIndex;
         updateTextureIfNeeded();
-        System.out.println(1/tpf);
+        
         if (Math.abs(x - Globals.cameraX) > (Globals.cloneCountX*16)){
             if (x < Globals.cameraX) {
                 loopTileX(Globals.cloneCountX);
@@ -209,6 +209,9 @@ class Player extends Component {
     double scratchX =  0.0;
     double scratchY = 0.0;
 
+    double tileGridX = 0.0;
+    double tileGridY = 0.0;
+
     public Player(double x, double y, double size) {
         this.x = x;
         this.y = y;
@@ -241,12 +244,18 @@ class Player extends Component {
         this.dy = dy;
     }
 
+    public void getTile(double x, double y) {
+        tileGridX = Math.floor(x/32);
+        tileGridY = Math.floor(y/32);
+
+        System.out.println("Tile Grid X: "+tileGridX + " Tile Grid Y"+ tileGridY );
+    }
 
     @Override
     public void onUpdate(double tpf) {
         this.x += dx;
         this.y += dy;
-
+        getTile(this.x, this.y);
         dx *= 0.9;
         dy *= 0.9;
 
@@ -384,6 +393,7 @@ public class Main extends GameApplication {
     @Override
     protected void onUpdate(double tpf) {
         movePlayer();
+        System.out.println(1/tpf);
 
         //Globals.cameraX = Math.sin(memoryWaster)*100;
         //Globals.cameraY = Math.sin(memoryWaster)*100;
