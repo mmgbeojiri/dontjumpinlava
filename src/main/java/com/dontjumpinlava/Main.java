@@ -250,9 +250,12 @@ class Player extends Component {
     public void getTile(double x, double y) {
         tileGridX = Math.floor(x/32)+1;
         tileGridY = Math.floor(y/32);
-        playerTileIndex = (1+ tileGridY) + ((tileGridX)*(Globals.gridHeight));
-        if (playerTileIndex >=0){
+        playerTileIndex = -(tileGridY+1) + ((tileGridX+1)*(Globals.gridHeight));
+        // the y value is flipped, so we get the next row, and subtract by tilegridy+1
+        if (playerTileIndex >= 0){
             underTile = Globals.tileGrid.get((int)playerTileIndex);
+        } else {
+            underTile = "";
         }
         System.out.println("Tile Grid X: "+tileGridX + " Tile Grid Y"+ tileGridY + " Tile: " + underTile);
     }
