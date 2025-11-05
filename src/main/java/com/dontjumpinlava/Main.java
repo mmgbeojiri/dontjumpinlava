@@ -249,7 +249,7 @@ class Player extends Component {
 
     public void getTile(double x, double y) {
         tileGridX = Math.floor(x/32)+1;
-        tileGridY = Math.floor(y/32);
+        tileGridY = Math.ceil(y/32);
         playerTileIndex = -(tileGridY+1) + ((tileGridX+1)*(Globals.gridHeight));
         // the y value is flipped, so we get the next row, and subtract by tilegridy+1
         if (playerTileIndex >= 0){
@@ -263,8 +263,15 @@ class Player extends Component {
     @Override
     public void onUpdate(double tpf) {
         this.x += dx;
+        getTile(this.x, this.y);
+        if ( !underTile.equalsIgnoreCase("Air.png")) {
+            this.x -= dx;
+        } 
         this.y += dy;
         getTile(this.x, this.y);
+        if ( !underTile.equalsIgnoreCase("Air.png")) {
+            this.y -= dy;
+        } 
         dx *= 0.9;
         dy *= 0.9;
 
