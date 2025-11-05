@@ -94,7 +94,7 @@ class Block extends Component {
             return;
         }
         
-        System.out.println("Tile Index: "+this.tileIndex);
+        //System.out.println("Tile Index: "+this.tileIndex);
         
         texName = Globals.tileGrid.get(this.tileIndex);
         //texName = Globals.tileGrid.get(Globals.tileIndex);
@@ -212,6 +212,9 @@ class Player extends Component {
     double tileGridX = 0.0;
     double tileGridY = 0.0;
 
+    double playerTileIndex = 0.0;
+    String underTile = "";
+
     public Player(double x, double y, double size) {
         this.x = x;
         this.y = y;
@@ -245,10 +248,13 @@ class Player extends Component {
     }
 
     public void getTile(double x, double y) {
-        tileGridX = Math.floor(x/32);
+        tileGridX = Math.floor(x/32)+1;
         tileGridY = Math.floor(y/32);
-
-        System.out.println("Tile Grid X: "+tileGridX + " Tile Grid Y"+ tileGridY );
+        playerTileIndex = (1+ tileGridY) + ((tileGridX)*(Globals.gridHeight));
+        if (playerTileIndex >=0){
+            underTile = Globals.tileGrid.get((int)playerTileIndex);
+        }
+        System.out.println("Tile Grid X: "+tileGridX + " Tile Grid Y"+ tileGridY + " Tile: " + underTile);
     }
 
     @Override
@@ -393,7 +399,7 @@ public class Main extends GameApplication {
     @Override
     protected void onUpdate(double tpf) {
         movePlayer();
-        System.out.println(1/tpf);
+        //System.out.println(1/tpf);
 
         //Globals.cameraX = Math.sin(memoryWaster)*100;
         //Globals.cameraY = Math.sin(memoryWaster)*100;
