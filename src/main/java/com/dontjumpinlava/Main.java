@@ -129,7 +129,9 @@ class Block extends Component {
         if (texName == null) {
             return;
         }
+
         if (!texName.equals(currentTextureName)) {
+            //System.out.println("hello i am peter and i am green" + Math.random());
             currentTextureName = texName;
 
             Image img = IMAGE_CACHE.get(texName);
