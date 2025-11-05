@@ -37,6 +37,8 @@ class Globals {
     public static double playerX = 0;
     public static double playerY = 0;
 
+    public static double playerHeight = 16;
+
     
 
 }
@@ -260,18 +262,22 @@ class Player extends Component {
         System.out.println("Tile Grid X: "+tileGridX + " Tile Grid Y"+ tileGridY + " Tile: " + underTile);
     }
 
-    @Override
-    public void onUpdate(double tpf) {
-        this.x += dx;
+    
+
+    public void fixCollisionInDirection(double dx, double dy) {
         getTile(this.x, this.y);
         if ( !underTile.equalsIgnoreCase("Air.png")) {
             this.x -= dx;
-        } 
-        this.y += dy;
-        getTile(this.x, this.y);
-        if ( !underTile.equalsIgnoreCase("Air.png")) {
             this.y -= dy;
         } 
+    }
+
+    @Override
+    public void onUpdate(double tpf) {
+        this.x += dx;
+        fixCollisionInDirection(dx, 0);
+        this.y += dy;
+        fixCollisionInDirection(0, dy);
         dx *= 0.9;
         dy *= 0.9;
 
@@ -511,6 +517,7 @@ public class Main extends GameApplication {
     public void resetPlayer() {
         Globals.cameraX= Globals.twoForty;
         Globals.cameraY= Globals.oneEighty;
+        Globals.playerHeight = 16;
         player.setX(0);
         player.setY(-32);
 
