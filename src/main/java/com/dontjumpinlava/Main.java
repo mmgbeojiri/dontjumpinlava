@@ -283,7 +283,7 @@ class Player extends Component {
         solid = 0;
         fixCollisionAtPoint(this.x, this.y);
         fixCollisionAtPoint(this.x, this.y - Globals.playerHeight);
-        fixCollisionAtPoint(this.x, this.y - (Globals.playerHeight+8));
+        //fixCollisionAtPoint(this.x, this.y - (Globals.playerHeight));
         if ( solid > 0) {
             this.x -= dx;
             this.y -= dy;
