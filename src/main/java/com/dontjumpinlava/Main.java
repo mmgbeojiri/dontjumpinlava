@@ -263,9 +263,12 @@ class Player extends Component {
     }
 
     
+    public void fixCollisionAtPoint(double x, double y) {
+        getTile(x, y);
+    }
 
     public void fixCollisionInDirection(double dx, double dy) {
-        getTile(this.x, this.y);
+        fixCollisionAtPoint(this.x, this.y);
         if ( !underTile.equalsIgnoreCase("Air.png")) {
             this.x -= dx;
             this.y -= dy;
