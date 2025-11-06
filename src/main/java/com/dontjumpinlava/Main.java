@@ -439,6 +439,10 @@ public class Main extends GameApplication {
                         -2
             ); 
 
+        if (player.getComponent(Player.class).dy < -22) {
+            player.getComponent(Player.class).setVelY(-22);
+        }
+
     };
 
     public void movePlayer() {
