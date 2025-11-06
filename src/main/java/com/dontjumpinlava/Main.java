@@ -272,6 +272,7 @@ class Player extends Component {
 
     
     public void fixCollisionAtPoint(double x, double y) {
+    
         getTile(x, y);
         if ( !underTile.equalsIgnoreCase("Air.png")) {
             solid = 10;
@@ -279,12 +280,15 @@ class Player extends Component {
     }
 
     public void fixCollisionInDirection(double dx, double dy) {
+        solid = 0;
         fixCollisionAtPoint(this.x, this.y);
-        fixCollisionAtPoint(this.x, this.y + Globals.playerHeight);
-        //fixCollisionAtPoint(this.x, this.y - Globals.playerHeight*2);
+        fixCollisionAtPoint(this.x, this.y - Globals.playerHeight);
+        fixCollisionAtPoint(this.x, this.y - (Globals.playerHeight+8));
         if ( solid > 0) {
             this.x -= dx;
             this.y -= dy;
+
+            this.dx = 0;
         } 
     }
 
