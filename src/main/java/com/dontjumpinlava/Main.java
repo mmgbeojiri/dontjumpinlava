@@ -280,8 +280,8 @@ class Player extends Component {
 
     public void fixCollisionInDirection(double dx, double dy) {
         fixCollisionAtPoint(this.x, this.y);
-        fixCollisionAtPoint(this.x, this.y - Globals.playerHeight);
-        fixCollisionAtPoint(this.x, this.y - Globals.playerHeight*2);
+        fixCollisionAtPoint(this.x, this.y + Globals.playerHeight);
+        //fixCollisionAtPoint(this.x, this.y - Globals.playerHeight*2);
         if ( solid > 0) {
             this.x -= dx;
             this.y -= dy;
@@ -447,8 +447,14 @@ public class Main extends GameApplication {
 
     public void movePlayer() {
 
-        handleKeysLeftRight();
-        handleKeysJump();
+        /*handleKeysLeftRight();
+        handleKeysJump();*/
+        player.getComponent(Player.class).setVelX(
+            6*(keyRight - keyLeft)
+        ); 
+        player.getComponent(Player.class).setVelY(
+            6*(keyUp - keyDown)
+        ); 
         moveCamera();
 
     }
