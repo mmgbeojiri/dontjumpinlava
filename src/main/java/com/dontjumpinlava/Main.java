@@ -250,6 +250,12 @@ class Player extends Component {
     public void setVelY(double dy) {
         this.dy = dy;
     }
+    public void changeVelX(double dx) {
+        this.dx += dx;
+    }
+    public void changeVelY(double dy) {
+        this.dy += dy;
+    }
 
     public void getTile(double x, double y) {
         tileGridX = Math.floor(x/32)+1;
@@ -282,14 +288,15 @@ class Player extends Component {
         } 
     }
 
+
+
     @Override
     public void onUpdate(double tpf) {
         this.x += dx;
         fixCollisionInDirection(dx, 0);
         this.y += dy;
         fixCollisionInDirection(0, dy);
-        dx *= 0.9;
-        dy *= 0.9;
+        
 
         Globals.playerX = this.x;
         Globals.playerY = this.y;
@@ -313,6 +320,8 @@ public class Main extends GameApplication {
     int keyLeft = 0;
     int keyUp = 0;
     int keyDown = 0;
+
+    int keyWalk = 0;
 
     
     
@@ -410,13 +419,32 @@ public class Main extends GameApplication {
         input.addAction(downPressed, KeyCode.DOWN);
     }
 
-    public void movePlayer() {
+    public void handleKeysLeftRight() {
+
+        keyWalk = (keyRight - keyLeft);
+
         player.getComponent(Player.class).setVelX(
-            6*(keyRight - keyLeft)
+            (player.getComponent(Player.class).dx * 0.9) + (keyWalk * 2)
         ); 
-        player.getComponent(Player.class).setVelY(
-            6*(keyUp - keyDown)
-        ); 
+    }
+
+    public void handleKeysJump() {
+        if (keyUp == 1) {
+            player.getComponent(Player.class).setVelY(
+                        14
+            ); 
+        }
+
+        player.getComponent(Player.class).changeVelY(
+                        -2
+            ); 
+
+    };
+
+    public void movePlayer() {
+
+        handleKeysLeftRight();
+        handleKeysJump();
         moveCamera();
 
     }
