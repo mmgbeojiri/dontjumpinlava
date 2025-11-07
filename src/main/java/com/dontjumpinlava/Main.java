@@ -267,7 +267,7 @@ class Player extends Component {
         } else {
             underTile = "";
         }
-        System.out.println("Tile Grid X: "+tileGridX + " Tile Grid Y"+ tileGridY + " Tile: " + underTile);
+        //System.out.println("Tile Grid X: "+tileGridX + " Tile Grid Y"+ tileGridY + " Tile: " + underTile);
     }
 
     
@@ -281,14 +281,15 @@ class Player extends Component {
 
     public void fixCollisionInDirection(double dx, double dy) {
         solid = 0;
-        fixCollisionAtPoint(this.x, this.y);
-        fixCollisionAtPoint(this.x, this.y - Globals.playerHeight);
-        //fixCollisionAtPoint(this.x, this.y - (Globals.playerHeight));
+        fixCollisionAtPoint(this.x+16, this.y);
+        fixCollisionAtPoint(this.x+16, this.y - Globals.playerHeight);
+        fixCollisionAtPoint(this.x+16, this.y - (Globals.playerHeight)-15);
         if ( solid > 0) {
             this.x -= dx;
             this.y -= dy;
 
-            this.dx = 0;
+            //this.dx = 0;
+            //this.dy = 0;
         } 
     }
 
@@ -428,20 +429,22 @@ public class Main extends GameApplication {
         keyWalk = (keyRight - keyLeft);
 
         player.getComponent(Player.class).setVelX(
-            (player.getComponent(Player.class).dx * 0.9) + (keyWalk * 2)
+            (player.getComponent(Player.class).dx * 0.9) + (keyWalk )
         ); 
     }
 
     public void handleKeysJump() {
+        System.out.println(player.getComponent(Player.class).dy);
+        System.out.println(player.getComponent(Player.class).dx);
         if (keyUp == 1) {
             player.getComponent(Player.class).setVelY(
-                        14
+                        6
             ); 
         }
 
         player.getComponent(Player.class).changeVelY(
-                        -2
-            ); 
+                        -0.3
+        ); 
 
         if (player.getComponent(Player.class).dy < -22) {
             player.getComponent(Player.class).setVelY(-22);
@@ -451,14 +454,14 @@ public class Main extends GameApplication {
 
     public void movePlayer() {
 
-        /*handleKeysLeftRight();
-        handleKeysJump();*/
-        player.getComponent(Player.class).setVelX(
+        handleKeysLeftRight();
+        handleKeysJump();
+        /*player.getComponent(Player.class).setVelX(
             6*(keyRight - keyLeft)
         ); 
         player.getComponent(Player.class).setVelY(
             6*(keyUp - keyDown)
-        ); 
+        );*/ 
         moveCamera();
 
     }
