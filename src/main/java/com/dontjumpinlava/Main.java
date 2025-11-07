@@ -219,6 +219,11 @@ class Player extends Component {
 
     int solid = 0;
 
+    double fixdx = 0.0;
+    double fixdy = 0.0;
+    double modx = 0.0;
+    double mody = 0.0;
+
     public Player(double x, double y, double size) {
         this.x = x;
         this.y = y;
@@ -276,20 +281,33 @@ class Player extends Component {
         getTile(x, y);
         if ( !underTile.equalsIgnoreCase("Air.png")) {
             solid = 10;
+            modx = x % 32;
+            mody = y % 32;
+            System.out.println("fixdy: " + fixdy + "mody: " + mody + "y: " + y);
+            if (fixdy < 0) {
+                this.y -= fixdy;
+            }
         } 
+
+        //
+
     }
 
     public void fixCollisionInDirection(double dx, double dy) {
         solid = 0;
+        fixdx = dx;
+        fixdy = dy;
         fixCollisionAtPoint(this.x+16, this.y);
         fixCollisionAtPoint(this.x+16, this.y - Globals.playerHeight);
         fixCollisionAtPoint(this.x+16, this.y - (Globals.playerHeight)-15);
         if ( solid > 0) {
+            
             this.x -= dx;
-            this.y -= dy;
-
-            //this.dx = 0;
-            //this.dy = 0;
+            if (dx == 0) {
+            this.dy = 0;
+            } else {
+            this.dx = 0;
+            }
         } 
     }
 
@@ -434,8 +452,7 @@ public class Main extends GameApplication {
     }
 
     public void handleKeysJump() {
-        System.out.println(player.getComponent(Player.class).dy);
-        System.out.println(player.getComponent(Player.class).dx);
+
         if (keyUp == 1) {
             player.getComponent(Player.class).setVelY(
                         6
