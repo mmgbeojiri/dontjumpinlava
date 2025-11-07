@@ -286,6 +286,7 @@ class Player extends Component {
             System.out.println("fixdy: " + fixdy + "mody: " + mody + "y: " + y);
             if (fixdy < 0) {
                 this.y -= fixdy;
+                //this.y -=mody;
             }
         } 
 
