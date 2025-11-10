@@ -267,10 +267,10 @@ class Player extends Component {
         tileGridY = Math.ceil(y/32);
         playerTileIndex = -(tileGridY+1) + ((tileGridX+1)*(Globals.gridHeight));
         // the y value is flipped, so we get the next row, and subtract by tilegridy+1
-        if (playerTileIndex >= 0){
+        if (playerTileIndex >= 0 && playerTileIndex < Globals.tileGrid.size()){
             underTile = Globals.tileGrid.get((int)playerTileIndex);
         } else {
-            underTile = "";
+            underTile = "Air.png";
         }
         //System.out.println("Tile Grid X: "+tileGridX + " Tile Grid Y"+ tileGridY + " Tile: " + underTile);
     }
@@ -283,11 +283,28 @@ class Player extends Component {
             solid = 10;
             modx = x % 32;
             mody = y % 32;
-            System.out.println("fixdy: " + fixdy + "mody: " + mody + "y: " + y);
+            
             if (fixdy < 0) {
-                this.y -= fixdy;
+                this.y += -mody;
                 //this.y -=mody;
             }
+            if (fixdx < 0) {
+                this.x +=  - modx;
+                //this.y -=mody;
+            }
+            if (fixdy > 0) {
+                this.y += -0.01-mody;
+                //this.y -=mody;
+            }
+
+            /*if (fixdx > 0) {
+                System.out.println("fixdy: " + fixdy +" mody: " + mody +
+                 " y: " + y
+         + " fixdx: " + fixdx + " modx: " + modx);
+                this.x += -modx;
+                //this.y -=mody;
+                System.out.println(underTile);
+            }*/
         } 
 
         //
@@ -303,11 +320,11 @@ class Player extends Component {
         fixCollisionAtPoint(this.x+16, this.y - (Globals.playerHeight)-15);
         if ( solid > 0) {
             
-            this.x -= dx;
+            //this.x -= dx;
             if (dx == 0) {
-            this.dy = 0;
+                this.dy = 0;
             } else {
-            this.dx = 0;
+                this.dx = 0;
             }
         } 
     }
