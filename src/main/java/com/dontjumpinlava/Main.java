@@ -285,11 +285,12 @@ class Player extends Component {
             mody = y % 32;
             
             if (fixdy < 0) {
-                this.y += 0.01-mody;
+                this.y += 32-mody;
+                System.out.println(" fixdy: " + fixdy + " mody: " + mody);
                 //this.y -=mody;
             }
             if (fixdx < 0) {
-                this.x += -modx;
+                this.x += 32-modx;
                 //this.y -=mody;
             }
             if (fixdy > 0) {
@@ -298,9 +299,7 @@ class Player extends Component {
             } 
 
             if (fixdx > 0) {
-                System.out.println("fixdy: " + fixdy +" mody: " + mody +
-                 " y: " + y
-         + " fixdx: " + fixdx + " modx: " + modx);
+                System.out.println(" fixdx: " + fixdx + " modx: " + modx);
                 this.x += -0.01-modx;
                 //this.y -=mody;
                 System.out.println(underTile);
@@ -333,10 +332,10 @@ class Player extends Component {
 
     @Override
     public void onUpdate(double tpf) {
-        this.x += dx;
-        fixCollisionInDirection(dx, 0);
-        this.y += dy;
-        fixCollisionInDirection(0, dy);
+        this.x += this.dx;
+        fixCollisionInDirection(this.dx, 0);
+        this.y += this.dy;
+        fixCollisionInDirection(0, this.dy);
         
 
         Globals.playerX = this.x;
