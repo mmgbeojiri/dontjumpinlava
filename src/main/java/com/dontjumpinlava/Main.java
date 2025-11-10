@@ -285,26 +285,26 @@ class Player extends Component {
             mody = y % 32;
             
             if (fixdy < 0) {
-                this.y += -mody;
+                this.y += 0.01-mody;
                 //this.y -=mody;
             }
             if (fixdx < 0) {
-                this.x +=  - modx;
+                this.x += -modx;
                 //this.y -=mody;
             }
             if (fixdy > 0) {
                 this.y += -0.01-mody;
                 //this.y -=mody;
-            }
+            } 
 
-            /*if (fixdx > 0) {
+            if (fixdx > 0) {
                 System.out.println("fixdy: " + fixdy +" mody: " + mody +
                  " y: " + y
          + " fixdx: " + fixdx + " modx: " + modx);
-                this.x += -modx;
+                this.x += -0.01-modx;
                 //this.y -=mody;
                 System.out.println(underTile);
-            }*/
+            }
         } 
 
         //
