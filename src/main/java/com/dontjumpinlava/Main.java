@@ -284,13 +284,13 @@ class Player extends Component {
             modx = x % 32;
             mody = y % 32;
             
-            if (fixdy < 0) {
-                this.y += 32-mody;
+            /*if (fixdy < 0) {
+                this.y += 0.01-mody;
                 System.out.println(" fixdy: " + fixdy + " mody: " + mody);
                 //this.y -=mody;
             }
             if (fixdx < 0) {
-                this.x += 32-modx;
+                this.x += 0.01-modx;
                 //this.y -=mody;
             }
             if (fixdy > 0) {
@@ -303,6 +303,9 @@ class Player extends Component {
                 this.x += -0.01-modx;
                 //this.y -=mody;
                 System.out.println(underTile);
+            }*/
+            if (fixdy < 0) {
+                this.y += -fixdy;
             }
         } 
 
