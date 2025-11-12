@@ -202,7 +202,7 @@ class Block extends Component {
 class Player extends Component {
     double x; 
     double y;
-    double size;
+    double size = 32;
     Entity imageEntity;
 
     double dx;
@@ -223,6 +223,9 @@ class Player extends Component {
     double fixdy = 0.0;
     double modx = 0.0;
     double mody = 0.0;
+
+    int falling = 99;
+    int jumping = 99;
 
     public Player(double x, double y, double size) {
         this.x = x;
@@ -260,6 +263,12 @@ class Player extends Component {
     }
     public void changeVelY(double dy) {
         this.dy += dy;
+    }
+    public void changeJumping(int dj) {
+        this.jumping += dj;
+    }
+    public void setJumping(int j) {
+        this.jumping = j;
     }
 
     public void getTile(double x, double y) {
@@ -326,28 +335,71 @@ class Player extends Component {
         solid = 0;
         fixdx = dx;
         fixdy = dy;
-        fixCollisionAtPoint(this.x+16, this.y);
+        fixCollisionAtPoint(this.x+16, this.y - 1);
         fixCollisionAtPoint(this.x+16, this.y - Globals.playerHeight);
         fixCollisionAtPoint(this.x+16, this.y - (Globals.playerHeight)-15);
-        if ( solid > 0) {
-            
-            //this.x -= dx;
-            if (dx == 0) {
-                this.dy = 0;
-            } else {
-                this.dx = 0;
-            }
-        } 
+         
     }
 
+    public void moveSpriteX(){
+        this.x += this.dx;
+        fixCollisionInDirection(this.dx, 0);
+        if ( solid > 0) {
+            
+
+                this.dx = 0;
+        
+        }
+    }
+    public void moveSpriteY(){
+        this.y += this.dy;
+        falling += 1;
+        fixCollisionInDirection(0, this.dy);
+        if ( solid > 0) {
+            if (this.dy < 0) {
+                falling = 0;
+
+            } else {
+                jumping = 99;
+            }
+                this.dy = 0;
+
+        }
+    }
+
+    public void changeImage(String texture){
+        ImageView image = new ImageView();
+        InputStream ris = getClass().getResourceAsStream("/assets/textures/"+texture);
+        Image img = new Image(ris);
+        image.setImage(img);
+        image.setPreserveRatio(true);
+        image.setSmooth(true);
+        image.setFitWidth(size*32);
+        
+        //image.setFitWidth(size);
+        imageEntity.getViewComponent().clearChildren();
+        imageEntity.getViewComponent().addChild(image);
+    }
+
+
+    public void paintSprite(){
+        imageEntity.setX(scratchX - Globals.cameraX);
+        imageEntity.setY(scratchY + Globals.cameraY);
+
+        if (falling > 1) {
+            changeImage("fall.png");
+            return;
+        }
+        changeImage("player.png");
+    }
 
 
     @Override
     public void onUpdate(double tpf) {
-        this.x += this.dx;
-        fixCollisionInDirection(this.dx, 0);
-        this.y += this.dy;
-        fixCollisionInDirection(0, this.dy);
+        moveSpriteX();
+        moveSpriteY();
+        System.err.println(falling);
+        
         
 
         Globals.playerX = this.x;
@@ -356,8 +408,7 @@ class Player extends Component {
         scratchX = this.x + Globals.width/2 - size/2 ;
         scratchY = -this.y +  Globals.height/2 - size/2;
 
-        imageEntity.setX(scratchX - Globals.cameraX);
-        imageEntity.setY(scratchY + Globals.cameraY);
+        paintSprite();
     }
 }
 
@@ -482,11 +533,7 @@ public class Main extends GameApplication {
 
     public void handleKeysJump() {
 
-        if (keyUp == 1) {
-            player.getComponent(Player.class).setVelY(
-                        6
-            ); 
-        }
+        
 
         player.getComponent(Player.class).changeVelY(
                         -0.3
@@ -494,6 +541,18 @@ public class Main extends GameApplication {
 
         if (player.getComponent(Player.class).dy < -22) {
             player.getComponent(Player.class).setVelY(-22);
+        }
+        if (keyUp == 1) {
+            if ((player.getComponent(Player.class).falling < 10)
+             || (player.getComponent(Player.class).jumping > 0)) {
+            
+                player.getComponent(Player.class).changeJumping(1);
+                if (player.getComponent(Player.class).jumping < 15) {
+                    player.getComponent(Player.class).setVelY(6); 
+                }
+        }
+        } else {
+            player.getComponent(Player.class).setJumping(0);
         }
 
     };
@@ -621,6 +680,8 @@ public class Main extends GameApplication {
         Globals.playerHeight = 16;
         player.setX(0);
         player.setY(-32);
+        player.getComponent(Player.class).jumping = 99;
+        player.getComponent(Player.class).falling = 99;
 
     }
 
