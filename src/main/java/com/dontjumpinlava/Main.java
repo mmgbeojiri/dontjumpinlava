@@ -387,6 +387,7 @@ class Player extends Component {
         imageEntity.setY(scratchY + Globals.cameraY);
 
         if (falling > 1) {
+            
             changeImage("fall.png");
             return;
         }
@@ -526,9 +527,19 @@ public class Main extends GameApplication {
 
         keyWalk = (keyRight - keyLeft);
 
+        if (keyWalk == 0) {
         player.getComponent(Player.class).setVelX(
             (player.getComponent(Player.class).dx * 0.9) + (keyWalk )
         ); 
+    }   else {
+        if (keyWalk*player.getComponent(Player.class).dx < 10) {
+            player.getComponent(Player.class).changeVelX(
+                keyWalk*0.4
+            );
+            
+        
+        }
+    }
     }
 
     public void handleKeysJump() {
