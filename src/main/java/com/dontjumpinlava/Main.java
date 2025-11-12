@@ -307,6 +307,15 @@ class Player extends Component {
             if (fixdy < 0) {
                 this.y += -fixdy;
             }
+            if(fixdx < 0) {
+                this.x+= -fixdx;
+            }
+            if (fixdy > 0) {
+                this.y += -fixdy;
+            }
+            if(fixdx > 0) {
+                this.x+= -fixdx;
+            }
         } 
 
         //
