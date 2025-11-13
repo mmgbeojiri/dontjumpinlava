@@ -389,7 +389,7 @@ class Player extends Component {
         image.setPreserveRatio(true);
         image.setSmooth(true);
         image.setFitWidth(width);
-        image.setTranslateX(-width-size);
+        image.setTranslateX(-(width-(size*32))/2);
         
         //image.setFitWidth(size);
         imageEntity.getViewComponent().clearChildren();
@@ -401,8 +401,8 @@ class Player extends Component {
         imageEntity.setX(scratchX - Globals.cameraX);
         imageEntity.setY(scratchY + Globals.cameraY);
 
-        if (falling > 1) {
-            if (this.dy > 1){
+        if (falling > 4) {
+            if (this.dy > 0){
             changeImage("fall.png");
             } else {
                 changeImage("fall2.png", 40);
