@@ -381,14 +381,32 @@ class Player extends Component {
         imageEntity.getViewComponent().addChild(image);
     }
 
+    public void changeImage(String texture, double width){
+        ImageView image = new ImageView();
+        InputStream ris = getClass().getResourceAsStream("/assets/textures/"+texture);
+        Image img = new Image(ris);
+        image.setImage(img);
+        image.setPreserveRatio(true);
+        image.setSmooth(true);
+        image.setFitWidth(width);
+        image.setTranslateX(-width-size);
+        
+        //image.setFitWidth(size);
+        imageEntity.getViewComponent().clearChildren();
+        imageEntity.getViewComponent().addChild(image);
+    }
+
 
     public void paintSprite(){
         imageEntity.setX(scratchX - Globals.cameraX);
         imageEntity.setY(scratchY + Globals.cameraY);
 
         if (falling > 1) {
-            
+            if (this.dy > 1){
             changeImage("fall.png");
+            } else {
+                changeImage("fall2.png", 40);
+            }
             return;
         }
         changeImage("player.png");
