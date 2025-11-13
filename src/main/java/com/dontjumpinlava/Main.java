@@ -224,6 +224,9 @@ class Player extends Component {
     double modx = 0.0;
     double mody = 0.0;
 
+    int playerframe = 0;
+    double temp = 0;
+
     int falling = 99;
     int jumping = 99;
 
@@ -390,7 +393,21 @@ class Player extends Component {
         image.setSmooth(true);
         image.setFitWidth(width);
         image.setTranslateX(-(width-(size*32))/2);
-        
+        //image.setFitWidth(size);
+        imageEntity.getViewComponent().clearChildren();
+        imageEntity.getViewComponent().addChild(image);
+    }
+
+        public void changeImage(String texture, double width, double height){
+        ImageView image = new ImageView();
+        InputStream ris = getClass().getResourceAsStream("/assets/textures/"+texture);
+        Image img = new Image(ris);
+        image.setImage(img);
+        image.setPreserveRatio(false);
+        image.setSmooth(true);
+        image.setFitWidth(width);
+        image.setFitHeight(height);
+        image.setTranslateX(-(width-(size*32))/2);
         //image.setFitWidth(size);
         imageEntity.getViewComponent().clearChildren();
         imageEntity.getViewComponent().addChild(image);
@@ -405,10 +422,21 @@ class Player extends Component {
             if (this.dy > 0){
             changeImage("fall.png");
             } else {
-                changeImage("fall2.png", 40);
+                changeImage("fall2.png", 36);
             }
             return;
         }
+
+        if ((this.dx) > 1) {
+            changeImage("run.png", 35, 32);
+            return;
+        }
+
+        if ((this.dx) < -1) {
+            changeImage("run2.png", 35, 32);
+            return;
+        }
+
         changeImage("player.png");
     }
 
@@ -555,6 +583,7 @@ public class Main extends GameApplication {
                 player.getComponent(Player.class).setVelX(
                         0
                 );
+                player.getComponent(Player.class).playerframe = 0;
             }
         }
 
@@ -572,6 +601,12 @@ public class Main extends GameApplication {
 
             }
         }
+
+        player.getComponent(Player.class).temp = Math.abs(player.getComponent(Player.class).dx)/19;
+        if (player.getComponent(Player.class).temp < 0.2) {
+            player.getComponent(Player.class).temp = 0.2;
+        }
+        player.getComponent(Player.class).playerframe +=1;
     }
 
     public void handleKeysJump() {
