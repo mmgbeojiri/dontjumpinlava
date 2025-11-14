@@ -38,7 +38,9 @@ class Globals {
     public static double playerY = 0;
 
     public static double playerHeight = 16;
+    public static double playerWidth = 16;
 
+    public static double NEGTINY = -0.01;
     
 
 }
@@ -339,9 +341,13 @@ class Player extends Component {
         solid = 0;
         fixdx = dx;
         fixdy = dy;
-        fixCollisionAtPoint(this.x+16, this.y - 1);
-        fixCollisionAtPoint(this.x+16, this.y - Globals.playerHeight);
-        fixCollisionAtPoint(this.x+16, this.y - (Globals.playerHeight)-15);
+        fixCollisionAtPoint(this.x, this.y - 1);
+        fixCollisionAtPoint(this.x, this.y - Globals.playerHeight);
+        fixCollisionAtPoint(this.x, this.y - (Globals.playerHeight)-15);
+         
+        fixCollisionAtPoint(this.x + (Globals.playerWidth*2)-1, this.y - 1);
+        fixCollisionAtPoint(this.x + (Globals.playerWidth*2)-1, this.y - Globals.playerHeight);
+        fixCollisionAtPoint(this.x + (Globals.playerWidth*2)-1, this.y - (Globals.playerHeight)-15);
          
     }
 
@@ -761,6 +767,8 @@ public class Main extends GameApplication {
         Globals.cameraX= Globals.twoForty;
         Globals.cameraY= Globals.oneEighty;
         Globals.playerHeight = 16;
+        Globals.playerWidth = 16;
+
         player.setX(0);
         player.setY(-32);
         player.getComponent(Player.class).jumping = 99;
