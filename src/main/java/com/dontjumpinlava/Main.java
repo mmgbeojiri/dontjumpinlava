@@ -226,6 +226,7 @@ class Player extends Component {
 
     int playerframe = 0;
     double temp = 0;
+    String playeraction = "";
 
     int falling = 99;
     int jumping = 99;
@@ -417,13 +418,18 @@ class Player extends Component {
     public void paintSprite(){
         imageEntity.setX(scratchX - Globals.cameraX);
         imageEntity.setY(scratchY + Globals.cameraY);
-
+        System.out.println(playeraction);
         if (falling > 4) {
             if (this.dy > 0){
             changeImage("fall.png");
             } else {
                 changeImage("fall2.png", 36);
             }
+            return;
+        }
+
+        if (playeraction.equalsIgnoreCase("turn")) {
+            changeImage("player.png");
             return;
         }
 
@@ -444,9 +450,7 @@ class Player extends Component {
     @Override
     public void onUpdate(double tpf) {
         moveSpriteX();
-        moveSpriteY();
-        System.err.println(falling);
-        
+        moveSpriteY();        
         
 
         Globals.playerX = this.x;
@@ -570,7 +574,7 @@ public class Main extends GameApplication {
     }
 
     public void handleKeysLeftRight() {
-
+        player.getComponent(Player.class).playeraction = "walk"; 
         keyWalk = (keyRight - keyLeft);
 
         if (keyWalk == 0) {
@@ -593,6 +597,7 @@ public class Main extends GameApplication {
                 player.getComponent(Player.class).changeVelX(
                         keyWalk * 0.8
                 );
+                player.getComponent(Player.class).playeraction = "turn";
             } else {
                 player.getComponent(Player.class).changeVelX(
                         keyWalk * 0.4
