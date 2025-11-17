@@ -424,7 +424,7 @@ class Player extends Component {
     public void paintSprite(){
         imageEntity.setX(scratchX - Globals.cameraX);
         imageEntity.setY(scratchY + Globals.cameraY);
-        System.out.println(playeraction);
+        //System.out.println(playeraction);
         if (falling > 4) {
             if (this.dy > 0){
             changeImage("fall.png");
@@ -466,6 +466,66 @@ class Player extends Component {
         scratchY = -this.y +  Globals.height/2 - size/2;
 
         paintSprite();
+    }
+}
+
+class Smoke extends Component {
+    double x = 0.0;
+    double y = 0.0;
+    double frame = 0;
+    Entity imageEntity;
+    
+    double scratchX = 0;
+    double scratchY = 0;
+    double size = 0.5;
+    public void changeImage(String texture){
+        ImageView image = new ImageView();
+        InputStream ris = getClass().getResourceAsStream("/assets/textures/"+texture);
+        Image img = new Image(ris);
+        image.setImage(img);
+        image.setPreserveRatio(true);
+        image.setSmooth(true);
+        image.setFitWidth(size*32);
+        image.setFitHeight(size*32);
+        
+        //image.setFitWidth(size);
+        imageEntity.getViewComponent().clearChildren();
+        imageEntity.getViewComponent().addChild(image);
+    }
+    public Smoke() {
+        frame = 1;
+        this.x = Globals.playerX;
+        this.y = Globals.playerY - Globals.playerHeight*2;
+        
+    }
+    
+    @Override
+    public void onAdded() {
+        this.imageEntity = entity;
+        changeImage("Smoke1.png");
+    };
+
+    @Override
+    public void onUpdate(double tpf) {
+        if (frame == 0) {
+            return;
+        }
+
+        if ((frame > 3)) {
+            entity.removeFromWorld();
+            return;
+        }
+
+        scratchX = this.x + Globals.width/2 - size/2 ;
+        scratchY = -this.y +  Globals.height/2 - size/2;
+
+        imageEntity.setX(scratchX - Globals.cameraX);
+        imageEntity.setY(scratchY + Globals.cameraY);
+        System.out.println("Smoke" + (int)Math.ceil(frame)+".png");
+        if (Math.ceil(frame) < 3) {
+            changeImage("Smoke" +(int) Math.ceil(frame)+".png");
+        }
+        frame += 0.4;
     }
 }
 
@@ -579,6 +639,15 @@ public class Main extends GameApplication {
         input.addAction(downPressed, KeyCode.DOWN);
     }
 
+    public void makeSkipSmoke() {
+        FXGL.entityBuilder().at(
+            (Globals.playerX + Globals.width/2 - 16/2 )- Globals.cameraX, 
+            (-(Globals.playerY - Globals.playerHeight*2) + Globals.height/2 - 16/2 )+ Globals.cameraY) // size is 16
+        .view("Smoke1.png")
+        .with(new Smoke())
+        .buildAndAttach();
+    }
+
     public void handleKeysLeftRight() {
         player.getComponent(Player.class).playeraction = "walk"; 
         keyWalk = (keyRight - keyLeft);
@@ -604,6 +673,8 @@ public class Main extends GameApplication {
                         keyWalk * 0.8
                 );
                 player.getComponent(Player.class).playeraction = "turn";
+                makeSkipSmoke();
+
             } else {
                 player.getComponent(Player.class).changeVelX(
                         keyWalk * 0.4
