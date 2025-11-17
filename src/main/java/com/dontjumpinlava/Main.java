@@ -478,15 +478,15 @@ class Smoke extends Component {
     double scratchX = 0;
     double scratchY = 0;
     double size = 0.5;
-    public void changeImage(String texture){
+    public void changeImage(String texture, double size){
         ImageView image = new ImageView();
         InputStream ris = getClass().getResourceAsStream("/assets/textures/"+texture);
         Image img = new Image(ris);
         image.setImage(img);
         image.setPreserveRatio(true);
         image.setSmooth(true);
-        image.setFitWidth(size*32);
-        image.setFitHeight(size*32);
+        //image.setFitWidth(size*32);
+        //image.setFitHeight(size*32);
         
         //image.setFitWidth(size);
         imageEntity.getViewComponent().clearChildren();
@@ -502,7 +502,7 @@ class Smoke extends Component {
     @Override
     public void onAdded() {
         this.imageEntity = entity;
-        changeImage("Smoke1.png");
+        changeImage("Smoke1.png", 1);
     };
 
     @Override
@@ -511,21 +511,22 @@ class Smoke extends Component {
             return;
         }
 
-        if ((frame > 3)) {
+        if ((frame > 2)) {
             entity.removeFromWorld();
             return;
         }
 
-        scratchX = this.x + Globals.width/2 - size/2 ;
-        scratchY = -this.y +  Globals.height/2 - size/2;
+        scratchX = this.x + Globals.width/2 ;
+        scratchY = -this.y +  Globals.height/2 ;
 
         imageEntity.setX(scratchX - Globals.cameraX);
         imageEntity.setY(scratchY + Globals.cameraY);
         System.out.println("Smoke" + (int)Math.ceil(frame)+".png");
         if (Math.ceil(frame) < 3) {
-            changeImage("Smoke" +(int) Math.ceil(frame)+".png");
+            changeImage("Smoke" +(int) Math.ceil(frame)+".png", frame*-0.5 + 1);
+            //make a function that is 1 at 0 and 0 at 2
         }
-        frame += 0.4;
+        frame += 0.2;
     }
 }
 
@@ -641,8 +642,8 @@ public class Main extends GameApplication {
 
     public void makeSkipSmoke() {
         FXGL.entityBuilder().at(
-            (Globals.playerX + Globals.width/2 - 16/2 )- Globals.cameraX, 
-            (-(Globals.playerY - Globals.playerHeight*2) + Globals.height/2 - 16/2 )+ Globals.cameraY) // size is 16
+            (Globals.playerX + Globals.width/2)- Globals.cameraX, 
+            (-(Globals.playerY - Globals.playerHeight*2) + Globals.height/2)+ Globals.cameraY) // size is 16
         .view("Smoke1.png")
         .with(new Smoke())
         .buildAndAttach();
