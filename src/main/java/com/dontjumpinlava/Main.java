@@ -517,13 +517,14 @@ class Smoke extends Component {
         }
 
         scratchX = this.x + Globals.width/2 ;
-        scratchY = -this.y +  Globals.height/2 ;
+        scratchY = -this.y +  Globals.height/2 - (size*32)/2;
 
         imageEntity.setX(scratchX - Globals.cameraX);
         imageEntity.setY(scratchY + Globals.cameraY);
-        System.out.println("Smoke" + (int)Math.ceil(frame)+".png");
+        System.out.println("Smoke" + (int)Math.round(frame)+".png");
+        //System.out.print(frame);
         if (Math.ceil(frame) < 3) {
-            changeImage("Smoke" +(int) Math.ceil(frame)+".png", frame*-0.5 + 1);
+            changeImage("Smoke" +(int) Math.round(frame)+".png", frame*-0.5 + 1);
             //make a function that is 1 at 0 and 0 at 2
         }
         frame += 0.2;
@@ -643,7 +644,7 @@ public class Main extends GameApplication {
     public void makeSkipSmoke() {
         FXGL.entityBuilder().at(
             (Globals.playerX + Globals.width/2)- Globals.cameraX, 
-            (-(Globals.playerY - Globals.playerHeight*2) + Globals.height/2)+ Globals.cameraY) // size is 16
+            (-(Globals.playerY - Globals.playerHeight*2 - (16*32)/2) + Globals.height/2)+ Globals.cameraY) // size is 16
         .view("Smoke1.png")
         .with(new Smoke())
         .buildAndAttach();
