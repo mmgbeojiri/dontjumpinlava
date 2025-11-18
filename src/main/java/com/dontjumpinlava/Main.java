@@ -26,7 +26,7 @@ class Globals {
     public static int oneEighty = (height/2)-32;
     public static int cloneCountX = (int) Math.ceil(width/32)+1;
 
-    public static int cloneCountY = (int) Math.ceil(height/32)+1+1;
+    public static int cloneCountY = (int) Math.ceil(height/32)+2;
 
     public static ArrayList<String> tileGrid = new ArrayList<>();
     public static int gridWidth = 90;
