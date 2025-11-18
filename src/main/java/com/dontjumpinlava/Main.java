@@ -233,6 +233,8 @@ class Player extends Component {
     int falling = 99;
     int jumping = 99;
 
+    int hitSmall = 1;
+
     public Player(double x, double y, double size) {
         this.x = x;
         this.y = y;
@@ -341,13 +343,15 @@ class Player extends Component {
         solid = 0;
         fixdx = dx;
         fixdy = dy;
-        fixCollisionAtPoint(this.x, this.y - 1);
-        fixCollisionAtPoint(this.x, this.y - Globals.playerHeight);
-        fixCollisionAtPoint(this.x, this.y - (Globals.playerHeight)-15);
+
+        
+        fixCollisionAtPoint(this.x + hitSmall, this.y - hitSmall);
+        fixCollisionAtPoint(this.x + hitSmall, this.y - Globals.playerHeight);
+        fixCollisionAtPoint(this.x + hitSmall, this.y - (Globals.playerHeight*2)+hitSmall);
          
-        fixCollisionAtPoint(this.x + (Globals.playerWidth*2)-1, this.y - 1);
-        fixCollisionAtPoint(this.x + (Globals.playerWidth*2)-1, this.y - Globals.playerHeight);
-        fixCollisionAtPoint(this.x + (Globals.playerWidth*2)-1, this.y - (Globals.playerHeight)-15);
+        fixCollisionAtPoint(this.x + (Globals.playerWidth*2)-hitSmall, this.y - 1);
+        fixCollisionAtPoint(this.x + (Globals.playerWidth*2)-hitSmall, this.y - Globals.playerHeight);
+        fixCollisionAtPoint(this.x + (Globals.playerWidth*2)-hitSmall, this.y - (Globals.playerHeight*2)+hitSmall);
          
     }
 
@@ -426,11 +430,18 @@ class Player extends Component {
         imageEntity.setY(scratchY + Globals.cameraY);
         //System.out.println(playeraction);
         if (falling > 4) {
+            /*
             if (this.dy > 0){
-            changeImage("fall.png");
+                changeImage("fall.png");
             } else {
                 changeImage("fall2.png", 36);
-            }
+            }  */
+            
+
+            
+            changeImage("player.png", 32-(dy*0.5), 32+(dy*0.5));
+        
+
             return;
         }
 
@@ -521,8 +532,7 @@ class Smoke extends Component {
 
         imageEntity.setX(scratchX - Globals.cameraX);
         imageEntity.setY(scratchY + Globals.cameraY);
-        System.out.println("Smoke" + (int)Math.floor(frame)+".png");
-        System.out.print(frame);
+
         changeImage("Smoke" +(int) Math.floor(frame)+".png", frame*-0.5 + 1);
             //make a function that is 1 at 0 and 0 at 2
         
@@ -552,7 +562,7 @@ public class Main extends GameApplication {
         }
     }
     public void addBoxColumn() {
-        String[] randomBlocks = {"dirt.png", "grass.png"};
+        String[] randomBlocks = {"dirt.png", "stone.png", "grass.png"};
 
         Globals.tileGrid.add("Bedrock.png");
         for (int i = 0; i < Globals.gridHeight-2; i++) {
@@ -591,87 +601,56 @@ public class Main extends GameApplication {
     UserAction rightPressed = new UserAction("Right") {
         @Override 
         protected void onAction() {keyRight = 1;}
-
         @Override
         protected void onActionEnd() {keyRight = 0;}
     };
-
     UserAction dPressed = new UserAction("D") {
         @Override 
         protected void onAction() {keyRight = 1;};
-
         @Override
         protected void onActionEnd() {keyRight = 0;};
     };
-
     UserAction leftPressed = new UserAction("Left") {
         @Override 
-        protected void onAction() {
-            keyLeft = 1;
-        }
-         @Override
-        protected void onActionEnd() {
-            keyLeft = 0;
-        }
+        protected void onAction() {keyLeft = 1;}
+        @Override
+        protected void onActionEnd() {keyLeft = 0;}
     };
-
     UserAction aPressed = new UserAction("A") {
         @Override 
         protected void onAction() {keyLeft = 1;};
-
         @Override
         protected void onActionEnd() {keyLeft = 0;};
     };
-    
     UserAction upPressed = new UserAction("Up") {
         @Override 
-        protected void onAction() {
-            keyUp = 1;
-        }
-         @Override
-        protected void onActionEnd() {
-            keyUp = 0;
-        }
+        protected void onAction() {keyUp = 1;}
+        @Override
+        protected void onActionEnd() {keyUp = 0;}
     };
-
     UserAction wPressed = new UserAction("W") {
         @Override 
-        protected void onAction() {
-            keyUp = 1;
-        }
-         @Override
-        protected void onActionEnd() {
-            keyUp = 0;
-        }
+        protected void onAction() {keyUp = 1;}
+        @Override
+        protected void onActionEnd() {keyUp = 0;}
     };
-
     UserAction spacePressed = new UserAction("Space") {
         @Override 
         protected void onAction() {keyUp = 1;};
-
         @Override
         protected void onActionEnd() {keyUp = 0;};
-    };
-    
+    }; 
     UserAction downPressed = new UserAction("Down") {
         @Override 
-        protected void onAction() {
-            keyDown = 1;
-        }
+        protected void onAction() {keyDown = 1;}
          @Override
-        protected void onActionEnd() {
-            keyDown = 0;
-        }
+        protected void onActionEnd() {keyDown = 0;}
     };
     UserAction sPressed = new UserAction("S") {
         @Override 
-        protected void onAction() {
-            keyDown = 1;
-        }
-         @Override
-        protected void onActionEnd() {
-            keyDown = 0;
-        }
+        protected void onAction() {keyDown = 1;}
+        @Override
+        protected void onActionEnd() {keyDown = 0;}
     };
     
     
@@ -793,7 +772,7 @@ public class Main extends GameApplication {
     @Override
     protected void onUpdate(double tpf) {
         movePlayer();
-        //System.out.println(1/tpf);
+        System.out.println(1/tpf);
 
         //Globals.cameraX = Math.sin(memoryWaster)*100;
         //Globals.cameraY = Math.sin(memoryWaster)*100;
