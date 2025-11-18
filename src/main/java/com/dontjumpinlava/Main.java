@@ -20,13 +20,13 @@ class Globals {
     public static double cameraX = 0;
     public static double cameraY = 0;
 
-    public static int width = 960;
+    public static int width = 960;//960
     public static int height = 540;
     public static int twoForty = (width/2)-32;
     public static int oneEighty = (height/2)-32;
     public static int cloneCountX = (int) Math.ceil(width/32)+1;
 
-    public static int cloneCountY = (int) Math.ceil(height/32)+1;
+    public static int cloneCountY = (int) Math.ceil(height/32)+1+1;
 
     public static ArrayList<String> tileGrid = new ArrayList<>();
     public static int gridWidth = 90;
@@ -511,7 +511,7 @@ class Smoke extends Component {
             return;
         }
 
-        if ((frame > 2)) {
+        if ((frame > 3)) {
             entity.removeFromWorld();
             return;
         }
@@ -521,12 +521,11 @@ class Smoke extends Component {
 
         imageEntity.setX(scratchX - Globals.cameraX);
         imageEntity.setY(scratchY + Globals.cameraY);
-        System.out.println("Smoke" + (int)Math.round(frame)+".png");
-        //System.out.print(frame);
-        if (Math.ceil(frame) < 3) {
-            changeImage("Smoke" +(int) Math.round(frame)+".png", frame*-0.5 + 1);
+        System.out.println("Smoke" + (int)Math.floor(frame)+".png");
+        System.out.print(frame);
+        changeImage("Smoke" +(int) Math.floor(frame)+".png", frame*-0.5 + 1);
             //make a function that is 1 at 0 and 0 at 2
-        }
+        
         frame += 0.2;
     }
 }
@@ -557,7 +556,7 @@ public class Main extends GameApplication {
 
         Globals.tileGrid.add("Bedrock.png");
         for (int i = 0; i < Globals.gridHeight-2; i++) {
-            if (Math.floor(Math.random()*10) == 0) {
+            if (Math.floor(Math.random()*25) == 0) {
                 Globals.tileGrid.add("Grass.png");
             }else{
                 Globals.tileGrid.add("Air.png");
@@ -588,15 +587,21 @@ public class Main extends GameApplication {
         settings.setTitle("Don't Jump in Lava");
     }
 
+    
     UserAction rightPressed = new UserAction("Right") {
         @Override 
-        protected void onAction() {
-            keyRight = 1;
-        }
-         @Override
-        protected void onActionEnd() {
-            keyRight = 0;
-        }
+        protected void onAction() {keyRight = 1;}
+
+        @Override
+        protected void onActionEnd() {keyRight = 0;}
+    };
+
+    UserAction dPressed = new UserAction("D") {
+        @Override 
+        protected void onAction() {keyRight = 1;};
+
+        @Override
+        protected void onActionEnd() {keyRight = 0;};
     };
 
     UserAction leftPressed = new UserAction("Left") {
@@ -609,6 +614,14 @@ public class Main extends GameApplication {
             keyLeft = 0;
         }
     };
+
+    UserAction aPressed = new UserAction("A") {
+        @Override 
+        protected void onAction() {keyLeft = 1;};
+
+        @Override
+        protected void onActionEnd() {keyLeft = 0;};
+    };
     
     UserAction upPressed = new UserAction("Up") {
         @Override 
@@ -619,6 +632,25 @@ public class Main extends GameApplication {
         protected void onActionEnd() {
             keyUp = 0;
         }
+    };
+
+    UserAction wPressed = new UserAction("W") {
+        @Override 
+        protected void onAction() {
+            keyUp = 1;
+        }
+         @Override
+        protected void onActionEnd() {
+            keyUp = 0;
+        }
+    };
+
+    UserAction spacePressed = new UserAction("Space") {
+        @Override 
+        protected void onAction() {keyUp = 1;};
+
+        @Override
+        protected void onActionEnd() {keyUp = 0;};
     };
     
     UserAction downPressed = new UserAction("Down") {
@@ -631,23 +663,44 @@ public class Main extends GameApplication {
             keyDown = 0;
         }
     };
+    UserAction sPressed = new UserAction("S") {
+        @Override 
+        protected void onAction() {
+            keyDown = 1;
+        }
+         @Override
+        protected void onActionEnd() {
+            keyDown = 0;
+        }
+    };
+    
     
     @Override
     protected void initInput() {
         Input input = FXGL.getInput();
+        input.addAction(upPressed, KeyCode.UP);
         input.addAction(rightPressed, KeyCode.RIGHT);
         input.addAction(leftPressed, KeyCode.LEFT);
-        input.addAction(upPressed, KeyCode.UP);
         input.addAction(downPressed, KeyCode.DOWN);
+        
+        input.addAction(wPressed, KeyCode.W);
+        input.addAction(aPressed, KeyCode.A);
+        input.addAction(sPressed, KeyCode.S);
+        input.addAction(dPressed, KeyCode.D);
+
+        input.addAction(spacePressed, KeyCode.SPACE);
     }
 
     public void makeSkipSmoke() {
-        FXGL.entityBuilder().at(
-            (Globals.playerX + Globals.width/2)- Globals.cameraX, 
-            (-(Globals.playerY - Globals.playerHeight*2 - (16*32)/2) + Globals.height/2)+ Globals.cameraY) // size is 16
-        .view("Smoke1.png")
-        .with(new Smoke())
-        .buildAndAttach();
+        player.getComponent(Player.class).playerframe += 1;
+        if (player.getComponent(Player.class).playerframe %3 < 1) {
+            FXGL.entityBuilder().at(
+                (Globals.playerX + Globals.width/2)- Globals.cameraX, 
+                (-(Globals.playerY - Globals.playerHeight*2 - (16*32)/2) + Globals.height/2)+ Globals.cameraY) // size is 16
+            .view("Smoke1.png")
+            .with(new Smoke())
+            .buildAndAttach();
+        }
     }
 
     public void handleKeysLeftRight() {
@@ -674,8 +727,11 @@ public class Main extends GameApplication {
                 player.getComponent(Player.class).changeVelX(
                         keyWalk * 0.8
                 );
-                player.getComponent(Player.class).playeraction = "turn";
-                makeSkipSmoke();
+
+                if (player.getComponent(Player.class).falling < 10){
+                    player.getComponent(Player.class).playeraction = "turn";
+                    makeSkipSmoke();
+                }
 
             } else {
                 player.getComponent(Player.class).changeVelX(
