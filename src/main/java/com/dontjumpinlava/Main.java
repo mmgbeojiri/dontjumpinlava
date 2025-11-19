@@ -1,5 +1,10 @@
 package com.dontjumpinlava;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -555,6 +560,7 @@ public class Main extends GameApplication {
 
     int keyWalk = 0;
 
+    String levelPath = "level.txt";
     
     
     public void addWall() {
@@ -883,6 +889,31 @@ public class Main extends GameApplication {
 
     }
 
+    public void readLevelData() {
+        try (FileInputStream fis = new FileInputStream(levelPath);
+             ObjectInputStream ois = new ObjectInputStream(fis)) {
+
+            Globals.tileGrid = (ArrayList<String>) ois.readObject();
+            System.out.println("ArrayList loaded from " + levelPath);
+            System.out.println("Loaded strings: " + Globals.tileGrid);
+
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void writeLevelData() {
+        try (FileOutputStream fos = new FileOutputStream(levelPath);
+             ObjectOutputStream oos = new ObjectOutputStream(fos)) {
+
+            oos.writeObject(Globals.tileGrid);
+            System.out.println("ArrayList saved to " + levelPath);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     protected void initGame() {
         FXGL.getGameScene().setBackgroundColor(javafx.scene.paint.Color.DARKGRAY); // or any color
@@ -904,9 +935,15 @@ public class Main extends GameApplication {
         .buildAndAttach();
         
         Globals.editor = true;
-        if (Globals.editor) {
+        readLevelData();
+        if (Globals.tileGrid.size() == 0) {
             generateLevel();
+            writeLevelData();
+            System.err.println("Data Empty: regenerate level!");
         }
+
+
+
         cloneLevelTiles();
         resetPlayer();
         
