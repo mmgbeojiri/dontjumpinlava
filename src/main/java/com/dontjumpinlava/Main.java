@@ -791,7 +791,8 @@ public class Main extends GameApplication {
         double mouseX = (double) FXGL.getInput().mouseXUIProperty().get();
         double mouseY = (double) FXGL.getInput().mouseXUIProperty().get();
 
-        System.out.println("Mouse X: " + mouseX + " Mouse Y: "+ mouseY);
+
+        System.out.println("Mouse X: " + mouseX + " Mouse Y: "+ mouseY + "Undertile: " + getTile(mouseX+Globals.cameraX, mouseY-Globals.cameraY));
     }
 
     public void movePlayer() {
