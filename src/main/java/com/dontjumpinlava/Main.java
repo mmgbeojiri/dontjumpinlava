@@ -29,8 +29,8 @@ class Globals {
     public static int cloneCountY = (int) Math.ceil(height/32)+2;
 
     public static ArrayList<String> tileGrid = new ArrayList<>();
-    public static int gridWidth = 90;
-    public static int gridHeight = 25;
+    public static int gridWidth = 100;
+    public static int gridHeight = 40;
 
     public static int tileIndex = 0;
 
@@ -42,6 +42,7 @@ class Globals {
 
     public static double NEGTINY = -0.01;
     
+    public static boolean editor = false;
 
 }
 
@@ -564,20 +565,18 @@ public class Main extends GameApplication {
     public void addBoxColumn() {
         String[] randomBlocks = {"dirt.png", "stone.png", "grass.png"};
 
-        Globals.tileGrid.add("Bedrock.png");
+        Globals.tileGrid.add("bedrock.png");
         for (int i = 0; i < Globals.gridHeight-2; i++) {
-            if (Math.floor(Math.random()*25) == 0) {
-                Globals.tileGrid.add("Grass.png");
-            }else{
+            
                 Globals.tileGrid.add("Air.png");
-            }
-
+            
         }
-        Globals.tileGrid.add("Bedrock.png");
+        Globals.tileGrid.add("grass.png");
 
     }
 
     public void generateLevel() {
+        
         addWall();
         for (int i = 0; i < Globals.gridWidth-2; i++) {
             addBoxColumn();
@@ -904,7 +903,10 @@ public class Main extends GameApplication {
         .with(new Player(0, 32, 1))
         .buildAndAttach();
         
-        generateLevel();
+        Globals.editor = true;
+        if (Globals.editor) {
+            generateLevel();
+        }
         cloneLevelTiles();
         resetPlayer();
         
