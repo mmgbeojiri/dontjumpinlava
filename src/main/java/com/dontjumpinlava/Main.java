@@ -560,7 +560,7 @@ public class Main extends GameApplication {
 
     int keyWalk = 0;
 
-    String levelPath = "level.txt";
+    String levelPath = "level.dat";
     
     
     public void addWall() {
