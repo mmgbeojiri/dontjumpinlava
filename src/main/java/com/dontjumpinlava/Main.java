@@ -17,6 +17,7 @@ import com.almasb.fxgl.entity.component.Component;
 import com.almasb.fxgl.input.Input;
 import com.almasb.fxgl.input.UserAction;
 
+import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -566,6 +567,7 @@ public class Main extends GameApplication {
     double tileGridY;
     double tileIndex;
     String underTile;
+    Point2D cursorPointInWorld;
     
     
     public void addWall() {
@@ -678,6 +680,8 @@ public class Main extends GameApplication {
         input.addAction(dPressed, KeyCode.D);
 
         input.addAction(spacePressed, KeyCode.SPACE);
+
+        
     }
 
     public void makeSkipSmoke() {
@@ -764,7 +768,7 @@ public class Main extends GameApplication {
 
     };
 
-    public void getTile(double x, double y) {
+    public String getTile(double x, double y) {
         tileGridX = Math.floor(x/32)+1;
         tileGridY = Math.ceil(y/32);
         tileIndex = -(tileGridY+1) + ((tileGridX+1)*(Globals.gridHeight));
@@ -774,6 +778,7 @@ public class Main extends GameApplication {
         } else {
             underTile = "Air.png";
         }
+        return underTile;
         //System.out.println("Tile Grid X: "+tileGridX + " Tile Grid Y"+ tileGridY + " Tile: " + underTile);
     }
 
@@ -781,10 +786,13 @@ public class Main extends GameApplication {
         if (Globals.editor == false) {
             return;
         }
+        
+        
+        double mouseX = (double) FXGL.getInput().mouseXUIProperty().get();
     }
 
     public void movePlayer() {
-        
+        movePlayerEditor();
         handleKeysLeftRight();
         handleKeysJump();
         /*player.getComponent(Player.class).setVelX(
@@ -801,7 +809,7 @@ public class Main extends GameApplication {
     @Override
     protected void onUpdate(double tpf) {
         movePlayer();
-        System.out.println(1/tpf);
+        //System.out.println(1/tpf);
 
         //Globals.cameraX = Math.sin(memoryWaster)*100;
         //Globals.cameraY = Math.sin(memoryWaster)*100;
