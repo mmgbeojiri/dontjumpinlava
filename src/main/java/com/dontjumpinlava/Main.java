@@ -17,7 +17,6 @@ import com.almasb.fxgl.entity.component.Component;
 import com.almasb.fxgl.input.Input;
 import com.almasb.fxgl.input.UserAction;
 
-import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -567,7 +566,8 @@ public class Main extends GameApplication {
     double tileGridY;
     double tileIndex;
     String underTile;
-    Point2D cursorPointInWorld;
+    double mouseX;
+    double mouseY;
     
     
     public void addWall() {
@@ -789,6 +789,9 @@ public class Main extends GameApplication {
         
         
         double mouseX = (double) FXGL.getInput().mouseXUIProperty().get();
+        double mouseY = (double) FXGL.getInput().mouseXUIProperty().get();
+
+        System.out.println("Mouse X: " + mouseX + " Mouse Y: "+ mouseY);
     }
 
     public void movePlayer() {
