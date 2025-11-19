@@ -561,6 +561,11 @@ public class Main extends GameApplication {
     int keyWalk = 0;
 
     String levelPath = "level.dat";
+
+    double tileGridX;
+    double tileGridY;
+    double tileIndex;
+    String underTile;
     
     
     public void addWall() {
@@ -759,8 +764,27 @@ public class Main extends GameApplication {
 
     };
 
-    public void movePlayer() {
+    public void getTile(double x, double y) {
+        tileGridX = Math.floor(x/32)+1;
+        tileGridY = Math.ceil(y/32);
+        tileIndex = -(tileGridY+1) + ((tileGridX+1)*(Globals.gridHeight));
+        // the y value is flipped, so we get the next row, and subtract by tilegridy+1
+        if (tileIndex >= 0 && tileIndex < Globals.tileGrid.size()){
+            underTile = Globals.tileGrid.get((int) tileIndex);
+        } else {
+            underTile = "Air.png";
+        }
+        //System.out.println("Tile Grid X: "+tileGridX + " Tile Grid Y"+ tileGridY + " Tile: " + underTile);
+    }
 
+    public void movePlayerEditor(){
+        if (Globals.editor == false) {
+            return;
+        }
+    }
+
+    public void movePlayer() {
+        
         handleKeysLeftRight();
         handleKeysJump();
         /*player.getComponent(Player.class).setVelX(
