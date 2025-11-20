@@ -821,12 +821,16 @@ public class Main extends GameApplication {
         if (!mouseDown) {
             return;
         }
+
         try {
+            //if (Globals.tileGrid[tileIndex].equalsIgnoreCase("Stone.png")) {
             Globals.tileGrid.set((int)tileIndex, "Stone.png");
+            writeLevelData();
+            //}
         } catch (Error e) {
             e.printStackTrace();
         }
-        writeLevelData();
+        
 
         
 
