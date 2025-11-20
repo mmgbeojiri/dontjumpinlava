@@ -771,13 +771,22 @@ public class Main extends GameApplication {
     public String getTile(double x, double y) {
         tileGridX = Math.floor(x/32)+1;
         tileGridY = Math.ceil(y/32);
-        tileIndex = -(tileGridY+1) + ((tileGridX+1)*(Globals.gridHeight));
-        // the y value is flipped, so we get the next row, and subtract by tilegridy+1
+
+
+        tileIndex = ((tileGridX)*(Globals.gridHeight)) - tileGridY;
+        // the y value is not flipped, so we get the next row, and subtract by tilegridy+1
         if (tileIndex >= 0 && tileIndex < Globals.tileGrid.size()){
-            underTile = Globals.tileGrid.get((int) tileIndex);
+            this.underTile = Globals.tileGrid.get((int) tileIndex);
         } else {
-            underTile = "Air.png";
+            this.underTile = "";
         }
+                System.out.println(
+            "X: " + x + " Y: " + y + 
+            "\tMouse X: " + mouseX + "Mouse Y: " +mouseY+
+            "\tCamera X:" + Globals.cameraX + "\tCamera Y: " + Globals.cameraY + 
+            "\tTile Grid X: " + tileGridX + " Tile Grid Y:" + tileGridY +
+            "\tUndertile: " + underTile);
+
         return underTile;
         //System.out.println("Tile Grid X: "+tileGridX + " Tile Grid Y"+ tileGridY + " Tile: " + underTile);
     }
@@ -788,11 +797,12 @@ public class Main extends GameApplication {
         }
         
         
-        double mouseX = (double) FXGL.getInput().mouseXUIProperty().get();
-        double mouseY = (double) FXGL.getInput().mouseXUIProperty().get();
+        mouseX = (double) FXGL.getInput().mouseXUIProperty().get();
+        mouseY = (double) FXGL.getInput().mouseYUIProperty().get();
+        getTile(mouseX + (Globals.cameraX - Globals.twoForty), Globals.height - (mouseY-(Globals.cameraY-Globals.oneEighty)));
 
-
-        System.out.println("Mouse X: " + mouseX + " Mouse Y: "+ mouseY + "Undertile: " + getTile(mouseX+Globals.cameraX, mouseY-Globals.cameraY));
+        //System.out.println("Mouse X: " + mouseX + " Mouse Y: "+ mouseY + 
+        //"\tUndertile: " + getTile(mouseX+Globals.cameraX, mouseY-Globals.cameraY));
     }
 
     public void movePlayer() {
