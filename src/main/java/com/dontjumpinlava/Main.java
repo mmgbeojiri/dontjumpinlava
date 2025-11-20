@@ -821,8 +821,12 @@ public class Main extends GameApplication {
         if (!mouseDown) {
             return;
         }
-
-        Globals.tileGrid.set((int)tileIndex, "Stone.png");
+        try {
+            Globals.tileGrid.set((int)tileIndex, "Stone.png");
+        } catch (Error e) {
+            e.printStackTrace();
+        }
+        writeLevelData();
 
         
 
@@ -850,7 +854,7 @@ public class Main extends GameApplication {
     @Override
     protected void onUpdate(double tpf) {
         movePlayer();
-        //System.out.println(1/tpf);
+        System.out.println(1/tpf);
 
         //Globals.cameraX = Math.sin(memoryWaster)*100;
         //Globals.cameraY = Math.sin(memoryWaster)*100;
@@ -976,6 +980,17 @@ public class Main extends GameApplication {
     }
 
     public void writeLevelData() {
+        try (
+            FileInputStream fis = new FileInputStream(levelPath);
+            ObjectInputStream ois = new ObjectInputStream(fis)) {
+
+            if (ois.readObject() == Globals.tileGrid) {
+                System.out.println("nothing has changed, ending write process");
+                return;
+            };
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
         try (FileOutputStream fos = new FileOutputStream(levelPath);
              ObjectOutputStream oos = new ObjectOutputStream(fos)) {
 
