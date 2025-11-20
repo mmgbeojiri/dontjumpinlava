@@ -20,6 +20,7 @@ import com.almasb.fxgl.input.UserAction;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.MouseButton;
 
 class Globals {
     public static double cameraX = 0;
@@ -568,6 +569,7 @@ public class Main extends GameApplication {
     String underTile;
     double mouseX;
     double mouseY;
+    boolean mouseDown = false;
     
     
     public void addWall() {
@@ -664,6 +666,12 @@ public class Main extends GameApplication {
         @Override
         protected void onActionEnd() {keyDown = 0;}
     };
+    UserAction mouseClicked = new UserAction("Click") {
+        @Override 
+        protected void onAction() {mouseDown = true;}
+        @Override
+        protected void onActionEnd() {mouseDown = false;}
+    };
     
     
     @Override
@@ -680,6 +688,8 @@ public class Main extends GameApplication {
         input.addAction(dPressed, KeyCode.D);
 
         input.addAction(spacePressed, KeyCode.SPACE);
+
+        input.addAction(mouseClicked, MouseButton.PRIMARY);
 
         
     }
@@ -783,7 +793,7 @@ public class Main extends GameApplication {
                 System.out.println(
             "X: " + x + " Y: " + y + 
             "\tMouse X: " + mouseX + "Mouse Y: " +mouseY+
-            "\tCamera X:" + Globals.cameraX + "\tCamera Y: " + Globals.cameraY + 
+            "\tCamera X:" + Globals.cameraX + " Camera Y: " + Globals.cameraY + 
             "\tTile Grid X: " + tileGridX + " Tile Grid Y:" + tileGridY +
             "\tUndertile: " + underTile);
 
