@@ -131,10 +131,14 @@ class Block extends Component {
             //System.out.print(tileIndex);
             return;
         }
+
+        texName = Globals.tileGrid.get(this.tileIndex);
         String[] randomBlocks = {"dirt.png", "grass.png", "bedrock.png"};
         //String texName = randomBlocks[(int) Math.floor(Math.random()*3)]; // or Globals.tileGrid.get(tileIndex);
         
-       
+       if (texName.equals("stone.png")) {
+            System.out.println("IM HERE");
+       }
         
         
         if (texName == null) {
@@ -790,12 +794,15 @@ public class Main extends GameApplication {
         } else {
             this.underTile = "";
         }
-                System.out.println(
+        
+        /*
+        System.out.println(
             "X: " + x + " Y: " + y + 
             "\tMouse X: " + mouseX + "Mouse Y: " +mouseY+
             "\tCamera X:" + Globals.cameraX + " Camera Y: " + Globals.cameraY + 
             "\tTile Grid X: " + tileGridX + " Tile Grid Y:" + tileGridY +
             "\tUndertile: " + underTile);
+             */
 
         return underTile;
         //System.out.println("Tile Grid X: "+tileGridX + " Tile Grid Y"+ tileGridY + " Tile: " + underTile);
@@ -815,7 +822,9 @@ public class Main extends GameApplication {
             return;
         }
 
-        Globals.tileGrid.set((int)tileIndex, "stone.png");
+        Globals.tileGrid.set((int)tileIndex, "Stone.png");
+
+        
 
 
 
