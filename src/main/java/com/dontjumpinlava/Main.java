@@ -811,6 +811,14 @@ public class Main extends GameApplication {
         mouseY = (double) FXGL.getInput().mouseYUIProperty().get();
         getTile(mouseX + (Globals.cameraX - Globals.twoForty), Globals.height - (mouseY-(Globals.cameraY-Globals.oneEighty)));
 
+        if (!mouseDown) {
+            return;
+        }
+
+        Globals.tileGrid.set((int)tileIndex, "stone.png");
+
+
+
         //System.out.println("Mouse X: " + mouseX + " Mouse Y: "+ mouseY + 
         //"\tUndertile: " + getTile(mouseX+Globals.cameraX, mouseY-Globals.cameraY));
     }
