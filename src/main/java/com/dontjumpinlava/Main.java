@@ -55,6 +55,10 @@ class Globals {
     public static boolean mouseDown = false;
     public static boolean mousePressed = false;
 
+
+    // this is the main tilegrid not player
+    public static double tileGridX;
+    public static double tileGridY;
 }
 
 class Block extends Component {
@@ -190,7 +194,8 @@ class Block extends Component {
         if (Globals.editor = false || Globals.mouseDown) {
             return;
         };
-        this.x = (32 * tileGridX);
+        this.x = (32 * Globals.tileGridX) + 16;
+        this.y = (32 * Globals.tileGridY) + 16;
         
     }
 
@@ -584,8 +589,7 @@ public class Main extends GameApplication {
 
     String levelPath = "level.dat";
 
-    double tileGridX;
-    double tileGridY;
+
     double tileIndex;
     String underTile;
     
@@ -815,11 +819,11 @@ public class Main extends GameApplication {
     };
 
     public String getTile(double x, double y) {
-        tileGridX = Math.floor(x/32)+1;
-        tileGridY = Math.ceil(y/32);
+        Globals.tileGridX = Math.floor(x/32)+1;
+        Globals.tileGridY = Math.ceil(y/32);
 
 
-        tileIndex = ((tileGridX)*(Globals.gridHeight)) - tileGridY;
+        tileIndex = ((Globals.tileGridX)*(Globals.gridHeight)) - Globals.tileGridY;
         // the y value is not flipped, so we get the next row, and subtract by tilegridy+1
         if (tileIndex >= 0 && tileIndex < Globals.tileGrid.size()){
             this.underTile = Globals.tileGrid.get((int) tileIndex);
