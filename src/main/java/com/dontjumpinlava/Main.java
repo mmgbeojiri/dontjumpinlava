@@ -577,6 +577,7 @@ public class Main extends GameApplication {
     boolean mousePressed = false;
 
     String brush = "Air.png";
+    String chosenBrush = "Stone.png";
     
     
     public void addWall() {
@@ -681,6 +682,13 @@ public class Main extends GameApplication {
         @Override
         protected void onActionEnd() {mouseDown = false;}
     };
+
+    public void changeBrush(String strung) {  chosenBrush = strung; System.out.println("Set chosen brush to: " + strung);}
+
+    UserAction one = new UserAction("Grass") { @Override protected void onActionBegin() {changeBrush("Grass.png");} };
+    UserAction two = new UserAction("Dirt") { @Override protected void onActionBegin() {changeBrush("Dirt.png");} };
+    UserAction three = new UserAction("Stone") { @Override protected void onActionBegin() {changeBrush("Stone.png");} };
+    UserAction four  = new UserAction("Bedrock") { @Override protected void onActionBegin() {changeBrush("Bedrock.png");} };
     
     
     @Override
@@ -699,6 +707,11 @@ public class Main extends GameApplication {
         input.addAction(spacePressed, KeyCode.SPACE);
 
         input.addAction(mouseClicked, MouseButton.PRIMARY);
+
+        input.addAction(one, KeyCode.DIGIT1);
+        input.addAction(two, KeyCode.DIGIT2);
+        input.addAction(three, KeyCode.DIGIT3);
+        input.addAction(four, KeyCode.DIGIT4);
 
         
     }
@@ -828,13 +841,13 @@ public class Main extends GameApplication {
         }
         if (mousePressed) {
             mousePressed = false;
-            if (underTile.equalsIgnoreCase("Stone.png")) {
+            System.out.println("Undertile: " + underTile + "\tBrush: " + chosenBrush);
+            if (underTile.equalsIgnoreCase(chosenBrush)) {
                 brush = "Air.png";
                 System.out.println("wut da hell");
             } else {
-                brush = "Stone.png";
+                brush = chosenBrush;
             }
-            System.out.println("Undertile: " + underTile + "\tBrush: " + brush);
         }
         try {
 
@@ -1020,7 +1033,7 @@ public class Main extends GameApplication {
 
         // Compare contents (use equals, not ==)
         if (existing != null && existing.equals(Globals.tileGrid)) {
-            System.out.println("nothing has changed, ending write process");
+            //System.out.println("nothing has changed, ending write process");
             return;
         }
 
