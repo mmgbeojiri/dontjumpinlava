@@ -975,6 +975,7 @@ public class Main extends GameApplication {
              ObjectInputStream ois = new ObjectInputStream(fis)) {
 
             Globals.tileGrid = (ArrayList<String>) ois.readObject();
+            ois.close();
             System.out.println("ArrayList loaded from " + levelPath);
             System.out.println("Loaded strings: " + Globals.tileGrid);
 
@@ -984,17 +985,31 @@ public class Main extends GameApplication {
     }
 
     public void writeLevelData() {
-        try (
-            FileInputStream fis = new FileInputStream(levelPath);
+        ArrayList<String> existing = null;
+
+        // Try to read existing file once
+        try (FileInputStream fis = new FileInputStream(levelPath);
             ObjectInputStream ois = new ObjectInputStream(fis)) {
 
-            if (ois.readObject() == Globals.tileGrid) {
-                System.out.println("nothing has changed, ending write process");
-                return;
-            };
+            Object obj = ois.readObject();
+            if (obj instanceof ArrayList) {
+                @SuppressWarnings("unchecked")
+                ArrayList<String> list = (ArrayList<String>) obj;
+                existing = list;
+            } else {
+                System.out.println("Unexpected object in " + levelPath);
+            }
         } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
+            // File missing/empty/corrupt -> we'll overwrite it below
+            System.out.println("Read error (will overwrite): " + e.getClass().getSimpleName() + " - " + e.getMessage());
         }
+
+        // Compare contents (use equals, not ==)
+        if (existing != null && existing.equals(Globals.tileGrid)) {
+            System.out.println("nothing has changed, ending write process");
+            return;
+        }
+
         try (FileOutputStream fos = new FileOutputStream(levelPath);
              ObjectOutputStream oos = new ObjectOutputStream(fos)) {
 
