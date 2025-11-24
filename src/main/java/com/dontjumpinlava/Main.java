@@ -50,6 +50,11 @@ class Globals {
     
     public static boolean editor = false;
 
+    public static double mouseX;
+    public static double mouseY;
+    public static boolean mouseDown = false;
+    public static boolean mousePressed = false;
+
 }
 
 class Block extends Component {
@@ -181,28 +186,40 @@ class Block extends Component {
         
     }
 
+    public void editorBrush() {
+        if (Globals.editor = false || Globals.mouseDown) {
+            return;
+        };
+        this.x = (32 * tileGridX);
+        
+    }
+
     @Override
     public void onUpdate(double tpf) {
         //Globals.tileGrid.get(Globals.tileIndex)
         //this.tileIndex = Globals.tileIndex;
         updateTextureIfNeeded();
-        
-        if (Math.abs(x - Globals.cameraX) > (Globals.cloneCountX*16)){
-            if (x < Globals.cameraX) {
-                loopTileX(Globals.cloneCountX);
-            } else {
-                loopTileX(Globals.cloneCountX*-1);
+        if (Globals.tileIndex == -1) {
+            editorBrush();
+        } else {
+            if (Math.abs(x - Globals.cameraX) > (Globals.cloneCountX*16)){
+                if (x < Globals.cameraX) {
+                    loopTileX(Globals.cloneCountX);
+                } else {
+                    loopTileX(Globals.cloneCountX*-1);
+                }
+            }
+
+            if (Math.abs(y + Globals.cameraY) > (Globals.cloneCountY*16)){
+                if (y < -Globals.cameraY) {
+                    loopTileY(Globals.cloneCountY);
+
+                } else {
+                    loopTileY(Globals.cloneCountY*-1);
+                }
             }
         }
 
-        if (Math.abs(y + Globals.cameraY) > (Globals.cloneCountY*16)){
-            if (y < -Globals.cameraY) {
-                loopTileY(Globals.cloneCountY);
-
-            } else {
-                loopTileY(Globals.cloneCountY*-1);
-            }
-        }
 
         scratchX = x + Globals.width/2 - size/2 ;
         scratchY = y + Globals.height/2 - size/2;
@@ -571,10 +588,7 @@ public class Main extends GameApplication {
     double tileGridY;
     double tileIndex;
     String underTile;
-    double mouseX;
-    double mouseY;
-    boolean mouseDown = false;
-    boolean mousePressed = false;
+    
 
     String brush = "Air.png";
     String chosenBrush = "Stone.png";
@@ -676,11 +690,11 @@ public class Main extends GameApplication {
     };
     UserAction mouseClicked = new UserAction("Click") {
         @Override
-        protected void onActionBegin() {mousePressed = true;}
+        protected void onActionBegin() {Globals.mousePressed = true;}
         @Override 
-        protected void onAction() {mouseDown = true;}
+        protected void onAction() {Globals.mouseDown = true;}
         @Override
-        protected void onActionEnd() {mouseDown = false;}
+        protected void onActionEnd() {Globals.mouseDown = false;}
     };
 
     public void changeBrush(String strung) {  chosenBrush = strung; System.out.println("Set chosen brush to: " + strung);}
@@ -832,19 +846,18 @@ public class Main extends GameApplication {
         }
         
         
-        mouseX = (double) FXGL.getInput().mouseXUIProperty().get();
-        mouseY = (double) FXGL.getInput().mouseYUIProperty().get();
-        getTile(mouseX + (Globals.cameraX - Globals.twoForty), Globals.height - (mouseY-(Globals.cameraY-Globals.oneEighty)));
+        Globals.mouseX = (double) FXGL.getInput().mouseXUIProperty().get();
+        Globals.mouseY = (double) FXGL.getInput().mouseYUIProperty().get();
+        getTile(Globals.mouseX + (Globals.cameraX - Globals.twoForty), Globals.height - (Globals.mouseY-(Globals.cameraY-Globals.oneEighty)));
 
-        if (!mouseDown) {
+        if (!Globals.mouseDown) {
             return;
         }
-        if (mousePressed) {
-            mousePressed = false;
+        if (Globals.mousePressed) {
+            Globals.mousePressed = false;
             System.out.println("Undertile: " + underTile + "\tBrush: " + chosenBrush);
             if (underTile.equalsIgnoreCase(chosenBrush)) {
                 brush = "Air.png";
-                System.out.println("wut da hell");
             } else {
                 brush = chosenBrush;
             }
@@ -957,6 +970,8 @@ public class Main extends GameApplication {
             Globals.tileIndex += (Globals.gridHeight - Globals.cloneCountY);
 
         }
+
+        Globals.tileIndex = -1;
 
 
     }
