@@ -574,6 +574,9 @@ public class Main extends GameApplication {
     double mouseX;
     double mouseY;
     boolean mouseDown = false;
+    boolean mousePressed = false;
+
+    String brush = "Air.png";
     
     
     public void addWall() {
@@ -671,6 +674,8 @@ public class Main extends GameApplication {
         protected void onActionEnd() {keyDown = 0;}
     };
     UserAction mouseClicked = new UserAction("Click") {
+        @Override
+        protected void onActionBegin() {mousePressed = true;}
         @Override 
         protected void onAction() {mouseDown = true;}
         @Override
@@ -821,12 +826,21 @@ public class Main extends GameApplication {
         if (!mouseDown) {
             return;
         }
-
+        if (mousePressed) {
+            mousePressed = false;
+            if (underTile.equalsIgnoreCase("Stone.png")) {
+                brush = "Air.png";
+                System.out.println("wut da hell");
+            } else {
+                brush = "Stone.png";
+            }
+            System.out.println("Undertile: " + underTile + "\tBrush: " + brush);
+        }
         try {
-            //if (Globals.tileGrid[tileIndex].equalsIgnoreCase("Stone.png")) {
-            Globals.tileGrid.set((int)tileIndex, "Stone.png");
+
+            Globals.tileGrid.set((int)tileIndex, brush);
             writeLevelData();
-            //}
+           
         } catch (Error e) {
             e.printStackTrace();
         }
@@ -858,7 +872,7 @@ public class Main extends GameApplication {
     @Override
     protected void onUpdate(double tpf) {
         movePlayer();
-        System.out.println(1/tpf);
+        //System.out.println(1/tpf);
 
         //Globals.cameraX = Math.sin(memoryWaster)*100;
         //Globals.cameraY = Math.sin(memoryWaster)*100;
