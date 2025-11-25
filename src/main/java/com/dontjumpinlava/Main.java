@@ -48,7 +48,7 @@ class Globals {
 
     public static double NEGTINY = -0.01;
     
-    public static boolean editor = false;
+    public static boolean editor = true;
 
     public static double mouseX;
     public static double mouseY;
@@ -227,16 +227,10 @@ class Block extends Component {
 class BlockBrush extends Block {
 
 
-    double scratchX =  0.0;
-    double scratchY = 0.0;
 
-    ImageView cachedImageView = null;
-    String currentTextureName = null;
-    InputStream is;
-    ImageView imageview = new ImageView();
-    Image image;
+
     String tile = "";
-    String texName;
+
 
 
 
@@ -283,7 +277,13 @@ class BlockBrush extends Block {
             
             //System.out.println(imageview);
             imageview.toFront();
+            
             imageview.setOpacity(0.5f);
+            /*if (!Globals.editor) {
+                System.out.println("Hell nah,.");
+                imageview.setOpacity(0);
+            }*/
+
 
             imageEntity.getViewComponent().clearChildren();
             imageEntity.getViewComponent().addChild(imageview);
@@ -306,7 +306,7 @@ class BlockBrush extends Block {
     }
 
     public void editorBrush() {
-        if (Globals.editor = false || Globals.mouseDown) {
+        if (Globals.editor == false || Globals.mouseDown) {
             return;
         };
         this.x = (32 * Globals.tileGridX) + 16;
@@ -316,13 +316,15 @@ class BlockBrush extends Block {
     @Override 
     public void onAdded(){
         super.onAdded();
+        imageEntity = this.entity;
     }
 
     @Override
     public void onUpdate(double tpf) { 
-        
+        editorBrush();
         updateTexture(tile);
-        
+
+        System.out.println("GlobalsX: " + Globals.tileGridX + " GlobalsY: " + Globals.tileGridY + "X: " + x + "Y: " + y + "Tile: "+ tile);
 
 
         scratchX = x + Globals.width/2 - size/2 ;
@@ -932,13 +934,13 @@ public class Main extends GameApplication {
         }
         
         
-        System.out.println(
+        /*System.out.println(
             "X: " + x + " Y: " + y + 
             "\tMouse X: " + Globals.mouseX + "Mouse Y: " +Globals.mouseY+
             "\tCamera X:" + Globals.cameraX + " Camera Y: " + Globals.cameraY + 
             "\tTile Grid X: " + Globals.tileGridX + " Tile Grid Y:" + Globals.tileGridY +
-            "\tUndertile: " + underTile);
-             
+            "\tUndertile: " + underTile);*/
+        
 
         return underTile;
         //System.out.println("Tile Grid X: "+tileGridX + " Tile Grid Y"+ tileGridY + " Tile: " + underTile);
@@ -948,7 +950,6 @@ public class Main extends GameApplication {
         if (Globals.editor == false) {
             return;
         }
-        
         
         Globals.mouseX = (double) FXGL.getInput().mouseXUIProperty().get();
         Globals.mouseY = (double) FXGL.getInput().mouseYUIProperty().get();
