@@ -235,13 +235,14 @@ class BlockBrush extends Block {
     InputStream is;
     ImageView imageview = new ImageView();
     Image image;
+    String tile = "";
     String texName;
 
 
 
     private static final Map<String, Image> IMAGE_CACHE = new HashMap<>();
 
-    private void updateTextureIfNeeded(String texture) {
+    private void updateTexture(String texture) {
         
         if (this.tileIndex < 0 || this.tileIndex >= Globals.tileGrid.size()) {
             //System.out.print(tileIndex);
@@ -282,6 +283,7 @@ class BlockBrush extends Block {
             
             //System.out.println(imageview);
             imageview.toFront();
+            imageview.setOpacity(0.5f);
 
             imageEntity.getViewComponent().clearChildren();
             imageEntity.getViewComponent().addChild(imageview);
@@ -291,10 +293,7 @@ class BlockBrush extends Block {
     }
 
     public BlockBrush(double x, double y, double size, String image) {
-        super.x = x;
-        super.y = y;
-        super.size = size;
-        super.tileIndex = Globals.tileIndex;
+        super(x, y, size, image);
         currentTextureName = image;
         imageview.setCache(true);
         imageview.setImage(new Image("/assets/textures/" + image));
@@ -302,7 +301,7 @@ class BlockBrush extends Block {
         imageview.setFitHeight(size);
         imageview.setPreserveRatio(true);
         // set initial view node once
-        super.texName = image;
+        this.tile = image;
         
     }
 
@@ -313,6 +312,19 @@ class BlockBrush extends Block {
         this.x = (32 * Globals.tileGridX) + 16;
         this.y = (32 * Globals.tileGridY) + 16;
         this.tile = Globals.chosenBrush;
+    }
+
+    @Override
+    public void onUpdate(double tpf) { 
+        
+        updateTextureIfNeeded(tile);
+
+
+        scratchX = x + Globals.width/2 - size/2 ;
+        scratchY = y + Globals.height/2 - size/2;
+
+        imageEntity.setX(scratchX - Globals.cameraX);
+        imageEntity.setY(scratchY + Globals.cameraY);
     }
 }
 
