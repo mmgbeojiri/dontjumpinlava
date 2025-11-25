@@ -225,7 +225,7 @@ class Block extends Component {
 }
 
 class BlockBrush extends Block {
-    Entity imageEntity;
+
 
     double scratchX =  0.0;
     double scratchY = 0.0;
@@ -313,11 +313,16 @@ class BlockBrush extends Block {
         this.y = (32 * Globals.tileGridY) + 16;
         this.tile = Globals.chosenBrush;
     }
+    @Override 
+    public void onAdded(){
+        super.onAdded();
+    }
 
     @Override
     public void onUpdate(double tpf) { 
         
-        updateTextureIfNeeded(tile);
+        updateTexture(tile);
+        
 
 
         scratchX = x + Globals.width/2 - size/2 ;
@@ -1006,10 +1011,7 @@ public class Main extends GameApplication {
 
     protected void createBlock(double x, double y, double size, String image) {
         double scratchX = x+Globals.width/2;
-
         double scratchY = y+Globals.height/2;
-
-
         // Try to load the image from the FXGL assets folder: assets/textures/<image>
         try {
             String resourcePath = "/assets/textures/" + image;
@@ -1046,6 +1048,45 @@ public class Main extends GameApplication {
         }
     }
 
+    protected void createBlockBrush(double x, double y, double size, String image) {
+        double scratchX = x+Globals.width/2;
+        double scratchY = y+Globals.height/2;
+        // Try to load the image from the FXGL assets folder: assets/textures/<image>
+        try {
+            String resourcePath = "/assets/textures/" + image;
+
+            // Use getResourceAsStream so it works from both IDE and packaged jar
+            java.io.InputStream is = getClass().getResourceAsStream(resourcePath);
+            if (is == null) {
+                throw new java.io.IOException("Resource not found: " + resourcePath);
+            }
+
+            Image playerImage = new Image(is);
+            ImageView playerImageView = new ImageView(playerImage);
+
+            // Set the desired width and height for the ImageView
+            playerImageView.setFitWidth(size);
+            playerImageView.setFitHeight(size);
+            playerImageView.setPreserveRatio(true);
+
+            FXGL.entityBuilder()
+                .at(scratchX, scratchY)
+                .view(playerImageView)
+                .with(new BlockBrush(x, y, size, image))
+                .buildAndAttach();
+
+        } catch (Exception ex) {
+            // Log a helpful message and fall back to a visible rectangle so the app still starts
+            System.err.println("Failed to load image '" + image + "' from /assets/textures/: " + ex.getMessage());
+            javafx.scene.shape.Rectangle fallback = new javafx.scene.shape.Rectangle(size, size, javafx.scene.paint.Color.BROWN);
+            FXGL.entityBuilder()
+                .at(scratchX, scratchY)
+                .view(fallback)
+                .with(new BlockBrush(x, y, size, image))
+                .buildAndAttach();
+        }
+    }
+
     public void setup() {
         double tileX = 0.0;
         double tileY = 0.0;
@@ -1070,7 +1111,9 @@ public class Main extends GameApplication {
 
         }
 
-        Globals.tileIndex = -1;
+        createBlockBrush(tileX, tileY, 32, Globals.tileGrid.get(Globals.tileIndex)); // move this to the block class);
+
+        
 
 
     }
