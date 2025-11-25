@@ -59,6 +59,7 @@ class Globals {
     // this is the main tilegrid not player
     public static double tileGridX;
     public static double tileGridY;
+    public static String chosenBrush = "Stone.png";
 }
 
 class Block extends Component {
@@ -78,7 +79,9 @@ class Block extends Component {
     Image image;
     String texName;
 
-     private static final Map<String, Image> IMAGE_CACHE = new HashMap<>();
+
+
+    private static final Map<String, Image> IMAGE_CACHE = new HashMap<>();
 
     public Block(double x, double y, double size,String image) {
         this.x = x;
@@ -142,12 +145,7 @@ class Block extends Component {
         }
 
         texName = Globals.tileGrid.get(this.tileIndex);
-        String[] randomBlocks = {"dirt.png", "grass.png", "bedrock.png"};
         //String texName = randomBlocks[(int) Math.floor(Math.random()*3)]; // or Globals.tileGrid.get(tileIndex);
-        
-       if (texName.equals("stone.png")) {
-            System.out.println("IM HERE");
-       }
         
         
         if (texName == null) {
@@ -184,29 +182,19 @@ class Block extends Component {
             imageEntity.getViewComponent().clearChildren();
             imageEntity.getViewComponent().addChild(imageview);
 
-
-
         }
         
     }
 
-    public void editorBrush() {
-        if (Globals.editor = false || Globals.mouseDown) {
-            return;
-        };
-        this.x = (32 * Globals.tileGridX) + 16;
-        this.y = (32 * Globals.tileGridY) + 16;
-        
-    }
+
 
     @Override
     public void onUpdate(double tpf) {
         //Globals.tileGrid.get(Globals.tileIndex)
         //this.tileIndex = Globals.tileIndex;
-        updateTextureIfNeeded();
-        if (Globals.tileIndex == -1) {
-            editorBrush();
-        } else {
+        
+
+        
             if (Math.abs(x - Globals.cameraX) > (Globals.cloneCountX*16)){
                 if (x < Globals.cameraX) {
                     loopTileX(Globals.cloneCountX);
@@ -223,7 +211,9 @@ class Block extends Component {
                     loopTileY(Globals.cloneCountY*-1);
                 }
             }
-        }
+        
+        
+        updateTextureIfNeeded();
 
 
         scratchX = x + Globals.width/2 - size/2 ;
@@ -233,6 +223,99 @@ class Block extends Component {
         imageEntity.setY(scratchY + Globals.cameraY);
     }
 }
+
+class BlockBrush extends Block {
+    Entity imageEntity;
+
+    double scratchX =  0.0;
+    double scratchY = 0.0;
+
+    ImageView cachedImageView = null;
+    String currentTextureName = null;
+    InputStream is;
+    ImageView imageview = new ImageView();
+    Image image;
+    String texName;
+
+
+
+    private static final Map<String, Image> IMAGE_CACHE = new HashMap<>();
+
+    private void updateTextureIfNeeded(String texture) {
+        
+        if (this.tileIndex < 0 || this.tileIndex >= Globals.tileGrid.size()) {
+            //System.out.print(tileIndex);
+            return;
+        }
+
+        texName = texture;
+        //String texName = randomBlocks[(int) Math.floor(Math.random()*3)]; // or Globals.tileGrid.get(tileIndex);
+        
+        
+        if (texName == null) {
+            return;
+        }
+
+        if (!texName.equals(currentTextureName)) {
+            //System.out.println("hello i am peter and i am green" + Math.random());
+            currentTextureName = texName;
+
+            Image img = IMAGE_CACHE.get(texName);
+            if (img == null) {
+                String resourcePath = "/assets/textures/" + texName;
+                try (InputStream ris = getClass().getResourceAsStream(resourcePath)) {
+                    if (ris == null) {
+                        System.err.println("Texture not found: " + texName);
+                        return;
+                    }
+                    // specify requested width/height to avoid oversized images in memory
+                    img = new Image(ris, (int) size, (int) size, true, true);
+                    IMAGE_CACHE.put(texName, img);
+                } catch (Exception ex) {
+                    System.err.println("Failed to load texture " + texName + ": " + ex.getMessage());
+                    return;
+                }
+            }
+
+            // just replace the image on the existing ImageView
+            imageview.setImage(img);
+            
+            //System.out.println(imageview);
+            imageview.toFront();
+
+            imageEntity.getViewComponent().clearChildren();
+            imageEntity.getViewComponent().addChild(imageview);
+
+        }
+        
+    }
+
+    public BlockBrush(double x, double y, double size, String image) {
+        super.x = x;
+        super.y = y;
+        super.size = size;
+        super.tileIndex = Globals.tileIndex;
+        currentTextureName = image;
+        imageview.setCache(true);
+        imageview.setImage(new Image("/assets/textures/" + image));
+        imageview.setFitWidth(size);
+        imageview.setFitHeight(size);
+        imageview.setPreserveRatio(true);
+        // set initial view node once
+        super.texName = image;
+        
+    }
+
+    public void editorBrush() {
+        if (Globals.editor = false || Globals.mouseDown) {
+            return;
+        };
+        this.x = (32 * Globals.tileGridX) + 16;
+        this.y = (32 * Globals.tileGridY) + 16;
+        this.tile = Globals.chosenBrush;
+    }
+}
+
 
 class Player extends Component {
     double x; 
@@ -595,7 +678,7 @@ public class Main extends GameApplication {
     
 
     String brush = "Air.png";
-    String chosenBrush = "Stone.png";
+    
     
     
     public void addWall() {
@@ -701,7 +784,7 @@ public class Main extends GameApplication {
         protected void onActionEnd() {Globals.mouseDown = false;}
     };
 
-    public void changeBrush(String strung) {  chosenBrush = strung; System.out.println("Set chosen brush to: " + strung);}
+    public void changeBrush(String strung) {  Globals.chosenBrush = strung; System.out.println("Set chosen brush to: " + strung);}
 
     UserAction one = new UserAction("Grass") { @Override protected void onActionBegin() {changeBrush("Grass.png");} };
     UserAction two = new UserAction("Dirt") { @Override protected void onActionBegin() {changeBrush("Dirt.png");} };
@@ -831,14 +914,14 @@ public class Main extends GameApplication {
             this.underTile = "";
         }
         
-        /*
+        
         System.out.println(
             "X: " + x + " Y: " + y + 
-            "\tMouse X: " + mouseX + "Mouse Y: " +mouseY+
+            "\tMouse X: " + Globals.mouseX + "Mouse Y: " +Globals.mouseY+
             "\tCamera X:" + Globals.cameraX + " Camera Y: " + Globals.cameraY + 
-            "\tTile Grid X: " + tileGridX + " Tile Grid Y:" + tileGridY +
+            "\tTile Grid X: " + Globals.tileGridX + " Tile Grid Y:" + Globals.tileGridY +
             "\tUndertile: " + underTile);
-             */
+             
 
         return underTile;
         //System.out.println("Tile Grid X: "+tileGridX + " Tile Grid Y"+ tileGridY + " Tile: " + underTile);
@@ -859,11 +942,11 @@ public class Main extends GameApplication {
         }
         if (Globals.mousePressed) {
             Globals.mousePressed = false;
-            System.out.println("Undertile: " + underTile + "\tBrush: " + chosenBrush);
-            if (underTile.equalsIgnoreCase(chosenBrush)) {
+            System.out.println("Undertile: " + underTile + "\tBrush: " + Globals.chosenBrush);
+            if (underTile.equalsIgnoreCase(Globals.chosenBrush)) {
                 brush = "Air.png";
             } else {
-                brush = chosenBrush;
+                brush = Globals.chosenBrush;
             }
         }
         try {
