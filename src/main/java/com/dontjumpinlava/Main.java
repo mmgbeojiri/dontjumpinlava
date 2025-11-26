@@ -602,8 +602,10 @@ class Player extends Component {
 
     @Override
     public void onUpdate(double tpf) {
+        if (!Globals.editor){
         moveSpriteX();
-        moveSpriteY();        
+        moveSpriteY();       
+        } 
         
 
         Globals.playerX = this.x;
