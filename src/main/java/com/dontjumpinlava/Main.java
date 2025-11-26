@@ -48,7 +48,7 @@ class Globals {
 
     public static double NEGTINY = -0.01;
     
-    public static boolean editor = true;
+    public static boolean editor = false;
 
     public static double mouseX;
     public static double mouseY;
@@ -238,7 +238,11 @@ class BlockBrush extends Block {
     private static final Map<String, Image> IMAGE_CACHE = new HashMap<>();
     
     private void updateTexture(String texture) {
-        
+        imageview.setOpacity(0.5f);
+        if (!Globals.editor) {
+            System.out.println("Hell nah,.");
+            imageview.setOpacity(0);
+        }
         if (this.tileIndex < 0 || this.tileIndex >= Globals.tileGrid.size()) {
             //System.out.print(tileIndex);
             return;
@@ -279,11 +283,7 @@ class BlockBrush extends Block {
             //System.out.println(imageview);
             imageview.toFront();
             
-            imageview.setOpacity(0.5f);
-            /*if (!Globals.editor) {
-                System.out.println("Hell nah,.");
-                imageview.setOpacity(0);
-            }*/
+            
 
 
             imageEntity.getViewComponent().clearChildren();
@@ -688,6 +688,7 @@ public class Main extends GameApplication {
     int keyLeft = 0;
     int keyUp = 0;
     int keyDown = 0;
+    int keyE = 0;
 
     int keyWalk = 0;
 
@@ -796,6 +797,13 @@ public class Main extends GameApplication {
         @Override
         protected void onActionEnd() {keyDown = 0;}
     };
+    UserAction ePressed = new UserAction("E") {
+        @Override 
+        protected void onActionBegin() {
+            Globals.editor = !Globals.editor;
+        }
+        
+    };
     UserAction mouseClicked = new UserAction("Click") {
         @Override
         protected void onActionBegin() {Globals.mousePressed = true;}
@@ -825,6 +833,8 @@ public class Main extends GameApplication {
         input.addAction(aPressed, KeyCode.A);
         input.addAction(sPressed, KeyCode.S);
         input.addAction(dPressed, KeyCode.D);
+
+        input.addAction(ePressed, KeyCode.E);
 
         input.addAction(spacePressed, KeyCode.SPACE);
 
@@ -1228,7 +1238,7 @@ public class Main extends GameApplication {
         .with(new Player(0, 32, 1))
         .buildAndAttach();
         
-        Globals.editor = true;
+        
         readLevelData();
         if (Globals.tileGrid.size() == 0) {
             generateLevel();
