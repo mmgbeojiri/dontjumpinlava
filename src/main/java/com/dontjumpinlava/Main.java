@@ -93,7 +93,7 @@ class Block extends Component {
         imageview.setImage(new Image("/assets/textures/" + image));
         imageview.setFitWidth(size);
         imageview.setFitHeight(size);
-        imageview.setOpacity((float) Globals.editor * 0.5);
+        
         imageview.setPreserveRatio(true);
         // set initial view node once
         this.texName = image;
@@ -300,6 +300,7 @@ class BlockBrush extends Block {
         imageview.setImage(new Image("/assets/textures/" + Globals.chosenBrush));
         imageview.setFitWidth(size);
         imageview.setFitHeight(size);
+        imageview.setOpacity(Globals.editor ? 0.5 : 0);
         imageview.setPreserveRatio(true);
         // set initial view node once
         this.tile = Globals.chosenBrush;
