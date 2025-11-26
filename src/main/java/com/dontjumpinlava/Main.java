@@ -240,7 +240,6 @@ class BlockBrush extends Block {
     private void updateTexture(String texture) {
         imageview.setOpacity(0.5f);
         if (!Globals.editor) {
-            System.out.println("Hell nah,.");
             imageview.setOpacity(0);
         }
         if (this.tileIndex < 0 || this.tileIndex >= Globals.tileGrid.size()) {
@@ -333,7 +332,7 @@ class BlockBrush extends Block {
         
         imageEntity.setX(scratchX - Globals.cameraX);
         imageEntity.setY(scratchY + Globals.cameraY);
-        System.out.println("GlobalsX: " + Globals.tileGridX + " GlobalsY: " + Globals.tileGridY + "X: " + imageEntity.getX() + "Y: " + imageEntity.getY() + "Tile: "+ tile);
+        //System.out.println("GlobalsX: " + Globals.tileGridX + " GlobalsY: " + Globals.tileGridY + "X: " + imageEntity.getX() + "Y: " + imageEntity.getY() + "Tile: "+ tile);
     }
 }
 
@@ -859,6 +858,16 @@ public class Main extends GameApplication {
             .buildAndAttach();
         }
     }
+    public void handleGodMode() {
+        player.getComponent(Player.class).changeVelX(3 * (keyRight - keyLeft));
+        player.getComponent(Player.class).changeVelY(3 * (keyUp - keyDown));
+
+        player.getComponent(Player.class).setVelX(0.7* player.getComponent(Player.class).dx);
+        player.getComponent(Player.class).setVelY(0.7* player.getComponent(Player.class).dy);
+
+        player.getComponent(Player.class).changeX(player.getComponent(Player.class).dx);
+        player.getComponent(Player.class).changeY(player.getComponent(Player.class).dy);
+    }
 
     public void handleKeysLeftRight() {
         player.getComponent(Player.class).playeraction = "walk"; 
@@ -998,15 +1007,14 @@ public class Main extends GameApplication {
     }
 
     public void movePlayer() {
-        movePlayerEditor();
-        handleKeysLeftRight();
-        handleKeysJump();
-        /*player.getComponent(Player.class).setVelX(
-            6*(keyRight - keyLeft)
-        ); 
-        player.getComponent(Player.class).setVelY(
-            6*(keyUp - keyDown)
-        );*/ 
+        if (Globals.editor) {
+            handleGodMode();
+            movePlayerEditor();
+        } else {
+            handleKeysLeftRight();
+            handleKeysJump();
+        }
+    
         moveCamera();
 
     }
