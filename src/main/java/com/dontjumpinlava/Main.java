@@ -93,6 +93,7 @@ class Block extends Component {
         imageview.setImage(new Image("/assets/textures/" + image));
         imageview.setFitWidth(size);
         imageview.setFitHeight(size);
+        imageview.setOpacity((float) Globals.editor * 0.5);
         imageview.setPreserveRatio(true);
         // set initial view node once
         this.texName = image;
@@ -235,7 +236,7 @@ class BlockBrush extends Block {
 
 
     private static final Map<String, Image> IMAGE_CACHE = new HashMap<>();
-
+    
     private void updateTexture(String texture) {
         
         if (this.tileIndex < 0 || this.tileIndex >= Globals.tileGrid.size()) {
@@ -292,16 +293,16 @@ class BlockBrush extends Block {
         
     }
 
-    public BlockBrush(double x, double y, double size, String image) {
-        super(x, y, size, image);
-        currentTextureName = image;
+    public BlockBrush(double x, double y, double size) {
+        super(x, y, size, Globals.chosenBrush);
+        currentTextureName = Globals.chosenBrush;
         imageview.setCache(true);
-        imageview.setImage(new Image("/assets/textures/" + image));
+        imageview.setImage(new Image("/assets/textures/" + Globals.chosenBrush));
         imageview.setFitWidth(size);
         imageview.setFitHeight(size);
         imageview.setPreserveRatio(true);
         // set initial view node once
-        this.tile = image;
+        this.tile = Globals.chosenBrush;
         
     }
 
@@ -309,8 +310,8 @@ class BlockBrush extends Block {
         if (Globals.editor == false || Globals.mouseDown) {
             return;
         };
-        this.x = (32 * Globals.tileGridX) + 16;
-        this.y = (32 * Globals.tileGridY) + 16;
+        super.x = (32 * (Globals.tileGridX-2))+16;
+        super.y = (-32 * (Globals.tileGridY-2))-16;
         this.tile = Globals.chosenBrush;
     }
     @Override 
@@ -324,14 +325,14 @@ class BlockBrush extends Block {
         editorBrush();
         updateTexture(tile);
 
-        System.out.println("GlobalsX: " + Globals.tileGridX + " GlobalsY: " + Globals.tileGridY + "X: " + x + "Y: " + y + "Tile: "+ tile);
-
-
+        
+        
         scratchX = x + Globals.width/2 - size/2 ;
         scratchY = y + Globals.height/2 - size/2;
-
+        
         imageEntity.setX(scratchX - Globals.cameraX);
         imageEntity.setY(scratchY + Globals.cameraY);
+        System.out.println("GlobalsX: " + Globals.tileGridX + " GlobalsY: " + Globals.tileGridY + "X: " + imageEntity.getX() + "Y: " + imageEntity.getY() + "Tile: "+ tile);
     }
 }
 
@@ -1073,7 +1074,7 @@ public class Main extends GameApplication {
             FXGL.entityBuilder()
                 .at(scratchX, scratchY)
                 .view(playerImageView)
-                .with(new BlockBrush(x, y, size, image))
+                .with(new BlockBrush(x, y, size))
                 .buildAndAttach();
 
         } catch (Exception ex) {
@@ -1083,7 +1084,7 @@ public class Main extends GameApplication {
             FXGL.entityBuilder()
                 .at(scratchX, scratchY)
                 .view(fallback)
-                .with(new BlockBrush(x, y, size, image))
+                .with(new BlockBrush(x, y, size))
                 .buildAndAttach();
         }
     }
