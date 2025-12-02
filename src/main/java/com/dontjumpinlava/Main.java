@@ -416,6 +416,8 @@ class Player extends Component {
         this.jumping = j;
     }
 
+    
+
     public void getTile(double x, double y) {
         tileGridX = Math.floor(x/32)+1;
         tileGridY = Math.ceil(y/32);
@@ -429,7 +431,7 @@ class Player extends Component {
         } else {
             underTile = "Air.png";
         }
-        //System.out.println("Tile Grid X: "+tileGridX + " Tile Grid Y"+ tileGridY + " Tile: " + underTile);
+        System.out.println("Tile Grid X: "+tileGridX + " Tile Grid Y"+ tileGridY + " Tile: " + underTile);
     }
 
     
@@ -1054,6 +1056,30 @@ public class Main extends GameApplication {
         //"\tUndertile: " + getTile(mouseX+Globals.cameraX, mouseY-Globals.cameraY));
     }
 
+
+    public void resetPlayer() {
+        
+        Globals.cameraX= Globals.twoForty;
+        Globals.cameraY= Globals.oneEighty;
+        Globals.playerHeight = 16;
+        Globals.playerWidth = 16;
+
+        player.setX(0);
+        player.setY(32);
+        player.getComponent(Player.class).jumping = 99;
+        player.getComponent(Player.class).falling = 99;
+         
+        
+
+    }
+    public void checkAroundPlayer() {
+        System.out.println(player.getComponent(Player.class).y);
+            if (player.getComponent(Player.class).y < 0) {
+                resetPlayer();
+                
+                
+            }
+        }
     public void movePlayer() {
         if (Globals.editor) {
             handleGodMode();
@@ -1061,6 +1087,7 @@ public class Main extends GameApplication {
         } else {
             handleKeysLeftRight();
             handleKeysJump();
+            checkAroundPlayer(); 
         }
     
         moveCamera();
@@ -1210,18 +1237,7 @@ public class Main extends GameApplication {
         }
     }
 
-    public void resetPlayer() {
-        Globals.cameraX= Globals.twoForty;
-        Globals.cameraY= Globals.oneEighty;
-        Globals.playerHeight = 16;
-        Globals.playerWidth = 16;
 
-        player.setX(0);
-        player.setY(-32);
-        player.getComponent(Player.class).jumping = 99;
-        player.getComponent(Player.class).falling = 99;
-
-    }
 
     public void readLevelData() {
         try (FileInputStream fis = new FileInputStream(levelPath);
