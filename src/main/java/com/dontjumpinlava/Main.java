@@ -1059,8 +1059,8 @@ public class Main extends GameApplication {
 
     public void resetPlayer() {
         
-        Globals.cameraX= Globals.twoForty;
-        Globals.cameraY= Globals.oneEighty;
+        Globals.cameraX = Globals.twoForty;
+        Globals.cameraY = Globals.oneEighty;
         Globals.playerHeight = 16;
         Globals.playerWidth = 16;
 
@@ -1073,11 +1073,9 @@ public class Main extends GameApplication {
 
     }
     public void checkAroundPlayer() {
-        System.out.println(player.getComponent(Player.class).y);
+        //System.out.println(player.getComponent(Player.class).y);
             if (player.getComponent(Player.class).y < 0) {
-                resetPlayer();
-                
-                
+                resetPlayer();   
             }
         }
     public void movePlayer() {
