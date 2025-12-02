@@ -585,7 +585,7 @@ class Player extends Component {
         }
 
         if (playeraction.equalsIgnoreCase("turn")) {
-            changeImage("player.png");
+            changeImage("player.png", 32, 32);
             return;
         }
 
