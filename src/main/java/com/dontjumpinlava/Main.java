@@ -422,6 +422,9 @@ class Player extends Component {
         playerTileIndex = -(tileGridY+1) + ((tileGridX+1)*(Globals.gridHeight));
         // the y value is flipped, so we get the next row, and subtract by tilegridy+1
         if (playerTileIndex >= 0 && playerTileIndex < Globals.tileGrid.size()){
+            if (tileGridY < 0) {
+                underTile = "Air.png";
+            }
             underTile = Globals.tileGrid.get((int)playerTileIndex);
         } else {
             underTile = "Air.png";
@@ -1197,7 +1200,7 @@ public class Main extends GameApplication {
             Globals.cameraX = Globals.twoForty ;
         }
         if (Globals.cameraY < Globals.oneEighty){ 
-            Globals.cameraY = Globals.oneEighty ;
+            Globals.cameraY = Globals.oneEighty;
         }
         if (Globals.cameraX > ((Globals.gridWidth*(32))-Globals.width/2 - 32)) { 
             Globals.cameraX = ((Globals.gridWidth*(32))-Globals.width/2 - 32);
