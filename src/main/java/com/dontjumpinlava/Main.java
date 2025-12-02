@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -817,12 +818,47 @@ public class Main extends GameApplication {
         protected void onActionEnd() {Globals.mouseDown = false;}
     };
 
+    String[] grassList = {"Grass.png", "Dirt.png", "CompactGrass.png", "CompactDirt.png"};
+    String[] stoneList = {"Stone.png", "Bedrock.png", "Nonsolid.png"};
+    String[] waterList = {"Water.png", "WaterTop1.png"};
+
+
     public void changeBrush(String strung) {  Globals.chosenBrush = strung; System.out.println("Set chosen brush to: " + strung);}
 
-    UserAction one = new UserAction("Grass") { @Override protected void onActionBegin() {changeBrush("Grass.png");} };
-    UserAction two = new UserAction("Dirt") { @Override protected void onActionBegin() {changeBrush("Dirt.png");} };
-    UserAction three = new UserAction("Stone") { @Override protected void onActionBegin() {changeBrush("Stone.png");} };
-    UserAction four  = new UserAction("Bedrock") { @Override protected void onActionBegin() {changeBrush("Bedrock.png");} };
+    public void nextBrush(int key) {
+        int index = 0;
+        String[] loadedList;
+        switch(key) {
+            case 1:
+              loadedList = grassList;
+              break;
+            case 2: 
+                loadedList = stoneList;
+                break;
+            case 3:
+                loadedList = waterList;
+                break;
+            default:
+                loadedList = grassList;
+                break;
+        }
+        try {
+            index = Arrays.asList(loadedList).indexOf(Globals.chosenBrush);
+        } catch(ArrayIndexOutOfBoundsException e) {
+            index = 0;
+        }
+
+        try {
+            changeBrush(loadedList[index+1]);
+        } catch(ArrayIndexOutOfBoundsException e) {
+            changeBrush(loadedList[0]);
+        }
+    }
+
+    UserAction one = new UserAction("Grass") { @Override protected void onActionBegin() { nextBrush(1); } };
+    UserAction two = new UserAction("Dirt") { @Override protected void onActionBegin() {nextBrush(2);}};
+    UserAction three = new UserAction("Stone") { @Override protected void onActionBegin() {nextBrush(3); }};
+    UserAction four  = new UserAction("Bedrock") { @Override protected void onActionBegin() {}};
     
     
     @Override
