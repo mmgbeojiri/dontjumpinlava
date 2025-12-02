@@ -859,6 +859,8 @@ public class Main extends GameApplication {
     UserAction two = new UserAction("Dirt") { @Override protected void onActionBegin() {nextBrush(2);}};
     UserAction three = new UserAction("Stone") { @Override protected void onActionBegin() {nextBrush(3); }};
     UserAction four  = new UserAction("Bedrock") { @Override protected void onActionBegin() {}};
+
+    UserAction qPressed  = new UserAction("Eyedrop") { @Override protected void onActionBegin() {changeBrush(underTile);}};
     
     
     @Override
@@ -875,6 +877,8 @@ public class Main extends GameApplication {
         input.addAction(dPressed, KeyCode.D);
 
         input.addAction(ePressed, KeyCode.E);
+
+        input.addAction(qPressed, KeyCode.Q);
 
         input.addAction(spacePressed, KeyCode.SPACE);
 
