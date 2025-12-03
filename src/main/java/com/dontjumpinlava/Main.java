@@ -827,6 +827,7 @@ public class Main extends GameApplication {
     String[] grassList = {"Grass.png", "Dirt.png", "CompactGrass.png", "CompactDirt.png"};
     String[] stoneList = {"Stone.png", "Bedrock.png", "Nonsolid.png"};
     String[] waterList = {"Water.png", "WaterTop1.png"};
+    String[] misaList = {"Rail.png", "WaterGlass.png"};
 
 
     public void changeBrush(String strung) {  Globals.chosenBrush = strung; System.out.println("Set chosen brush to: " + strung);}
@@ -843,6 +844,9 @@ public class Main extends GameApplication {
                 break;
             case 3:
                 loadedList = waterList;
+                break;
+            case 4:
+                loadedList = misaList;
                 break;
             default:
                 loadedList = grassList;
@@ -864,7 +868,7 @@ public class Main extends GameApplication {
     UserAction one = new UserAction("Grass") { @Override protected void onActionBegin() { nextBrush(1); } };
     UserAction two = new UserAction("Dirt") { @Override protected void onActionBegin() {nextBrush(2);}};
     UserAction three = new UserAction("Stone") { @Override protected void onActionBegin() {nextBrush(3); }};
-    UserAction four  = new UserAction("Bedrock") { @Override protected void onActionBegin() {resetPlayer();}};
+    UserAction four  = new UserAction("Bedrock") { @Override protected void onActionBegin() {nextBrush(4);}};
 
     UserAction qPressed  = new UserAction("Eyedrop") { @Override protected void onActionBegin() {changeBrush(underTile);}};
     
