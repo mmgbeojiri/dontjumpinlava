@@ -147,6 +147,7 @@ class Block extends Component {
         }
 
         texName = Globals.tileGrid.get(this.tileIndex);
+
         //String texName = randomBlocks[(int) Math.floor(Math.random()*3)]; // or Globals.tileGrid.get(tileIndex);
         
         
@@ -177,6 +178,12 @@ class Block extends Component {
 
             // just replace the image on the existing ImageView
             imageview.setImage(img);
+
+            if (texName.equalsIgnoreCase("Water.png") || texName.equalsIgnoreCase("WaterTop1.png")){
+                imageview.setOpacity(0.5f);
+            } else{
+                imageview.setOpacity(1);
+            }
             
             //System.out.println(imageview);
             imageview.toFront();
