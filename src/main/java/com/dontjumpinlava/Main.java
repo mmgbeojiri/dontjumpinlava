@@ -61,6 +61,8 @@ class Globals {
     public static double tileGridX;
     public static double tileGridY;
     public static String chosenBrush = "Stone.png";
+
+    public static double timer=0.0;
 }
 
 class Block extends Component {
@@ -79,6 +81,7 @@ class Block extends Component {
     ImageView imageview = new ImageView();
     Image image;
     String texName;
+    
 
 
 
@@ -147,6 +150,10 @@ class Block extends Component {
         }
 
         texName = Globals.tileGrid.get(this.tileIndex);
+        if (texName.equalsIgnoreCase("WaterTop1.png")) {
+            System.out.println("WaterTop" + (int)  ((Math.floor(Globals.timer*4)%2)+1)  + ".png");
+            texName = "WaterTop" + (int) ((Math.floor(Globals.timer*4)%2)+1) + ".png";
+        }
 
         //String texName = randomBlocks[(int) Math.floor(Math.random()*3)]; // or Globals.tileGrid.get(tileIndex);
         
@@ -179,7 +186,7 @@ class Block extends Component {
             // just replace the image on the existing ImageView
             imageview.setImage(img);
 
-            if (texName.equalsIgnoreCase("Water.png") || texName.equalsIgnoreCase("WaterTop1.png")){
+            if (texName.equalsIgnoreCase("Water.png") || texName.contains("WaterTop")){
                 imageview.setOpacity(0.5f);
             } else{
                 imageview.setOpacity(1);
@@ -196,7 +203,7 @@ class Block extends Component {
     }
 
 
-
+    
     @Override
     public void onUpdate(double tpf) {
         //Globals.tileGrid.get(Globals.tileIndex)
@@ -1107,9 +1114,10 @@ public class Main extends GameApplication {
 
     }
 
-    double memoryWaster = 0;
+    
     @Override
     protected void onUpdate(double tpf) {
+        Globals.timer += tpf;
         movePlayer();
         //System.out.println(1/tpf);
 
