@@ -423,15 +423,16 @@ class Player extends Component {
         tileGridY = Math.ceil(y/32);
         playerTileIndex = -(tileGridY+1) + ((tileGridX+1)*(Globals.gridHeight));
         // the y value is flipped, so we get the next row, and subtract by tilegridy+1
-        if (playerTileIndex >= 0 && playerTileIndex < Globals.tileGrid.size()){
-            if (tileGridY < 0) {
-                underTile = "Air.png";
-            }
-            underTile = Globals.tileGrid.get((int)playerTileIndex);
-        } else {
+        if (tileGridY < 0) {
             underTile = "Air.png";
         }
-        System.out.println("Tile Grid X: "+tileGridX + " Tile Grid Y"+ tileGridY + " Tile: " + underTile);
+
+        try {
+            underTile = Globals.tileGrid.get((int)playerTileIndex);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            underTile = "Air.png";
+        }
+        //System.out.println("Tile Grid X: "+tileGridX + " Tile Grid Y: "+ tileGridY + " Tile: " + underTile);
     }
 
     
@@ -863,7 +864,7 @@ public class Main extends GameApplication {
     UserAction one = new UserAction("Grass") { @Override protected void onActionBegin() { nextBrush(1); } };
     UserAction two = new UserAction("Dirt") { @Override protected void onActionBegin() {nextBrush(2);}};
     UserAction three = new UserAction("Stone") { @Override protected void onActionBegin() {nextBrush(3); }};
-    UserAction four  = new UserAction("Bedrock") { @Override protected void onActionBegin() {}};
+    UserAction four  = new UserAction("Bedrock") { @Override protected void onActionBegin() {resetPlayer();}};
 
     UserAction qPressed  = new UserAction("Eyedrop") { @Override protected void onActionBegin() {changeBrush(underTile);}};
     
@@ -1058,16 +1059,19 @@ public class Main extends GameApplication {
 
 
     public void resetPlayer() {
-        
         Globals.cameraX = Globals.twoForty;
         Globals.cameraY = Globals.oneEighty;
         Globals.playerHeight = 16;
         Globals.playerWidth = 16;
 
-        player.setX(0);
-        player.setY(32);
+        player.getComponent(Player.class).x = 0;
+        player.getComponent(Player.class).y = 32;
+        player.getComponent(Player.class).dx = 0;
+        player.getComponent(Player.class).dy = 0;
         player.getComponent(Player.class).jumping = 99;
         player.getComponent(Player.class).falling = 99;
+
+        System.out.println("damn");
          
         
 
