@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -61,6 +62,8 @@ class Globals {
     public static double tileGridX;
     public static double tileGridY;
     public static String chosenBrush = "Stone.png";
+
+    public static String levelStore = "";
 
     public static double timer=0.0;
 }
@@ -1309,6 +1312,29 @@ public class Main extends GameApplication {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void encodeLevel() {
+        for (String str : Globals.tileGrid) {
+            Globals.levelStore += str + " ";
+        }
+        String savePath = "stupid.txt";
+
+        try (FileOutputStream fos = new FileOutputStream(savePath)) {
+            // Convert the string to bytes using UTF-8 encoding
+            byte[] bytes = Globals.levelStore.getBytes(StandardCharsets.UTF_8);
+
+            // Write the bytes to the FileOutputStream
+            fos.write(bytes);
+
+            System.out.println("String successfully written to " + savePath);
+
+        } catch (IOException e) {
+            System.err.println("An error occurred while writing to the file: " + e.getMessage());
+        }
+
+
+        
     }
 
     @Override
