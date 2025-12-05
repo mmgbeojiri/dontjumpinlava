@@ -66,6 +66,8 @@ class Globals {
     public static String levelStore = "";
 
     public static double timer=0.0;
+
+    public static final String atoz = "abcdefghiklmnopqrstuvwxyz";
 }
 
 class Block extends Component {
@@ -1324,13 +1326,15 @@ public class Main extends GameApplication {
         int tileIndex = 0;
         int length = 0;
         String tile = Globals.tileGrid.get(tileIndex);
+
+        
         for (int i =0; i< Globals.gridHeight; i++) {
             for (int j = 0; j < Globals.gridWidth; j++) {
-                if (tile.equalsIgnoreCase(Globals.tileGrid.get(tileIndex))) {
+                if (length < 24 && tile.equalsIgnoreCase(Globals.tileGrid.get(tileIndex))) {
                     length++;
                 } else {
-                    writeValue(tile, '_');
-                    writeValue(Integer.toString(length), '_');
+                    writeValue(tile, Globals.atoz.charAt(length+1));
+                   
                     tile = Globals.tileGrid.get(tileIndex);
                     length = 1;
                 }
@@ -1338,8 +1342,7 @@ public class Main extends GameApplication {
             }
             tileIndex += 1 - (Globals.gridWidth * Globals.gridHeight);
         }
-        writeValue(tile, '_');
-        writeValue(Integer.toString(length), '_');
+        writeValue(tile, Globals.atoz.charAt(length+1));
 
         String savePath = "stupid.txt";
 
