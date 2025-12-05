@@ -1313,11 +1313,21 @@ public class Main extends GameApplication {
             e.printStackTrace();
         }
     }
+    public void writeValue(String value, char delimiter) {
+        
+        Globals.levelStore += value + delimiter;
+       
+    }
 
-    public void encodeLevel() {
+    public void encodeLevel(char delimiter) {
+        Globals.levelStore = "";
+        int tileIndex = 1;
+
         for (String str : Globals.tileGrid) {
-            Globals.levelStore += str + " ";
+            writeValue(str, '_');
+            tileIndex++;
         }
+        
         String savePath = "stupid.txt";
 
         try (FileOutputStream fos = new FileOutputStream(savePath)) {
@@ -1369,6 +1379,8 @@ public class Main extends GameApplication {
 
         cloneLevelTiles();
         resetPlayer();
+
+        encodeLevel('|');
         
         
     }
