@@ -1330,10 +1330,10 @@ public class Main extends GameApplication {
         
         for (int i =0; i< Globals.gridHeight; i++) {
             for (int j = 0; j < Globals.gridWidth; j++) {
-                if (length < 24 && tile.equalsIgnoreCase(Globals.tileGrid.get(tileIndex))) {
+                if (length < Globals.atoz.length() && tile.equalsIgnoreCase(Globals.tileGrid.get(tileIndex))) {
                     length++;
                 } else {
-                    writeValue(tile, Globals.atoz.charAt(length+1));
+                    writeValue(tile, Globals.atoz.charAt(length));
                    
                     tile = Globals.tileGrid.get(tileIndex);
                     length = 1;
@@ -1342,7 +1342,7 @@ public class Main extends GameApplication {
             }
             tileIndex += 1 - (Globals.gridWidth * Globals.gridHeight);
         }
-        writeValue(tile, Globals.atoz.charAt(length+1));
+        writeValue(tile, Globals.atoz.charAt(length));
 
         String savePath = "stupid.txt";
 
