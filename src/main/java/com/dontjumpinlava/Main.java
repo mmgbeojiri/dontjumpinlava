@@ -1321,13 +1321,26 @@ public class Main extends GameApplication {
 
     public void encodeLevel(char delimiter) {
         Globals.levelStore = "";
-        int tileIndex = 1;
-
-        for (String str : Globals.tileGrid) {
-            writeValue(str, '_');
-            tileIndex++;
+        int tileIndex = 0;
+        int length = 0;
+        String tile = Globals.tileGrid.get(tileIndex);
+        for (int i =0; i< Globals.gridHeight; i++) {
+            for (int j = 0; j < Globals.gridWidth; j++) {
+                if (tile.equalsIgnoreCase(Globals.tileGrid.get(tileIndex))) {
+                    length++;
+                } else {
+                    writeValue(tile, '_');
+                    writeValue(Integer.toString(length), '_');
+                    tile = Globals.tileGrid.get(tileIndex);
+                    length = 1;
+                }
+                tileIndex += Globals.gridHeight;
+            }
+            tileIndex += 1 - (Globals.gridWidth * Globals.gridHeight);
         }
-        
+        writeValue(tile, '_');
+        writeValue(Integer.toString(length), '_');
+
         String savePath = "stupid.txt";
 
         try (FileOutputStream fos = new FileOutputStream(savePath)) {
