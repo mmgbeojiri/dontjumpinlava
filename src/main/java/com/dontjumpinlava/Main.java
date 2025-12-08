@@ -67,7 +67,7 @@ class Globals {
 
     public static double timer=0.0;
 
-    public static final String atoz = "abcdefghiklmnopqrstuvwxyz";
+    public static final String atoz = "abcdefghijklmnopqrstuvwxyz";
 }
 
 class Block extends Component {
@@ -1333,7 +1333,9 @@ public class Main extends GameApplication {
                 if (length < Globals.atoz.length() && tile.equalsIgnoreCase(Globals.tileGrid.get(tileIndex))) {
                     length++;
                 } else {
-                    writeValue(tile, Globals.atoz.charAt(length));
+                    writeValue(tile, Globals.atoz.charAt(length-1));
+                    //writeValue(tile, '_');
+                    //writeValue(Integer.toString(length), '_');
                    
                     tile = Globals.tileGrid.get(tileIndex);
                     length = 1;
@@ -1342,7 +1344,9 @@ public class Main extends GameApplication {
             }
             tileIndex += 1 - (Globals.gridWidth * Globals.gridHeight);
         }
-        writeValue(tile, Globals.atoz.charAt(length));
+        writeValue(tile, Globals.atoz.charAt(length-1));
+        //writeValue(tile, '_');
+        //writeValue(Integer.toString(length), '_');
 
         String savePath = "stupid.txt";
 
