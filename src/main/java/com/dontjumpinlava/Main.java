@@ -1419,6 +1419,8 @@ public class Main extends GameApplication {
             System.err.println("An error occurred while writing to the file: " + e.getMessage());
         }
 
+        Globals.levelStore = "";
+
 
 
 
