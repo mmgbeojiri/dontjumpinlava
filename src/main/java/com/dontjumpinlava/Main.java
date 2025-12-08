@@ -1326,11 +1326,13 @@ public class Main extends GameApplication {
         int tileIndex = 0;
         int length = 0;
         String tile = Globals.tileGrid.get(tileIndex);
+        tile = tile.substring(0, tile.length() - 4);
 
         
         for (int i =0; i< Globals.gridHeight; i++) {
             for (int j = 0; j < Globals.gridWidth; j++) {
-                if (length < Globals.atoz.length() && tile.equalsIgnoreCase(Globals.tileGrid.get(tileIndex))) {
+                String currTile = Globals.tileGrid.get(tileIndex);
+                if (length < Globals.atoz.length() && tile.equalsIgnoreCase(currTile.substring(0, currTile.length()-4))) {
                     length++;
                 } else {
                     writeValue(tile, Globals.atoz.charAt(length-1));
@@ -1338,6 +1340,7 @@ public class Main extends GameApplication {
                     //writeValue(Integer.toString(length), '_');
                    
                     tile = Globals.tileGrid.get(tileIndex);
+                    tile = tile.substring(0, tile.length() - 4);
                     length = 1;
                 }
                 tileIndex += Globals.gridHeight;
