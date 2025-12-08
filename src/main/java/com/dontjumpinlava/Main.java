@@ -1,14 +1,18 @@
 package com.dontjumpinlava;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.almasb.fxgl.app.GameApplication;
@@ -1321,8 +1325,51 @@ public class Main extends GameApplication {
        
     }
 
-    public void encodeLevel(char delimiter) {
+    public static void writeStringToFileLine(String filePath, int lineNumber, String content) throws IOException {
+        if (lineNumber < 1) {
+            throw new IllegalArgumentException("Line number must be 1 or greater.");
+        }
+
+        List<String> lines = new ArrayList<>();
+
+        // Read all lines from the file
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                lines.add(line);
+            }
+        } catch (IOException e) {
+            // Handle file not found or other read errors (e.g., if the file doesn't exist yet)
+            // For this scenario, we'll proceed with an empty list of lines
+        }
+
+        // Adjust the list to accommodate the target line number
+        while (lines.size() < lineNumber) {
+            lines.add(""); // Add empty lines until the target line is reached
+        }
+
+        // Replace or insert the content at the specified line number
+        lines.set(lineNumber - 1, content);
+
+        // Write all lines back to the file
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+            for (int i = 0; i < lines.size(); i++) {
+                writer.write(lines.get(i));
+                if (i < lines.size() - 1) { // Add newline for all lines except the last
+                    writer.newLine();
+                }
+            }
+        }
+    }
+
+    public void encodeLevel(int levelNumber) {
         Globals.levelStore = "";
+
+        writeValue("1", '_');
+        writeValue(Integer.toString(Globals.gridWidth), '_');
+        writeValue(Integer.toString(Globals.gridHeight), '_');
+
+
         int tileIndex = 0;
         int length = 0;
         String tile = Globals.tileGrid.get(tileIndex);
@@ -1356,7 +1403,7 @@ public class Main extends GameApplication {
 
         String savePath = "stupid.txt";
 
-        try (FileOutputStream fos = new FileOutputStream(savePath)) {
+        /*try (FileOutputStream fos = new FileOutputStream(savePath)) {
             // Convert the string to bytes using UTF-8 encoding
             byte[] bytes = Globals.levelStore.getBytes(StandardCharsets.UTF_8);
 
@@ -1367,7 +1414,12 @@ public class Main extends GameApplication {
 
         } catch (IOException e) {
             System.err.println("An error occurred while writing to the file: " + e.getMessage());
+        }*/
+       try {writeStringToFileLine(savePath, levelNumber, Globals.levelStore);} catch (IOException e) {
+            System.err.println("An error occurred while writing to the file: " + e.getMessage());
         }
+
+
 
 
         
@@ -1406,7 +1458,7 @@ public class Main extends GameApplication {
         cloneLevelTiles();
         resetPlayer();
 
-        encodeLevel('|');
+        encodeLevel(1);
         
         
     }
