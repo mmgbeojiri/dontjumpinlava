@@ -1335,6 +1335,9 @@ public class Main extends GameApplication {
                 if (length < Globals.atoz.length() && tile.equalsIgnoreCase(currTile.substring(0, currTile.length()-4))) {
                     length++;
                 } else {
+                    if (tile.equalsIgnoreCase("Air")) {
+                        tile = "";
+                    }
                     writeValue(tile, Globals.atoz.charAt(length-1));
                     //writeValue(tile, '_');
                     //writeValue(Integer.toString(length), '_');
