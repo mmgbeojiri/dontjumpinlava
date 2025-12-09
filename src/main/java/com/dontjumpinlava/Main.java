@@ -72,6 +72,9 @@ class Globals {
     public static double timer=0.0;
 
     public static final String atoz = "abcdefghijklmnopqrstuvwxyz";
+
+    public static String[] blockID = {"Bedrock.png", "Air.png", "Grass.png", "Dirt.png", "CompactGrass.png", "CompactDirt.png","Stone.png","Nonsolid.png",
+    "Rail.png","Water.png","WaterTop1.png","WaterTop2.png","WaterGlass.png"};
 }
 
 class Block extends Component {
@@ -1362,42 +1365,53 @@ public class Main extends GameApplication {
         }
     }
 
+    public String getIDfromBlock(String tile) {
+        for (int i = 0; i < Globals.blockID.length; i++) {
+            if (Globals.blockID[i].equalsIgnoreCase(tile)){
+                return Integer.toString(i);
+            }
+        }
+
+        return "~";
+    }
+
     public void encodeLevel(int levelNumber) {
         Globals.levelStore = "";
 
+        
         writeValue("1", '_');
         writeValue(Integer.toString(Globals.gridWidth), '_');
         writeValue(Integer.toString(Globals.gridHeight), '_');
-
-
+        
+        
         int tileIndex = 0;
         int length = 0;
         String tile = Globals.tileGrid.get(tileIndex);
-        tile = tile.substring(0, tile.length() - 4);
-
+        String blockID = "0";
         
         for (int i =0; i< Globals.gridHeight; i++) {
             for (int j = 0; j < Globals.gridWidth; j++) {
-                String currTile = Globals.tileGrid.get(tileIndex);
-                if (length < Globals.atoz.length() && tile.equalsIgnoreCase(currTile.substring(0, currTile.length()-4))) {
+                if (length < Globals.atoz.length() && tile.equalsIgnoreCase(Globals.tileGrid.get(tileIndex))) {
                     length++;
                 } else {
-                    if (tile.equalsIgnoreCase("Air")) {
-                        tile = "";
+                    blockID = getIDfromBlock(tile);
+                    if (tile.equalsIgnoreCase("Air.png")) {
+                        blockID = "";
                     }
-                    writeValue(tile, Globals.atoz.charAt(length-1));
+
+
+                    writeValue(blockID, Globals.atoz.charAt(length-1));
                     //writeValue(tile, '_');
                     //writeValue(Integer.toString(length), '_');
                    
                     tile = Globals.tileGrid.get(tileIndex);
-                    tile = tile.substring(0, tile.length() - 4);
                     length = 1;
                 }
                 tileIndex += Globals.gridHeight;
             }
             tileIndex += 1 - (Globals.gridWidth * Globals.gridHeight);
         }
-        writeValue(tile, Globals.atoz.charAt(length-1));
+        writeValue(getIDfromBlock(tile), Globals.atoz.charAt(length-1));
         //writeValue(tile, '_');
         //writeValue(Integer.toString(length), '_');
 
