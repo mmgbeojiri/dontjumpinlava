@@ -1488,11 +1488,20 @@ public class Main extends GameApplication {
     public String readValue() {
         String value = "";
         int ascii = (int) Globals.letter;
+        readLetter();
         while (ascii < 65 || Globals.letter != ' '){ // ascii value below 65 means its number 
-            readLetter();
             value += Globals.letter;
             ascii = (int) Globals.letter;
+            if (ascii < 65) {
+                break;
+            }
+            if(Globals.letter != ' ') {
+                break;
+            }
+            readLetter();
         }
+
+        
 
         return value;
     }
@@ -1507,8 +1516,9 @@ public class Main extends GameApplication {
         
 
         System.out.println(readValue());
-        //System.out.println(readValue());
-
+        System.out.println(readValue());
+        System.out.println(readValue());
+        System.out.println(readValue());
     }
 
     @Override
