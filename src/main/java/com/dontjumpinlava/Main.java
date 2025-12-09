@@ -1101,7 +1101,6 @@ public class Main extends GameApplication {
         player.getComponent(Player.class).jumping = 99;
         player.getComponent(Player.class).falling = 99;
 
-        System.out.println("damn");
          
         
 
@@ -1221,7 +1220,7 @@ public class Main extends GameApplication {
         double tileY = 0.0;
 
         System.out.println(Globals.tileGrid.size());
-        System.out.println(Globals.tileGrid);
+        //System.out.println(Globals.tileGrid);
 
         tileX = -16*3;
         for (int i = 0; i < Globals.cloneCountX; i++) {
@@ -1279,7 +1278,7 @@ public class Main extends GameApplication {
             Globals.tileGrid = (ArrayList<String>) ois.readObject();
             ois.close();
             System.out.println("ArrayList loaded from " + levelPath);
-            System.out.println("Loaded strings: " + Globals.tileGrid);
+            //System.out.println("Loaded strings: " + Globals.tileGrid);
 
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
@@ -1375,10 +1374,20 @@ public class Main extends GameApplication {
         return "~";
     }
 
+    public String getBlockFromID(String id) {
+        try {
+            return Globals.blockID[Integer.parseInt(id)];
+        } catch (ArrayIndexOutOfBoundsException e) { // out of bounds
+            return "Air.png";
+        }
+
+        
+    }
+
+
     public void encodeLevel(int levelNumber) {
         Globals.levelStore = "";
 
-        
         writeValue("1", '_');
         writeValue(Integer.toString(Globals.gridWidth), '_');
         writeValue(Integer.toString(Globals.gridHeight), '_');
