@@ -1489,7 +1489,7 @@ public class Main extends GameApplication {
         String value = "";
         int ascii = (int) Globals.letter;
         readLetter();
-        while (ascii < 65 || Globals.letter != ' '){ // ascii value below 65 means its number 
+        while (true){ // ascii value below 65 means its number 
             value += Globals.letter;
             ascii = (int) Globals.letter;
             if (ascii < 65) {
