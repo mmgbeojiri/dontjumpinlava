@@ -75,6 +75,9 @@ class Globals {
 
     public static String[] blockID = {"Bedrock.png", "Air.png", "Grass.png", "Dirt.png", "CompactGrass.png", "CompactDirt.png","Stone.png","Nonsolid.png",
     "Rail.png","Water.png","WaterTop1.png","WaterTop2.png","WaterGlass.png"};
+
+    public static int readIndex = 0;
+    public static char letter; 
 }
 
 class Block extends Component {
@@ -1364,6 +1367,23 @@ public class Main extends GameApplication {
         }
     }
 
+    public static String readLineFromFile(String filePath, int lineNumber) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            int currentLineNumber = 1;
+
+            while ((line = reader.readLine()) != null) {
+                if (currentLineNumber == lineNumber) {
+                    return line; // Return the desired line
+                }
+                currentLineNumber++;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null; // Return null if the line number is out of bounds or an error occurs
+    }
+
     public String getIDfromBlock(String tile) {
         for (int i = 0; i < Globals.blockID.length; i++) {
             if (Globals.blockID[i].equalsIgnoreCase(tile)){
@@ -1371,7 +1391,7 @@ public class Main extends GameApplication {
             }
         }
 
-        return "~";
+        return "@";
     }
 
     public String getBlockFromID(String id) {
@@ -1450,6 +1470,47 @@ public class Main extends GameApplication {
         
     }
 
+    public char readLetter() {
+        char character = ' ';
+        try {
+            character = Globals.levelStore.charAt(Globals.readIndex);
+        } catch (StringIndexOutOfBoundsException e) {
+            Globals.letter = ' ';
+            e.printStackTrace();
+        }
+
+        Globals.letter = character;
+        
+        Globals.readIndex++;
+        return character;
+    }
+
+    public String readValue() {
+        String value = "";
+        int ascii = (int) Globals.letter;
+        while (ascii < 65 || Globals.letter != ' '){ // ascii value below 65 means its number 
+            readLetter();
+            value += Globals.letter;
+            ascii = (int) Globals.letter;
+        }
+
+        return value;
+    }
+
+    public void decodeLevel(int levelNumber) {
+        try {
+            Globals.levelStore = readLineFromFile("stupid.txt", levelNumber);
+        } catch (Error e) {
+            e.printStackTrace();
+        }
+        Globals.readIndex = 0;
+        
+
+        System.out.println(readValue());
+        //System.out.println(readValue());
+
+    }
+
     @Override
     protected void initGame() {
         FXGL.getGameScene().setBackgroundColor(javafx.scene.paint.Color.DARKGRAY); // or any color
@@ -1483,7 +1544,9 @@ public class Main extends GameApplication {
         cloneLevelTiles();
         resetPlayer();
 
-        encodeLevel(1);
+        //encodeLevel(1);
+
+        decodeLevel(1);
         
         
     }
