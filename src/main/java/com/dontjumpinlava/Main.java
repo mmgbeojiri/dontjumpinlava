@@ -1521,8 +1521,32 @@ public class Main extends GameApplication {
             return;
         }
         Globals.tileGrid.clear(); // scary!
-        Globals.gridWidth = readValue();
-        Globals.gridHeight = readValue();
+        Globals.gridWidth = Integer.valueOf(readValue());
+        Globals.gridHeight = Integer.valueOf(readValue());
+
+        for (int i = 0; i < Globals.gridHeight * Globals.gridWidth; i++) {
+            Globals.tileGrid.add("");
+        };
+
+        Globals.tileIndex = 0;
+
+        String value;
+        while (Globals.readIndex < Globals.levelStore.length()) {
+          value = readValue();
+          if (value.equalsIgnoreCase("")) {
+            value = getIDfromBlock("Air.png");
+          }
+          for (int i = 0; i < Globals.atoz.indexOf(Globals.letter)+1; i++) {
+              if (Globals.tileIndex > (Globals.gridHeight * Globals.gridWidth)-1) {
+                  Globals.tileIndex += (1 - (Globals.gridWidth*Globals.gridHeight));
+              }
+              System.out.println("TileIndex:" + Globals.tileIndex);
+              Globals.tileGrid.set(Globals.tileIndex, getBlockFromID(value));
+              Globals.tileIndex += Globals.gridHeight;
+              
+              
+          }
+        }
 
 
     }
