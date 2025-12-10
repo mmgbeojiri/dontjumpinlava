@@ -1516,12 +1516,13 @@ public class Main extends GameApplication {
         }
         Globals.readIndex = 0;
         
-        System.out.println("Value: " + readValue() + "\tDelimiter: " + Globals.letter);
-        System.out.println("Value: " + readValue() + "\tDelimiter: " + Globals.letter);
-        System.out.println("Value: " + readValue() + "\tDelimiter: " + Globals.letter);
-        System.out.println("Value: " + readValue() + "\tDelimiter: " + Globals.letter);
-        System.out.println("Value: " + readValue() + "\tDelimiter: " + Globals.letter);
-
+        
+        if (!readValue().equalsIgnoreCase("1")) {
+            return;
+        }
+        Globals.tileGrid.clear(); // scary!
+        Globals.gridWidth = readValue();
+        Globals.gridHeight = readValue();
 
 
     }
