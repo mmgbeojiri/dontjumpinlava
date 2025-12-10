@@ -1492,10 +1492,10 @@ public class Main extends GameApplication {
         while (true){ // ascii value below 65 means its number 
             value += Globals.letter;
             ascii = (int) Globals.letter;
-            if (ascii < 65) {
+            if (ascii > 65) {
                 break;
             }
-            if(Globals.letter != ' ') {
+            if(Globals.letter == ' ') {
                 break;
             }
             readLetter();
