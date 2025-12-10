@@ -1489,15 +1489,17 @@ public class Main extends GameApplication {
         String value = "";
         int ascii = (int) Globals.letter;
         readLetter();
-        while (true){ // ascii value below 65 means its number 
-            value += Globals.letter;
+        while (true){ // ascii value below 65 means its number
+            
             ascii = (int) Globals.letter;
+            
             if (ascii > 65) {
                 break;
             }
             if(Globals.letter == ' ') {
                 break;
-            }
+            } 
+            value += Globals.letter;
             readLetter();
         }
 
@@ -1514,11 +1516,14 @@ public class Main extends GameApplication {
         }
         Globals.readIndex = 0;
         
+        System.out.println("Value: " + readValue() + "\tDelimiter: " + Globals.letter);
+        System.out.println("Value: " + readValue() + "\tDelimiter: " + Globals.letter);
+        System.out.println("Value: " + readValue() + "\tDelimiter: " + Globals.letter);
+        System.out.println("Value: " + readValue() + "\tDelimiter: " + Globals.letter);
+        System.out.println("Value: " + readValue() + "\tDelimiter: " + Globals.letter);
 
-        System.out.println(readValue());
-        System.out.println(readValue());
-        System.out.println(readValue());
-        System.out.println(readValue());
+
+
     }
 
     @Override
