@@ -1577,12 +1577,14 @@ public class Main extends GameApplication {
         .buildAndAttach();
         
         
-        readLevelData();
+        /*readLevelData();
         if (Globals.tileGrid.size() == 0) {
             generateLevel();
             writeLevelData();
             System.err.println("Data Empty: regenerate level!");
-        }
+        }*/
+
+        generateLevel();
 
 
 
