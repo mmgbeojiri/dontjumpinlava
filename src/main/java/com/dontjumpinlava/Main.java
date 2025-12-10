@@ -78,6 +78,8 @@ class Globals {
 
     public static int readIndex = 0;
     public static char letter; 
+
+    public static int levelNumber = 1;
 }
 
 class Block extends Component {
@@ -762,12 +764,15 @@ public class Main extends GameApplication {
     }
 
     public void generateLevel() {
-        
-        addWall();
+        Globals.editor = false;
+        Globals.levelNumber = 1;
+        decodeLevel(Globals.levelNumber);
+
+        /*addWall();
         for (int i = 0; i < Globals.gridWidth-2; i++) {
             addBoxColumn();
         }
-        addWall();
+        addWall();*/
     };
 
     
@@ -1586,7 +1591,7 @@ public class Main extends GameApplication {
 
         //encodeLevel(1);
 
-        decodeLevel(1);
+        
         
         
     }
