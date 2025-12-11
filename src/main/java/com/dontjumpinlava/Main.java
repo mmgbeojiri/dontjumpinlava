@@ -769,7 +769,15 @@ public class Main extends GameApplication {
         Globals.tileGrid.add("grass.png");
 
     }
-
+    public void generateNewLevel() {
+        if (Globals.tileGrid.size() == 0) {
+            addWall();
+            for (int i = 0; i < Globals.gridWidth-2; i++) {
+                addBoxColumn();
+            }
+            addWall();
+        }
+    }
     public void generateLevel() {
         Globals.editor = false;
         Globals.levelNumber = 1;
@@ -1560,6 +1568,7 @@ public class Main extends GameApplication {
 
             if (Globals.levelStore == null) {
                 Globals.tileGrid.clear();
+                generateNewLevel();
                 return;
             }
             
