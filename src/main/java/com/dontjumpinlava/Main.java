@@ -14,6 +14,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
 
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
@@ -27,6 +28,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
+
 
 class Globals {
     public static double cameraX = 0;
@@ -80,6 +82,10 @@ class Globals {
     public static char letter; 
 
     public static int levelNumber = 1;
+
+    public static Scanner Input = new Scanner(System.in); 
+
+    public static boolean levelStart = true;
 }
 
 class Block extends Component {
@@ -768,13 +774,11 @@ public class Main extends GameApplication {
         Globals.tileGrid.clear();
         decodeLevel(Globals.levelNumber);
         if (Globals.tileGrid.size() == 0) {
-
-        addWall();
-        for (int i = 0; i < Globals.gridWidth-2; i++) {
-            addBoxColumn();
-        }
-        addWall();
-    
+            addWall();
+            for (int i = 0; i < Globals.gridWidth-2; i++) {
+                addBoxColumn();
+            }
+            addWall();
         }
     };
 
@@ -849,13 +853,35 @@ public class Main extends GameApplication {
         @Override 
         protected void onActionBegin() {
             if (Globals.editor) {
+                Globals.levelStart = false;
                 encodeLevel(Globals.levelNumber);
+                Globals.levelStart = true;
             } else {
+                Globals.levelStart = false;
                 decodeLevel(Globals.levelNumber);
+                Globals.levelStart = true;
             }
             Globals.editor = !Globals.editor;
         }
-        
+    };
+
+    UserAction lPressed = new UserAction("L") {
+        @Override 
+        protected void onActionBegin() {
+            int answer = 0;
+            System.out.print("Enter Level Number: (Current: " + Globals.levelNumber + "): ");
+            answer = Globals.Input.nextInt();
+            if (answer < 1) {
+                System.out.println("Please enter a number greater than 1.");
+                return;
+            }
+            
+            encodeLevel(Globals.levelNumber);
+            
+            Globals.levelNumber = answer;
+            decodeLevel(Globals.levelNumber);
+            
+        }
     };
     UserAction mouseClicked = new UserAction("Click") {
         @Override
@@ -940,6 +966,8 @@ public class Main extends GameApplication {
         input.addAction(two, KeyCode.DIGIT2);
         input.addAction(three, KeyCode.DIGIT3);
         input.addAction(four, KeyCode.DIGIT4);
+
+        input.addAction(lPressed, KeyCode.L);
 
         
     }
@@ -1145,7 +1173,9 @@ public class Main extends GameApplication {
     @Override
     protected void onUpdate(double tpf) {
         Globals.timer += tpf;
+        if (Globals.levelStart) {
         movePlayer();
+        }
         //System.out.println(1/tpf);
 
         //Globals.cameraX = Math.sin(memoryWaster)*100;
@@ -1524,6 +1554,12 @@ public class Main extends GameApplication {
     public void decodeLevel(int levelNumber) {
         try {
             Globals.levelStore = readLineFromFile("stupid.txt", levelNumber);
+
+            if (Globals.levelStore == null) {
+                Globals.tileGrid.clear();
+                return;
+            }
+            
         } catch (Error e) {
             e.printStackTrace();
         }
