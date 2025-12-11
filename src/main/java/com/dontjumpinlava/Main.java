@@ -168,7 +168,6 @@ class Block extends Component {
 
         texName = Globals.tileGrid.get(this.tileIndex);
         if (texName.equalsIgnoreCase("WaterTop1.png")) {
-            System.out.println("WaterTop" + (int)  ((Math.floor(Globals.timer*4)%2)+1)  + ".png");
             texName = "WaterTop" + (int) ((Math.floor(Globals.timer*4)%2)+1) + ".png";
         }
 
@@ -851,6 +850,8 @@ public class Main extends GameApplication {
         protected void onActionBegin() {
             if (Globals.editor) {
                 encodeLevel(Globals.levelNumber);
+            } else {
+                decodeLevel(Globals.levelNumber);
             }
             Globals.editor = !Globals.editor;
         }
