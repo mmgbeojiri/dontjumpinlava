@@ -849,6 +849,9 @@ public class Main extends GameApplication {
     UserAction ePressed = new UserAction("E") {
         @Override 
         protected void onActionBegin() {
+            if (Globals.editor) {
+                encodeLevel(Globals.levelNumber);
+            }
             Globals.editor = !Globals.editor;
         }
         
@@ -1084,7 +1087,7 @@ public class Main extends GameApplication {
         try {
 
             Globals.tileGrid.set((int)tileIndex, brush);
-            writeLevelData();
+            //writeLevelData();
            
         } catch (Error e) {
             e.printStackTrace();
