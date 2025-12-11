@@ -648,19 +648,21 @@ class Player extends Component {
 
     @Override
     public void onUpdate(double tpf) {
-        if (!Globals.editor){
-        moveSpriteX();
-        moveSpriteY();       
-        } 
-        
+        if (Globals.levelStart){
+            if (!Globals.editor){
+                moveSpriteX();
+                moveSpriteY();       
+            } 
+            
 
-        Globals.playerX = this.x;
-        Globals.playerY = this.y;
+            Globals.playerX = this.x;
+            Globals.playerY = this.y;
 
-        scratchX = this.x + Globals.width/2 - size/2 ;
-        scratchY = -this.y +  Globals.height/2 - size/2;
+            scratchX = this.x + Globals.width/2 - size/2 ;
+            scratchY = -this.y +  Globals.height/2 - size/2;
 
-        paintSprite();
+            paintSprite();
+        }
     }
 }
 
@@ -875,11 +877,12 @@ public class Main extends GameApplication {
                 System.out.println("Please enter a number greater than 1.");
                 return;
             }
-            
+            Globals.levelStart = false;
             encodeLevel(Globals.levelNumber);
             
             Globals.levelNumber = answer;
             decodeLevel(Globals.levelNumber);
+            Globals.levelStart = true;
             
         }
     };
