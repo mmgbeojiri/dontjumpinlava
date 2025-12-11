@@ -766,13 +766,17 @@ public class Main extends GameApplication {
     public void generateLevel() {
         Globals.editor = false;
         Globals.levelNumber = 1;
+        Globals.tileGrid.clear();
         decodeLevel(Globals.levelNumber);
+        if (Globals.tileGrid.size() == 0) {
 
-        /*addWall();
+        addWall();
         for (int i = 0; i < Globals.gridWidth-2; i++) {
             addBoxColumn();
         }
-        addWall();*/
+        addWall();
+    
+        }
     };
 
     
@@ -1552,6 +1556,8 @@ public class Main extends GameApplication {
               
           }
         }
+
+        Globals.tileIndex = 0;
 
 
     }
