@@ -766,9 +766,9 @@ public class Main extends GameApplication {
         if (entity.hasComponent(Block.class)) {
             entity.getComponent(Block.class).doneLoading();
         // Do something with the entity or its component
-            
+            };
         };
-    };
+    }
     
     
     public void addWall() {
@@ -938,7 +938,7 @@ public class Main extends GameApplication {
                     }
 
                     generateNewLevel();
-                    Globals.doneLoading = true;
+                    callDoneLoadingOnAllBlocks();
                     Globals.levelStart = true;
                 
                 }
@@ -1665,7 +1665,7 @@ public class Main extends GameApplication {
 
         Globals.tileIndex = 0;
 
-        Globals.doneLoading = true;
+        callDoneLoadingOnAllBlocks();
 
 
     }
