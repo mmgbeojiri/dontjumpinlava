@@ -770,13 +770,13 @@ public class Main extends GameApplication {
 
     }
     public void generateNewLevel() {
-        if (Globals.tileGrid.size() == 0) {
-            addWall();
-            for (int i = 0; i < Globals.gridWidth-2; i++) {
-                addBoxColumn();
-            }
-            addWall();
+        
+        addWall();
+        for (int i = 0; i < Globals.gridWidth-2; i++) {
+            addBoxColumn();
         }
+        addWall();
+        
     }
     public void generateLevel() {
         Globals.editor = false;
@@ -784,11 +784,9 @@ public class Main extends GameApplication {
         Globals.tileGrid.clear();
         decodeLevel(Globals.levelNumber);
         if (Globals.tileGrid.size() == 0) {
-            addWall();
-            for (int i = 0; i < Globals.gridWidth-2; i++) {
-                addBoxColumn();
-            }
-            addWall();
+            Globals.gridWidth = 100;
+            Globals.gridHeight = 40;
+            generateNewLevel();
         }
     };
 
@@ -891,6 +889,41 @@ public class Main extends GameApplication {
             Globals.levelNumber = answer;
             decodeLevel(Globals.levelNumber);
             Globals.levelStart = true;
+            
+        }
+    };
+
+    UserAction rPressed = new UserAction("R") {
+        @Override 
+        protected void onActionBegin() {
+            if (Globals.editor){
+                String answer = "";
+                System.out.print("Do you want to reset the level? Please exactly type: \"Yes\".");
+                answer = Globals.Input.nextLine();
+                if (answer.equals("Yes")) {
+                    Globals.levelStart = false;
+
+
+                    System.out.print("Enter Level Width (Current: " + Globals.gridWidth + ")");
+                    try {
+                        Globals.gridWidth = Globals.Input.nextInt();
+                    } catch (Error e) {
+                        Globals.gridWidth = 100;
+                    }
+
+                    System.out.print("Enter Level Height (Current: " + Globals.gridHeight + ")");
+                    try {
+                        Globals.gridHeight = Globals.Input.nextInt();
+                    } catch (Error e) {
+                        Globals.gridHeight = 40;
+                    }
+
+                    generateNewLevel();
+
+                    Globals.levelStart = true;
+                
+                }
+            }
             
         }
     };
