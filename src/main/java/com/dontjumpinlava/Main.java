@@ -86,6 +86,8 @@ class Globals {
     public static Scanner Input = new Scanner(System.in); 
 
     public static boolean levelStart = true;
+
+    public static boolean doneLoading = false;
 }
 
 class Block extends Component {
@@ -165,6 +167,8 @@ class Block extends Component {
         stupid(tileSkip);
     }
 
+
+
     private void updateTextureIfNeeded() {
         
         if (this.tileIndex < 0 || this.tileIndex >= Globals.tileGrid.size()) {
@@ -224,13 +228,20 @@ class Block extends Component {
         
     }
 
+    public void doneLoading() {
+        tileIndex = 1 + (int) Math.floor(y/32);
+        tileIndex = Globals.gridHeight * (int) Math.floor(x/32);
+    }
 
     
     @Override
     public void onUpdate(double tpf) {
         //Globals.tileGrid.get(Globals.tileIndex)
         //this.tileIndex = Globals.tileIndex;
-        
+        if (Globals.doneLoading) {
+            doneLoading();
+            Globals.doneLoading = false;
+        }
 
         
             if (Math.abs(x - Globals.cameraX) > (Globals.cloneCountX*16)){
@@ -919,7 +930,7 @@ public class Main extends GameApplication {
                     }
 
                     generateNewLevel();
-
+                    Globals.doneLoading = true;
                     Globals.levelStart = true;
                 
                 }
@@ -1012,6 +1023,8 @@ public class Main extends GameApplication {
         input.addAction(four, KeyCode.DIGIT4);
 
         input.addAction(lPressed, KeyCode.L);
+
+        input.addAction(rPressed, KeyCode.R);
 
         
     }
@@ -1643,6 +1656,8 @@ public class Main extends GameApplication {
         }
 
         Globals.tileIndex = 0;
+
+        Globals.doneLoading = true;
 
 
     }
