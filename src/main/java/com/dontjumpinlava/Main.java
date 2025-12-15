@@ -81,7 +81,7 @@ class Globals {
     public static int readIndex = 0;
     public static char letter; 
 
-    public static int levelNumber = 1;
+    public static int levelNumber = 2;
 
     public static Scanner Input = new Scanner(System.in); 
 
@@ -794,7 +794,6 @@ public class Main extends GameApplication {
     }
     public void generateLevel() {
         Globals.editor = false;
-        Globals.levelNumber = 1;
         Globals.tileGrid.clear();
         decodeLevel(Globals.levelNumber);
         if (Globals.tileGrid.size() == 0) {
