@@ -236,12 +236,7 @@ class Block extends Component {
     
     @Override
     public void onUpdate(double tpf) {
-        //Globals.tileGrid.get(Globals.tileIndex)
-        //this.tileIndex = Globals.tileIndex;
-        if (Globals.doneLoading) {
-            doneLoading();
-            Globals.doneLoading = false;
-        }
+
 
         
             if (Math.abs(x - Globals.cameraX) > (Globals.cloneCountX*16)){
