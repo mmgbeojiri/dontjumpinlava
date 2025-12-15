@@ -761,6 +761,14 @@ public class Main extends GameApplication {
 
     String brush = "Air.png";
     
+    public void callDoneLoadingOnAllBlocks() {
+       for (Entity entity : FXGL.getGameWorld().getEntities()) {
+        if (entity.hasComponent(Block.class)) {
+            entity.getComponent(Block.class).doneLoading();
+        // Do something with the entity or its component
+            
+        };
+    };
     
     
     public void addWall() {
