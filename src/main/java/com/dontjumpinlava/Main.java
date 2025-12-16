@@ -230,7 +230,7 @@ class Block extends Component {
 
     public void doneLoading() {
         tileIndex = 1 + (int) Math.floor(y/32);
-        tileIndex = Globals.gridHeight * (int) Math.floor(x/32);
+        tileIndex += Globals.gridHeight * (int) Math.floor(x/32);
     }
 
     
@@ -471,7 +471,7 @@ class Player extends Component {
 
         try {
             underTile = Globals.tileGrid.get((int)playerTileIndex);
-        } catch (ArrayIndexOutOfBoundsException e) {
+        } catch (java.lang.IndexOutOfBoundsException e) {
             underTile = "Air.png";
         }
         //System.out.println("Tile Grid X: "+tileGridX + " Tile Grid Y: "+ tileGridY + " Tile: " + underTile);
@@ -790,6 +790,8 @@ public class Main extends GameApplication {
             addBoxColumn();
         }
         addWall();
+
+        System.out.println(Globals.tileGrid);
         
     }
     public void generateLevel() {
