@@ -229,8 +229,8 @@ class Block extends Component {
     }
 
     public void doneLoading() {
-        tileIndex = 1 + (int) Math.floor(y/32);
-        tileIndex += Globals.gridHeight * (int) Math.floor(x/32);
+        tileIndex = 2 + (int) Math.floor(y/32);
+        tileIndex -= Globals.gridHeight * (int) Math.floor(x/32);
     }
 
     
