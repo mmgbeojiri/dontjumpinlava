@@ -229,8 +229,16 @@ class Block extends Component {
     }
 
     public void doneLoading() {
-        tileIndex = 2 + (int) Math.floor(y/32);
-        tileIndex -= Globals.gridHeight * (int) Math.floor(x/32);
+
+        /*
+        Line 464: 
+        tileGridX = Math.floor(x/32)+1;
+        tileGridY = Math.ceil(y/32);
+        playerTileIndex = -(tileGridY+1) + ((tileGridX+1)*(Globals.gridHeight));
+        // the y value is flipped, so we get the next row, and subtract by tilegridy+1
+        */
+        tileIndex = (2 + (int) Math.ceil(y/32))*-1;
+        tileIndex += Globals.gridHeight * (int) Math.floor(x/32)+2;
     }
 
     
@@ -786,12 +794,13 @@ public class Main extends GameApplication {
     public void generateNewLevel() {
         
         addWall();
+        System.out.println("width:"+Globals.gridWidth);
         for (int i = 0; i < Globals.gridWidth-2; i++) {
             addBoxColumn();
         }
         addWall();
 
-        System.out.println(Globals.tileGrid);
+        
         
     }
     public void generateLevel() {
@@ -912,6 +921,7 @@ public class Main extends GameApplication {
         @Override 
         protected void onActionBegin() {
             if (Globals.editor){
+                System.out.println(Globals.tileGrid);
                 String answer = "";
                 System.out.print("Do you want to reset the level? Please exactly type: \"Yes\".");
                 answer = Globals.Input.nextLine();
@@ -1651,7 +1661,7 @@ public class Main extends GameApplication {
               if (Globals.tileIndex > (Globals.gridHeight * Globals.gridWidth)-1) {
                   Globals.tileIndex += (1 - (Globals.gridWidth*Globals.gridHeight));
               }
-              System.out.println("TileIndex:" + Globals.tileIndex);
+              //System.out.println("TileIndex:" + Globals.tileIndex);
               Globals.tileGrid.set(Globals.tileIndex, getBlockFromID(value));
               Globals.tileIndex += Globals.gridHeight;
               
