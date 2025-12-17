@@ -250,9 +250,9 @@ class Block extends Component {
 
         tileIndex = ((Globals.tileGridX)*(Globals.gridHeight)) - Globals.tileGridY;
         */
-        Globals.tileGridX =  Math.floor(x/32)+1;
-        Globals.tileGridY =  Math.ceil(y/32);
-        this.tileIndex =  ((int) (Globals.tileGridX)*( Globals.gridHeight)) + (int) Globals.tileGridY;
+        Globals.tileGridX =  Math.floor(x/32)+2;
+        Globals.tileGridY =  Math.ceil(y/32)-2;
+        this.tileIndex =  (int) Globals.tileGridY + ((int) (Globals.tileGridX)*( Globals.gridHeight));
 
         System.out.println(
             "NTileindex: " + this.tileIndex + "\tX: " + x + "\tY: " + y
