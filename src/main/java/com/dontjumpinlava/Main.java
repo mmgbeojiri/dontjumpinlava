@@ -134,12 +134,12 @@ class Block extends Component {
         super.onAdded();
         imageEntity = getEntity(); // reliable way to get the owner entity
 
-        System.out.println(
+        /*System.out.println(
             "Tileindex: " + tileIndex + "\tX: " + x + "\tY: " + y
             +"\tGlobals.tileGridX" + (Math.floor(x/32)+1)
             +"\tGlobals.tileGridY"+ Math.ceil(y/32)
          + "\tGridHeight: " + Globals.gridHeight
-        );
+        );*/
 
         imageEntity.getViewComponent().clearChildren();
         imageEntity.getViewComponent().addChild(imageview);
@@ -254,11 +254,11 @@ class Block extends Component {
         Globals.tileGridY =  Math.ceil(y/32)-2;
         this.tileIndex =  (int) Globals.tileGridY + ((int) (Globals.tileGridX)*( Globals.gridHeight));
 
-        System.out.println(
+        /*System.out.println(
             "NTileindex: " + this.tileIndex + "\tX: " + x + "\tY: " + y
          + "\tTile Grid X: "+ Globals.tileGridX +"\tTile Grid Y: "+ Globals.tileGridY
          + "\tGridHeight: " + Globals.gridHeight
-        );
+        );*/
     }
 
     
