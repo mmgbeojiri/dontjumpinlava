@@ -236,9 +236,23 @@ class Block extends Component {
         tileGridY = Math.ceil(y/32);
         playerTileIndex = -(tileGridY+1) + ((tileGridX+1)*(Globals.gridHeight));
         // the y value is flipped, so we get the next row, and subtract by tilegridy+1
+
+        Line 1148:
+        Globals.tileGridX = Math.floor(x/32)+1;
+        Globals.tileGridY = Math.ceil(y/32);
+
+
+        tileIndex = ((Globals.tileGridX)*(Globals.gridHeight)) - Globals.tileGridY;
         */
-        tileIndex = (2 + (int) Math.ceil(y/32))*-1;
-        tileIndex += Globals.gridHeight * (int) Math.floor(x/32)+2;
+        int tilegridx = (int) Math.floor(x/32)+1;
+        int tilegridy = (int) Math.ceil(y/32);
+        tileIndex = -(tilegridy+1) + ((tilegridx+1)*(Globals.gridHeight));
+
+        System.out.println(
+            "Tileindex: " + tileIndex + "\tX: " + x + "\tY: " + y
+         + "\tTile Grid X: "+ tilegridx +"\tTile Grid Y: "+ tilegridy
+         + "\tGridHeight: " + Globals.gridHeight
+        );
     }
 
     
@@ -1637,10 +1651,10 @@ public class Main extends GameApplication {
         }
         Globals.readIndex = 0;
         
-        
-        if (!readValue().equalsIgnoreCase("1")) {
+        readValue();
+        /*if (!readValue().equalsIgnoreCase("1")) {
             return;
-        }
+        }*/
         Globals.tileGrid.clear(); // scary!
         Globals.gridWidth = Integer.valueOf(readValue());
         Globals.gridHeight = Integer.valueOf(readValue());
@@ -1710,6 +1724,8 @@ public class Main extends GameApplication {
 
         cloneLevelTiles();
         resetPlayer();
+
+        System.out.println("GridHeight: "+ Globals.gridHeight + "\tGridwidth: " + Globals.gridWidth);
 
         //encodeLevel(1);
 
