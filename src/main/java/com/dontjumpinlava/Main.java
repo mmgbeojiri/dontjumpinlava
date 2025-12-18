@@ -785,20 +785,26 @@ public class Main extends GameApplication {
     String brush = "Air.png";
     
     public void callDoneLoadingOnAllBlocks() {
+        
        for (Entity entity : FXGL.getGameWorld().getEntities()) {
         if (entity.hasComponent(Block.class)) {
             entity.getComponent(Block.class).doneLoading();
         // Do something with the entity or its component
             };
         };
-    }
+        
+    };
+    
     
     
     public void addWall() {
         for (int i = 0; i < Globals.gridHeight; i++) {
             Globals.tileGrid.add("Bedrock.png");
+            
         }
+        System.out.println("Created Wall!");
     }
+
     public void addBoxColumn() {
         String[] randomBlocks = {"dirt.png", "stone.png", "grass.png"};
 
@@ -810,18 +816,20 @@ public class Main extends GameApplication {
         }
         Globals.tileGrid.add("grass.png");
 
+        System.out.println("Created Column!");
+
     }
     public void generateNewLevel() {
-        
-        addWall();
+        Globals.tileGrid.clear();
         System.out.println("width:"+Globals.gridWidth);
+        addWall();
         for (int i = 0; i < Globals.gridWidth-2; i++) {
             addBoxColumn();
         }
         addWall();
+        System.out.println("Still width:"+Globals.gridWidth);
 
-        System.out.println(Globals.tileGrid);
-        encodeLevel(Globals.levelNumber);
+        
 
         
         
@@ -944,7 +952,7 @@ public class Main extends GameApplication {
         @Override 
         protected void onActionBegin() {
             if (Globals.editor){
-                System.out.println(Globals.tileGrid);
+                //System.out.println(Globals.tileGrid);
                 String answer = "";
                 System.out.print("Do you want to reset the level? Please exactly type: \"Yes\".");
                 answer = Globals.Input.nextLine();
@@ -967,6 +975,8 @@ public class Main extends GameApplication {
                     }
 
                     generateNewLevel();
+                    System.out.println("I WOKE UP IN A NEW BUGATII");
+                    System.out.println(Globals.tileGrid); // there is a row of bedrocks in the middle of the list that is the same length as Grid.height. why does this occur? the only fnction that couild do this could be addwall.
                     callDoneLoadingOnAllBlocks();
                     Globals.levelStart = true;
                 
