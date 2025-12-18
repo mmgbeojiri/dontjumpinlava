@@ -803,7 +803,7 @@ public class Main extends GameApplication {
         String[] randomBlocks = {"dirt.png", "stone.png", "grass.png"};
 
         Globals.tileGrid.add("bedrock.png");
-        for (int i = 0; i < Globals.gridHeight-2; i++) {
+        for (int i = 0; i < Globals.gridHeight - 2; i++) {
             
                 Globals.tileGrid.add("Air.png");
             
@@ -819,6 +819,9 @@ public class Main extends GameApplication {
             addBoxColumn();
         }
         addWall();
+
+        System.out.println(Globals.tileGrid);
+        encodeLevel(Globals.levelNumber);
 
         
         
