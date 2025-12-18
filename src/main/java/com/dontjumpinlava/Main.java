@@ -802,7 +802,7 @@ public class Main extends GameApplication {
             Globals.tileGrid.add("Bedrock.png");
             
         }
-        System.out.println("Created Wall!");
+        // System.out.println("Created Wall!");
     }
 
     public void addBoxColumn() {
@@ -816,7 +816,7 @@ public class Main extends GameApplication {
         }
         Globals.tileGrid.add("grass.png");
 
-        System.out.println("Created Column!");
+        //System.out.println("Created Column!");
 
     }
     public void generateNewLevel() {
@@ -959,15 +959,26 @@ public class Main extends GameApplication {
 
 
                     System.out.print("Enter Level Width (Current: " + Globals.gridWidth + ")");
+                    int answerInt = Globals.Input.nextInt();
                     try {
-                        Globals.gridWidth = Globals.Input.nextInt();
+                        
+                        Globals.gridWidth = answerInt;
+                        if (answerInt < 30) {
+                            System.out.println("Grid Width should not be less than 30.");
+                            Globals.gridWidth = 30;
+                        }
                     } catch (Error e) {
                         Globals.gridWidth = 100;
-                    }
+                    } 
 
                     System.out.print("Enter Level Height (Current: " + Globals.gridHeight + ")");
+                    answerInt = Globals.Input.nextInt();
                     try {
-                        Globals.gridHeight = Globals.Input.nextInt();
+                        Globals.gridHeight = answerInt;
+                        if (answerInt < 16) {
+                            System.out.println("Grid height should not be less than 16.");
+                            Globals.gridHeight = 16;
+                        }
                     } catch (Error e) {
                         Globals.gridHeight = 40;
                     }
