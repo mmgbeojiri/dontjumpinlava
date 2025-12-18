@@ -821,13 +821,11 @@ public class Main extends GameApplication {
     }
     public void generateNewLevel() {
         Globals.tileGrid.clear();
-        System.out.println("width:"+Globals.gridWidth);
         addWall();
         for (int i = 0; i < Globals.gridWidth-2; i++) {
             addBoxColumn();
         }
         addWall();
-        System.out.println("Still width:"+Globals.gridWidth);
 
         
 
@@ -975,8 +973,8 @@ public class Main extends GameApplication {
                     }
 
                     generateNewLevel();
-                    System.out.println("I WOKE UP IN A NEW BUGATII");
-                    System.out.println(Globals.tileGrid); // there is a row of bedrocks in the middle of the list that is the same length as Grid.height. why does this occur? the only fnction that couild do this could be addwall.
+                    //System.out.println("I WOKE UP IN A NEW BUGATII");
+                    //System.out.println(Globals.tileGrid); // there is a row of bedrocks in the middle of the list that is the same length as Grid.height. why does this occur? the only fnction that couild do this could be addwall.
                     callDoneLoadingOnAllBlocks();
                     Globals.levelStart = true;
                 
