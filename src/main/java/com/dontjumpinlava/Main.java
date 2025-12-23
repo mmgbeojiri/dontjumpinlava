@@ -1273,8 +1273,11 @@ public class Main extends GameApplication {
         if (player.getComponent(Player.class).y < 0) {
             resetPlayer();
         }
-        getTile(player.getComponent(Player.class).x, player.getComponent(Player.class).y);
+        
+        getTile(player.getComponent(Player.class).x+48, player.getComponent(Player.class).y+32);
+        System.out.println(underTile);
         if (underTile.equalsIgnoreCase("WaterGlass.png")) {
+            System.out.println("aaaa");
             Globals.tileGrid.set((int) tileIndex, "Air.png"); // Scary!
         }
 
