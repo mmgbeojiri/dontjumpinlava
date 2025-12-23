@@ -89,7 +89,7 @@ class Globals {
 
     public static boolean doneLoading = false;
 
-    public static String[] tileShape = {"#", "", "=", "=", "#", "#","#","=", "#","","","","#"};
+    public static String[] tileShape = {"#", "", "=", "", "#", "#","#","=", "#","","","",""};
 
     public static String getIDfromBlock(String tile) {
         for (int i = 0; i < Globals.blockID.length; i++) {
@@ -247,7 +247,7 @@ class Block extends Component {
             }
             
             //System.out.println(imageview);
-            imageview.toFront();
+            //imageview.toBack();
 
             imageEntity.getViewComponent().clearChildren();
             imageEntity.getViewComponent().addChild(imageview);
@@ -527,7 +527,7 @@ class Player extends Component {
         }
         shapeOfTile = Globals.tileShape[Integer.valueOf(Globals.getIDfromBlock(underTile))];
         
-        System.out.println("Tile Grid X: "+tileGridX + " Tile Grid Y: "+ tileGridY + " Tile: " + underTile + "\tTile Shape: "+ shapeOfTile);
+        //System.out.println("Tile Grid X: "+tileGridX + " Tile Grid Y: "+ tileGridY + " Tile: " + underTile + "\tTile Shape: "+ shapeOfTile);
     }
 
     
@@ -1270,10 +1270,16 @@ public class Main extends GameApplication {
     }
     public void checkAroundPlayer() {
         //System.out.println(player.getComponent(Player.class).y);
-            if (player.getComponent(Player.class).y < 0) {
-                resetPlayer();   
-            }
+        if (player.getComponent(Player.class).y < 0) {
+            resetPlayer();
         }
+        getTile(player.getComponent(Player.class).x, player.getComponent(Player.class).y);
+        if (underTile.equalsIgnoreCase("WaterGlass.png")) {
+            Globals.tileGrid.set((int) tileIndex, "Air.png"); // Scary!
+        }
+
+    }
+
     public void movePlayer() {
         if (Globals.editor) {
             handleGodMode();
