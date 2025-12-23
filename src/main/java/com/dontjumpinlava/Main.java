@@ -534,46 +534,27 @@ class Player extends Component {
     public void fixCollisionAtPoint(double x, double y) {
     
         getTile(x, y);
-        if ( !underTile.equalsIgnoreCase("Air.png")) {
-            solid = 10;
-            modx = x % 32;
-            mody = y % 32;
-            
-            /*if (fixdy < 0) {
-                this.y += 0.01-mody;
-                System.out.println(" fixdy: " + fixdy + " mody: " + mody);
-                //this.y -=mody;
-            }
-            if (fixdx < 0) {
-                this.x += 0.01-modx;
-                //this.y -=mody;
-            }
-            if (fixdy > 0) {
-                this.y += -0.01-mody;
-                //this.y -=mody;
-            } 
+        if (shapeOfTile.equalsIgnoreCase("")) {
+            return;
+        }
 
-            if (fixdx > 0) {
-                System.out.println(" fixdx: " + fixdx + " modx: " + modx);
-                this.x += -0.01-modx;
-                //this.y -=mody;
-                System.out.println(underTile);
-            }*/
-            if (fixdy < 0) {
-                this.y += -fixdy;
-            }
-            if(fixdx < 0) {
-                this.x+= -fixdx;
-            }
-            if (fixdy > 0) {
-                this.y += -fixdy;
-            }
-            if(fixdx > 0) {
-                this.x+= -fixdx;
-            }
-        } 
+        solid = 10;
+        modx = x % 32;
+        mody = y % 32;
 
-        //
+        if (fixdy < 0) {
+            this.y += -fixdy;
+        }
+        if (fixdx < 0) {
+            this.x += -fixdx;
+        }
+        if (fixdy > 0) {
+            this.y += -fixdy;
+        }
+        if (fixdx > 0) {
+            this.x += -fixdx;
+        }
+
 
     }
 
