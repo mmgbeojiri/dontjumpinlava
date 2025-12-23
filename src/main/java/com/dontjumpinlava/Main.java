@@ -90,6 +90,26 @@ class Globals {
     public static boolean doneLoading = false;
 
     public static String[] tileShape = {"#", "", "=", "=", "#", "#","#","=", "#","","","","#"};
+
+    public static String getIDfromBlock(String tile) {
+        for (int i = 0; i < Globals.blockID.length; i++) {
+            if (Globals.blockID[i].equalsIgnoreCase(tile)){
+                return Integer.toString(i);
+            }
+        }
+
+        return "@";
+    }
+
+    public static String getBlockFromID(String id) {
+        try {
+            return Globals.blockID[Integer.parseInt(id)];
+        } catch (ArrayIndexOutOfBoundsException e) { // out of bounds
+            return "Air.png";
+        }
+
+        
+    }
 }
 
 class Block extends Component {
@@ -505,7 +525,9 @@ class Player extends Component {
         } catch (java.lang.IndexOutOfBoundsException e) {
             underTile = "Air.png";
         }
-        //System.out.println("Tile Grid X: "+tileGridX + " Tile Grid Y: "+ tileGridY + " Tile: " + underTile);
+        shapeOfTile = Globals.tileShape[Integer.valueOf(Globals.getBlockFromID(underTile))];
+        
+        System.out.println("Tile Grid X: "+tileGridX + " Tile Grid Y: "+ tileGridY + " Tile: " + underTile + "\tTile Shape: "+ shapeOfTile);
     }
 
     
@@ -1543,25 +1565,7 @@ public class Main extends GameApplication {
         return null; // Return null if the line number is out of bounds or an error occurs
     }
 
-    public String getIDfromBlock(String tile) {
-        for (int i = 0; i < Globals.blockID.length; i++) {
-            if (Globals.blockID[i].equalsIgnoreCase(tile)){
-                return Integer.toString(i);
-            }
-        }
-
-        return "@";
-    }
-
-    public String getBlockFromID(String id) {
-        try {
-            return Globals.blockID[Integer.parseInt(id)];
-        } catch (ArrayIndexOutOfBoundsException e) { // out of bounds
-            return "Air.png";
-        }
-
-        
-    }
+    
 
 
     public void encodeLevel(int levelNumber) {
@@ -1582,7 +1586,7 @@ public class Main extends GameApplication {
                 if (length < Globals.atoz.length() && tile.equalsIgnoreCase(Globals.tileGrid.get(tileIndex))) {
                     length++;
                 } else {
-                    blockID = getIDfromBlock(tile);
+                    blockID = Globals.getIDfromBlock(tile);
                     if (tile.equalsIgnoreCase("Air.png")) {
                         blockID = "";
                     }
@@ -1599,7 +1603,7 @@ public class Main extends GameApplication {
             }
             tileIndex += 1 - (Globals.gridWidth * Globals.gridHeight);
         }
-        writeValue(getIDfromBlock(tile), Globals.atoz.charAt(length-1));
+        writeValue(Globals.getIDfromBlock(tile), Globals.atoz.charAt(length-1));
         //writeValue(tile, '_');
         //writeValue(Integer.toString(length), '_');
 
@@ -1700,14 +1704,14 @@ public class Main extends GameApplication {
         while (Globals.readIndex < Globals.levelStore.length()) {
           value = readValue();
           if (value.equalsIgnoreCase("")) {
-            value = getIDfromBlock("Air.png");
+            value = Globals.getIDfromBlock("Air.png");
           }
           for (int i = 0; i < Globals.atoz.indexOf(Globals.letter)+1; i++) {
               if (Globals.tileIndex > (Globals.gridHeight * Globals.gridWidth)-1) {
                   Globals.tileIndex += (1 - (Globals.gridWidth*Globals.gridHeight));
               }
               //System.out.println("TileIndex:" + Globals.tileIndex);
-              Globals.tileGrid.set(Globals.tileIndex, getBlockFromID(value));
+              Globals.tileGrid.set(Globals.tileIndex, Globals.getBlockFromID(value));
               Globals.tileIndex += Globals.gridHeight;
               
               
