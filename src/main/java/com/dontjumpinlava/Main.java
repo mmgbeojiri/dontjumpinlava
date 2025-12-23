@@ -427,6 +427,7 @@ class Player extends Component {
 
     double playerTileIndex = 0.0;
     String underTile = "";
+    String shapeOfTile = "";
 
     int solid = 0;
 
