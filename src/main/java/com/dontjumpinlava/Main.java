@@ -81,13 +81,15 @@ class Globals {
     public static int readIndex = 0;
     public static char letter; 
 
-    public static int levelNumber = 2;
+    public static int levelNumber = 1;
 
     public static Scanner Input = new Scanner(System.in); 
 
     public static boolean levelStart = true;
 
     public static boolean doneLoading = false;
+
+    public static String[] tileShape = {"#", "", "=", "=", "#", "#","#","=", "#","","","","#"};
 }
 
 class Block extends Component {
