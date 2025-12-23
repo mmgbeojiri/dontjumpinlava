@@ -110,6 +110,8 @@ class Globals {
 
         
     }
+
+    public static int waterGlasses = 0; // IF YOU ARE GOING TO REFACTOR THIS CODE, THIS IS ONE OF THE ONLY NUMBERS THAT WILL NOT BE FINAL.
 }
 
 class Block extends Component {
@@ -1275,10 +1277,12 @@ public class Main extends GameApplication {
         }
         
         getTile(player.getComponent(Player.class).x+48, player.getComponent(Player.class).y+32);
-        System.out.println(underTile);
+        //System.out.println(underTile);
         if (underTile.equalsIgnoreCase("WaterGlass.png")) {
-            System.out.println("aaaa");
+            
             Globals.tileGrid.set((int) tileIndex, "Air.png"); // Scary!
+            Globals.waterGlasses += 1;
+            System.out.println("Water Glasses: "+ Globals.waterGlasses);
         }
 
     }
