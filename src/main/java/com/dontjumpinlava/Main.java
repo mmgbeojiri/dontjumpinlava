@@ -525,7 +525,7 @@ class Player extends Component {
         } catch (java.lang.IndexOutOfBoundsException e) {
             underTile = "Air.png";
         }
-        shapeOfTile = Globals.tileShape[Integer.valueOf(Globals.getBlockFromID(underTile))];
+        shapeOfTile = Globals.tileShape[Integer.valueOf(Globals.getIDfromBlock(underTile))];
         
         System.out.println("Tile Grid X: "+tileGridX + " Tile Grid Y: "+ tileGridY + " Tile: " + underTile + "\tTile Shape: "+ shapeOfTile);
     }
