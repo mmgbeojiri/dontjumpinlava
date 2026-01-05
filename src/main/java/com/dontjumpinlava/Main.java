@@ -545,7 +545,7 @@ class Player extends Component {
         mody = (32+y) % 32;
 
         if (shapeOfTile.equalsIgnoreCase("=")) {
-            System.out.println("Y: " + Math.floor(y) + "\tModY: " + mody + "\tFixdy: " + fixdy);
+            System.out.println("Y: " + Math.floor(y) + "\tModY: " + mody + "\tFixdy: " + fixdy + "\tdy:" + Math.floor(dy));
             if ((!part.equalsIgnoreCase("feet")) || mody - fixdy > 32 ) { // mody - fixdy < 32 
                 return;
             }
