@@ -546,15 +546,15 @@ class Player extends Component {
 
         if (shapeOfTile.equalsIgnoreCase("=")) {
             System.out.println("Y: " + Math.floor(y) + "\tModY: " + mody + "\tFixdy: " + fixdy);
-            if ((!part.equalsIgnoreCase("feet")) || mody - fixdy < 32) {
+            if ((!part.equalsIgnoreCase("feet")) || mody - fixdy > 32 ) { // mody - fixdy < 32 
                 return;
             }
-
 
         }
 
         if (fixdy < 0) {
             this.y += -fixdy;
+        
         }
         if (fixdx < 0) {
             this.x += -fixdx;
@@ -575,13 +575,13 @@ class Player extends Component {
         fixdy = dy;
 
         
-        fixCollisionAtPoint(this.x + hitSmall, this.y - hitSmall, "feet");
+        fixCollisionAtPoint(this.x + hitSmall, this.y - hitSmall, "");
         fixCollisionAtPoint(this.x + hitSmall, this.y - Globals.playerHeight, "");
-        fixCollisionAtPoint(this.x + hitSmall, this.y - (Globals.playerHeight*2)+hitSmall,"");
+        fixCollisionAtPoint(this.x + hitSmall, this.y - (Globals.playerHeight*2)+hitSmall,"feet");
          
-        fixCollisionAtPoint(this.x + (Globals.playerWidth*2)-hitSmall, this.y - 1,"feet");
+        fixCollisionAtPoint(this.x + (Globals.playerWidth*2)-hitSmall, this.y - 1,"");
         fixCollisionAtPoint(this.x + (Globals.playerWidth*2)-hitSmall, this.y - Globals.playerHeight,"");
-        fixCollisionAtPoint(this.x + (Globals.playerWidth*2)-hitSmall, this.y - (Globals.playerHeight*2)+hitSmall,"");
+        fixCollisionAtPoint(this.x + (Globals.playerWidth*2)-hitSmall, this.y - (Globals.playerHeight*2)+hitSmall,"feet");
          
     }
 
