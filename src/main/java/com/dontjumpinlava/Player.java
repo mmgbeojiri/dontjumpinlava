@@ -114,17 +114,19 @@ public class Player extends Component {
             return;
         }
 
-        solid = 10;
         modx = (32+x) % 32;
         mody = (32+y) % 32;
-
-        /*if (shapeOfTile.equalsIgnoreCase("=")) {
+        
+        if (shapeOfTile.equalsIgnoreCase("=")) {
             System.out.println("Y: " + Math.floor(y) + "\tModY: " + mody + "\tFixdy: " + fixdy + "\tdy:" + Math.floor(dy));
-            if ((!part.equalsIgnoreCase("feet")) || mody - fixdy > 32 ) { // mody - fixdy < 32 
+            if ((!part.equalsIgnoreCase("feet")) || Math.ceil(mody) - this.dy < 32) { // mody - fixdy < 32 
                 return;
             }
-
-        }*/
+            
+            
+            
+        }
+        solid = 10;
 
         if (fixdy < 0) {
             this.y += -fixdy;
