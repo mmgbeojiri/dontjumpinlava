@@ -104,6 +104,16 @@ public class Block extends Component {
         if (texName.equalsIgnoreCase("WaterTop1.png")) {
             texName = "WaterTop" + (int) ((Math.floor(Globals.timer*4)%2)+1) + ".png";
         }
+        if (texName.equalsIgnoreCase("CompactGrass.png")) {
+            if (Globals.editor == false) {
+                texName = "Grass.png";
+            }
+        }
+        if (texName.equalsIgnoreCase("CompactDirt.png")) {
+            if (Globals.editor == false) {
+                texName = "Dirt.png";
+            }
+        }
 
         //String texName = randomBlocks[(int) Math.floor(Math.random()*3)]; // or Globals.tileGrid.get(tileIndex);
         
@@ -172,12 +182,7 @@ public class Block extends Component {
         Globals.tileGridX =  Math.floor(x/32)+2;
         Globals.tileGridY =  Math.ceil(y/32)-2;
         this.tileIndex =  (int) Globals.tileGridY + ((int) (Globals.tileGridX)*( Globals.gridHeight));
-        if (texName == "CompactGrass.png") {
-            System.out.print("I'm Wet!");
-            if (Globals.editor) {
-                texName = "Grass.png";
-            }
-        }
+        
 
         /*System.out.println(
             "NTileindex: " + this.tileIndex + "\tX: " + x + "\tY: " + y
