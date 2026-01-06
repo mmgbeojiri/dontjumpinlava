@@ -119,6 +119,7 @@ public class Block extends Component {
             Image img = IMAGE_CACHE.get(texName);
             if (img == null) {
                 String resourcePath = "/assets/textures/" + texName;
+                
                 try (InputStream ris = getClass().getResourceAsStream(resourcePath)) {
                     if (ris == null) {
                         System.err.println("Texture not found: " + texName);
@@ -171,6 +172,12 @@ public class Block extends Component {
         Globals.tileGridX =  Math.floor(x/32)+2;
         Globals.tileGridY =  Math.ceil(y/32)-2;
         this.tileIndex =  (int) Globals.tileGridY + ((int) (Globals.tileGridX)*( Globals.gridHeight));
+        if (texName == "CompactGrass.png") {
+            System.out.print("I'm Wet!");
+            if (Globals.editor) {
+                texName = "Grass.png";
+            }
+        }
 
         /*System.out.println(
             "NTileindex: " + this.tileIndex + "\tX: " + x + "\tY: " + y
