@@ -520,6 +520,9 @@ public class Main extends GameApplication {
                 brush = Globals.chosenBrush;
             }
         }
+        if (brush.equalsIgnoreCase("PlayerSpawn.png")) {
+            // foundIndex = 
+        }
         try {
 
             Globals.tileGrid.set((int)tileIndex, brush);
