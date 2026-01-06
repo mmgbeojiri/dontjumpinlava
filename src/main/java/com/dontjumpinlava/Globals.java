@@ -83,4 +83,6 @@ public class Globals {
     }
 
     public static int waterGlasses = 0; // IF YOU ARE GOING TO REFACTOR THIS CODE, THIS IS ONE OF THE ONLY NUMBERS THAT WILL NOT BE FINAL.
+
+    public static int keyDown = 0; // same here
 }

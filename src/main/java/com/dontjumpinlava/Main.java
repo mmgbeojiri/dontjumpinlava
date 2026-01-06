@@ -64,7 +64,7 @@ public class Main extends GameApplication {
     int keyRight = 0;
     int keyLeft = 0;
     int keyUp = 0;
-    int keyDown = 0;
+    
     int keyE = 0;
 
     int keyWalk = 0;
@@ -194,15 +194,15 @@ public class Main extends GameApplication {
     }; 
     UserAction downPressed = new UserAction("Down") {
         @Override 
-        protected void onAction() {keyDown = 1;}
+        protected void onAction() {Globals.keyDown = 1;}
          @Override
-        protected void onActionEnd() {keyDown = 0;}
+        protected void onActionEnd() {Globals.keyDown = 0;}
     };
     UserAction sPressed = new UserAction("S") {
         @Override 
-        protected void onAction() {keyDown = 1;}
+        protected void onAction() {Globals.keyDown = 1;}
         @Override
-        protected void onActionEnd() {keyDown = 0;}
+        protected void onActionEnd() {Globals.keyDown = 0;}
     };
     UserAction ePressed = new UserAction("E") {
         @Override 
@@ -392,7 +392,7 @@ public class Main extends GameApplication {
     }
     public void handleGodMode() {
         player.getComponent(Player.class).changeVelX(3 * (keyRight - keyLeft));
-        player.getComponent(Player.class).changeVelY(3 * (keyUp - keyDown));
+        player.getComponent(Player.class).changeVelY(3 * (keyUp - Globals.keyDown));
 
         player.getComponent(Player.class).setVelX(0.7* player.getComponent(Player.class).dx);
         player.getComponent(Player.class).setVelY(0.7* player.getComponent(Player.class).dy);

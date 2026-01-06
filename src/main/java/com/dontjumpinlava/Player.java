@@ -122,6 +122,9 @@ public class Player extends Component {
             if ((!part.equalsIgnoreCase("feet")) || Math.ceil(mody) - this.dy < 32) { // mody - fixdy < 32 
                 return;
             }
+            if(Globals.keyDown > 0) {
+                return;
+            }
             
             
             
