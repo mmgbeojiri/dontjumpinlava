@@ -300,7 +300,7 @@ public class Main extends GameApplication {
     String[] grassList = {"Grass.png", "Dirt.png", "CompactGrass.png", "CompactDirt.png"};
     String[] stoneList = {"Stone.png", "Bedrock.png", "Nonsolid.png"};
     String[] waterList = {"Water.png", "WaterTop1.png"};
-    String[] misaList = {"Rail.png", "WaterGlass.png"};
+    String[] misaList = {"Rail.png", "WaterGlass.png", "PlayerSpawn.png"};
 
 
     public void changeBrush(String strung) {  Globals.chosenBrush = strung; System.out.println("Set chosen brush to: " + strung);}
