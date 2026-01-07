@@ -77,15 +77,18 @@ public class Main extends GameApplication {
     
     int foundIndex;
     String brush = "Air.png";
+    int spawnIndex = -1;
     
     public void callDoneLoadingOnAllBlocks() {
-        
+        spawnIndex = Globals.tileGrid.indexOf("PlayerSpawn.png");
        for (Entity entity : FXGL.getGameWorld().getEntities()) {
         if (entity.hasComponent(Block.class)) {
             entity.getComponent(Block.class).doneLoading();
         // Do something with the entity or its component
             };
         };
+
+
         
     };
     

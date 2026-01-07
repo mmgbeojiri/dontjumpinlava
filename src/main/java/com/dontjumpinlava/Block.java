@@ -114,6 +114,11 @@ public class Block extends Component {
                 texName = "Dirt.png";
             }
         }
+        if (texName.equalsIgnoreCase("PlayerSpawn.png")) {
+            if (Globals.editor == false) {
+                texName = "Air.png";
+            }
+        }
 
         //String texName = randomBlocks[(int) Math.floor(Math.random()*3)]; // or Globals.tileGrid.get(tileIndex);
         
