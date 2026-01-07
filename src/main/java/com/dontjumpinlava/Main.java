@@ -81,12 +81,12 @@ public class Main extends GameApplication {
     
     public void callDoneLoadingOnAllBlocks() {
         spawnIndex = Globals.tileGrid.indexOf("PlayerSpawn.png");
-       for (Entity entity : FXGL.getGameWorld().getEntities()) {
-        if (entity.hasComponent(Block.class)) {
-            entity.getComponent(Block.class).doneLoading();
-        // Do something with the entity or its component
+        for (Entity entity : FXGL.getGameWorld().getEntities()) {
+            if (entity.hasComponent(Block.class)) {
+                entity.getComponent(Block.class).doneLoading();
+            // Do something with the entity or its component
+                };
             };
-        };
 
 
         
@@ -554,8 +554,14 @@ public class Main extends GameApplication {
         Globals.playerHeight = 16;
         Globals.playerWidth = 16;
 
+        if (spawnIndex > -1) {
+            player.getComponent(Player.class).x = Math.floor((spawnIndex-1)/Globals.gridHeight);
+            player.getComponent(Player.class).y = (spawnIndex - 1) % Globals.gridHeight;
+        }
         player.getComponent(Player.class).x = 0;
         player.getComponent(Player.class).y = 32;
+
+
         player.getComponent(Player.class).dx = 0;
         player.getComponent(Player.class).dy = 0;
         player.getComponent(Player.class).jumping = 99;
