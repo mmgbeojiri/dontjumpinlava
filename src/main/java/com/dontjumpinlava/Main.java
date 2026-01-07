@@ -75,7 +75,7 @@ public class Main extends GameApplication {
     double tileIndex;
     String underTile;
     
-
+    int foundIndex;
     String brush = "Air.png";
     
     public void callDoneLoadingOnAllBlocks() {
@@ -521,7 +521,10 @@ public class Main extends GameApplication {
             }
         }
         if (brush.equalsIgnoreCase("PlayerSpawn.png")) {
-            // foundIndex = 
+            foundIndex = Globals.tileGrid.indexOf(brush);
+            if (foundIndex != -1) {
+                Globals.tileGrid.set(foundIndex, "Air.png");
+            }
         }
         try {
 
