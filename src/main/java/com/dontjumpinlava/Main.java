@@ -553,13 +553,14 @@ public class Main extends GameApplication {
         Globals.cameraY = Globals.oneEighty;
         Globals.playerHeight = 16;
         Globals.playerWidth = 16;
-
+        System.out.println(spawnIndex);
         if (spawnIndex > -1) {
-            player.getComponent(Player.class).x = Math.floor((spawnIndex-1)/Globals.gridHeight);
-            player.getComponent(Player.class).y = (spawnIndex - 1) % Globals.gridHeight;
+            player.getComponent(Player.class).x = (Math.floor((spawnIndex-2)/Globals.gridHeight) * 32)-32;
+            player.getComponent(Player.class).y = 32;
+            //player.getComponent(Player.class).y = -(spawnIndex - 1) % Globals.gridHeight;
 
-            player.getComponent(Player.class).x = (player.getComponent(Player.class).x * 32) + 16;
-            player.getComponent(Player.class).y = (player.getComponent(Player.class).y * 32) + Globals.playerHeight;
+            //player.getComponent(Player.class).x = (player.getComponent(Player.class).x * 32) + 16;
+            //player.getComponent(Player.class).y = (player.getComponent(Player.class).y * 32) + Globals.playerHeight;
         } else {
             player.getComponent(Player.class).x = 0;
             player.getComponent(Player.class).y = 32;
@@ -579,10 +580,10 @@ public class Main extends GameApplication {
     public void checkAroundPlayer() {
         //System.out.println(player.getComponent(Player.class).y);
         if (player.getComponent(Player.class).y < 0) {
+            getTile(player.getComponent(Player.class).x+48, player.getComponent(Player.class).y+32);
             resetPlayer();
         }
         
-        getTile(player.getComponent(Player.class).x+48, player.getComponent(Player.class).y+32);
         //System.out.println(underTile);
         if (underTile.equalsIgnoreCase("WaterGlass.png")) {
             
