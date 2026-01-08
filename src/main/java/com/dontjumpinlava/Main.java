@@ -556,10 +556,11 @@ public class Main extends GameApplication {
         Globals.cameraY = Globals.oneEighty;
         Globals.playerHeight = 16;
         Globals.playerWidth = 16;
-        System.out.println(spawnIndex);
         if (spawnIndex > -1) {
             player.getComponent(Player.class).x = (Math.floor((spawnIndex-2)/Globals.gridHeight) * 32)-32;
-            player.getComponent(Player.class).y = ((spawnIndex-1) % Globals.gridHeight) * 32;
+            player.getComponent(Player.class).y = Globals.gridHeight - (spawnIndex % Globals.gridHeight);
+            //tileIndex = ((Globals.tileGridX)*(Globals.gridHeight)) - Globals.tileGridY;
+            //
             System.out.println(player.getComponent(Player.class).y);
             //player.getComponent(Player.class).y = -(spawnIndex - 1) % Globals.gridHeight;
             
