@@ -507,6 +507,7 @@ public class Main extends GameApplication {
         if (Globals.editor == false) {
             return;
         }
+        //System.out.println(player.getComponent(Player.class).y);
         
         Globals.mouseX = (double) FXGL.getInput().mouseXUIProperty().get();
         Globals.mouseY = (double) FXGL.getInput().mouseYUIProperty().get();
@@ -526,7 +527,7 @@ public class Main extends GameApplication {
         }
         if (brush.equalsIgnoreCase("PlayerSpawn.png")) {
             foundIndex = Globals.tileGrid.indexOf(brush);
-            if (foundIndex != -1) {
+            if (foundIndex > -1) {
                 Globals.tileGrid.set(foundIndex, "Air.png");
             }
             
@@ -558,9 +559,10 @@ public class Main extends GameApplication {
         System.out.println(spawnIndex);
         if (spawnIndex > -1) {
             player.getComponent(Player.class).x = (Math.floor((spawnIndex-2)/Globals.gridHeight) * 32)-32;
-            player.getComponent(Player.class).y = 32;
+            player.getComponent(Player.class).y = ((spawnIndex-1) % Globals.gridHeight) * 32;
+            System.out.println(player.getComponent(Player.class).y);
             //player.getComponent(Player.class).y = -(spawnIndex - 1) % Globals.gridHeight;
-
+            
             //player.getComponent(Player.class).x = (player.getComponent(Player.class).x * 32) + 16;
             //player.getComponent(Player.class).y = (player.getComponent(Player.class).y * 32) + Globals.playerHeight;
         } else {
