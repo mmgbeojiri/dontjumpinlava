@@ -557,9 +557,12 @@ public class Main extends GameApplication {
         if (spawnIndex > -1) {
             player.getComponent(Player.class).x = Math.floor((spawnIndex-1)/Globals.gridHeight);
             player.getComponent(Player.class).y = (spawnIndex - 1) % Globals.gridHeight;
+        } else {
+            player.getComponent(Player.class).x = 3;
+            player.getComponent(Player.class).y = 3;
         }
-        player.getComponent(Player.class).x = 0;
-        player.getComponent(Player.class).y = 32;
+        player.getComponent(Player.class).x = (player.getComponent(Player.class).x * 32) + 16;
+        player.getComponent(Player.class).y = (player.getComponent(Player.class).y * 32) + 16;
 
 
         player.getComponent(Player.class).dx = 0;
