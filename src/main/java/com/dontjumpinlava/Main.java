@@ -529,7 +529,7 @@ public class Main extends GameApplication {
             if (foundIndex != -1) {
                 Globals.tileGrid.set(foundIndex, "Air.png");
             }
-            updateSpawnIndex();
+            
         }
         try {
 
