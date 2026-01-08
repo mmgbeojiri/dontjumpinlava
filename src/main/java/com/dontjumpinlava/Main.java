@@ -78,7 +78,7 @@ public class Main extends GameApplication {
     int foundIndex;
     String brush = "Air.png";
     int spawnIndex = -1;
-    public void updateSpawnIndex() {spawnIndex = Globals.tileGrid.indexOf("PlayerSpawn.png");};
+    public void updateSpawnIndex() {spawnIndex = Globals.tileGrid.indexOf("PlayerSpawn.png"); System.out.println("SpawnIndex: " + spawnIndex);};
 
     public void callDoneLoadingOnAllBlocks() {
         updateSpawnIndex();
@@ -529,6 +529,7 @@ public class Main extends GameApplication {
             if (foundIndex != -1) {
                 Globals.tileGrid.set(foundIndex, "Air.png");
             }
+            updateSpawnIndex();
         }
         try {
 
