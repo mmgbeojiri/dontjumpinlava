@@ -78,9 +78,10 @@ public class Main extends GameApplication {
     int foundIndex;
     String brush = "Air.png";
     int spawnIndex = -1;
-    
+    public void updateSpawnIndex() {spawnIndex = Globals.tileGrid.indexOf("PlayerSpawn.png");};
+
     public void callDoneLoadingOnAllBlocks() {
-        spawnIndex = Globals.tileGrid.indexOf("PlayerSpawn.png");
+        updateSpawnIndex();
         for (Entity entity : FXGL.getGameWorld().getEntities()) {
             if (entity.hasComponent(Block.class)) {
                 entity.getComponent(Block.class).doneLoading();
@@ -577,12 +578,13 @@ public class Main extends GameApplication {
         
 
     }
+    
     public void checkAroundPlayer() {
         //System.out.println(player.getComponent(Player.class).y);
         if (player.getComponent(Player.class).y < 0) {
-            getTile(player.getComponent(Player.class).x+48, player.getComponent(Player.class).y+32);
             resetPlayer();
         }
+        getTile(player.getComponent(Player.class).x+48, player.getComponent(Player.class).y+32);
         
         //System.out.println(underTile);
         if (underTile.equalsIgnoreCase("WaterGlass.png")) {
