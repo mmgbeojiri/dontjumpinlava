@@ -78,7 +78,9 @@ public class Main extends GameApplication {
     int foundIndex;
     String brush = "Air.png";
     int spawnIndex = -1;
-    public void updateSpawnIndex() {spawnIndex = Globals.tileGrid.indexOf("PlayerSpawn.png"); System.out.println("SpawnIndex: " + spawnIndex);};
+    public void updateSpawnIndex() {//spawnIndex = Globals.tileGrid.indexOf("PlayerSpawn.png"); 
+    System.out.println("SpawnIndex: " + spawnIndex);
+    };
 
     public void callDoneLoadingOnAllBlocks() {
         updateSpawnIndex();
@@ -385,7 +387,7 @@ public class Main extends GameApplication {
 
         input.addAction(rPressed, KeyCode.R);
 
-        input.addAction(specialPressed, KeyCode.BACK_SLASH);
+        //input.addAction(specialPressed, KeyCode.BACK_SLASH);
         
 
         
@@ -538,12 +540,16 @@ public class Main extends GameApplication {
             if (foundIndex > -1) {
                 Globals.tileGrid.set(foundIndex, "Air.png");
             }
+
             
         }
         try {
 
             Globals.tileGrid.set((int)tileIndex, brush);
             //writeLevelData();
+            if (brush.equalsIgnoreCase("PlayerSpawn.png")) {
+                updateSpawnIndex();
+            }
            
         } catch (Error e) {
             e.printStackTrace();
@@ -560,8 +566,6 @@ public class Main extends GameApplication {
 
 
     public void resetPlayer() {
-        Globals.cameraX = Globals.twoForty;
-        Globals.cameraY = Globals.oneEighty;
         Globals.playerHeight = 16;
         Globals.playerWidth = 16;
         if (spawnIndex > -1) {
@@ -579,15 +583,20 @@ public class Main extends GameApplication {
             player.getComponent(Player.class).y = 32;
         }
         
-
-
+        
+        
         player.getComponent(Player.class).dx = 0;
         player.getComponent(Player.class).dy = 0;
         player.getComponent(Player.class).jumping = 99;
         player.getComponent(Player.class).falling = 99;
-
-         
         
+        
+        //Globals.cameraX = Globals.twoForty;
+        //Globals.cameraY = Globals.oneEighty;
+        
+
+        Globals.cameraX = player.getComponent(Player.class).x;
+        Globals.cameraY = player.getComponent(Player.class).y;
 
     }
     
