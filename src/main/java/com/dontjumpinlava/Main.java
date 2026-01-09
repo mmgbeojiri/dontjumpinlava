@@ -566,7 +566,7 @@ public class Main extends GameApplication {
         Globals.playerWidth = 16;
         if (spawnIndex > -1) {
             player.getComponent(Player.class).x = (Math.floor((spawnIndex-2)/Globals.gridHeight) * 32)-32;
-            player.getComponent(Player.class).y = Globals.gridHeight - (-spawnIndex % Globals.gridHeight);
+            player.getComponent(Player.class).y = ((Globals.gridHeight - 1) - (spawnIndex % Globals.gridHeight)) * 32;
             //tileIndex = ((Globals.tileGridX)*(Globals.gridHeight)) - Globals.tileGridY;
             //
             System.out.println(player.getComponent(Player.class).y);
