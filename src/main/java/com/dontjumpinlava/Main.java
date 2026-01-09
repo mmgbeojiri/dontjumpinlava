@@ -152,7 +152,12 @@ public class Main extends GameApplication {
         settings.setHeight(Globals.height);
         settings.setTitle("Don't Jump in Lava");
     }
-
+    UserAction specialPressed = new UserAction("Debug") {
+        @Override
+        protected void onActionBegin() {
+            System.out.println("SpawnIndex: " +  spawnIndex + "Tile Grid Y: "+Math.floor(player.getComponent(Player.class).y/32));
+        }
+    };
     
     UserAction rightPressed = new UserAction("Right") {
         @Override 
@@ -379,6 +384,9 @@ public class Main extends GameApplication {
         input.addAction(lPressed, KeyCode.L);
 
         input.addAction(rPressed, KeyCode.R);
+
+        input.addAction(specialPressed, KeyCode.BACK_SLASH);
+        
 
         
     }
