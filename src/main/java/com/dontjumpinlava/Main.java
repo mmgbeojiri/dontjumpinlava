@@ -223,6 +223,7 @@ public class Main extends GameApplication {
                 Globals.levelStart = false;
                 encodeLevel(Globals.levelNumber);
                 Globals.levelStart = true;
+                callDoneLoadingOnAllBlocks();
             } else {
                 Globals.levelStart = false;
                 decodeLevel(Globals.levelNumber);
