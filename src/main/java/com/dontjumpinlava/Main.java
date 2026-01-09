@@ -115,7 +115,7 @@ public class Main extends GameApplication {
                 Globals.tileGrid.add("Air.png");
             
         }
-        Globals.tileGrid.add("grass.png");
+        Globals.tileGrid.add("CompactGrass.png");
 
         //System.out.println("Created Column!");
 
