@@ -150,7 +150,9 @@ public class Block extends Component {
             }
 
             // just replace the image on the existing ImageView
+            imageview.toBack();
             imageview.setImage(img);
+            imageview.setSmooth(true);
 
             if (texName.equalsIgnoreCase("Water.png") || texName.contains("WaterTop")){
                 imageview.setOpacity(0.5f);

@@ -190,6 +190,10 @@ public class Player extends Component {
         }
     }
 
+   void debug(ImageView image) {
+    System.out.println(image.getParent());
+   }
+
     public void changeImage(String texture){
         ImageView image = new ImageView();
         InputStream ris = getClass().getResourceAsStream("/assets/textures/"+texture);
@@ -201,6 +205,7 @@ public class Player extends Component {
         
         //image.setFitWidth(size);
         image.toFront();
+        debug(image);
         imageEntity.getViewComponent().clearChildren();
         imageEntity.getViewComponent().addChild(image);
     }
@@ -216,11 +221,12 @@ public class Player extends Component {
         image.setTranslateX(-(width-(size*32))/2);
         //image.setFitWidth(size);
         image.toFront();
+        debug(image);
         imageEntity.getViewComponent().clearChildren();
         imageEntity.getViewComponent().addChild(image);
     }
 
-        public void changeImage(String texture, double width, double height){
+    public void changeImage(String texture, double width, double height){
         ImageView image = new ImageView();
         InputStream ris = getClass().getResourceAsStream("/assets/textures/"+texture);
         Image img = new Image(ris);
@@ -232,6 +238,9 @@ public class Player extends Component {
         image.setTranslateX(-(width-(size*32))/2);
         //image.setFitWidth(size);
         image.toFront();
+        debug(image);
+
+        
         imageEntity.getViewComponent().clearChildren();
         imageEntity.getViewComponent().addChild(image);
     }
