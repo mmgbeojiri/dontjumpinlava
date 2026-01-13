@@ -213,7 +213,7 @@ public class Enemy extends Component {
         imageEntity.setY(scratchY + Globals.cameraY);
         //System.out.println(playeraction);
 
-        changeImage(costume, 35, 32);
+        changeImage(costume, 32);
     }
 
     double frame = 0;
