@@ -79,8 +79,8 @@ public class Main extends GameApplication {
     String brush = "Air.png";
     int spawnIndex = -1;
 
-    Image enemyImage = new Image("assets/textures/EnemyRun1.png", 64, 64, true, true);
-    ImageView enemyImageView = new ImageView(enemyImage);
+    //Image enemyImage = new Image("EnemyRun1.png", 64, 64, true, true);
+    //ImageView enemyImageView = new ImageView(enemyImage);
 
 
     public void updateSpawnIndex() {
@@ -226,7 +226,7 @@ public class Main extends GameApplication {
         @Override
         protected void onActionBegin(){
             FXGL.entityBuilder().at(player.getComponent(Player.class).x, player.getComponent(Player.class).y)
-            .view(enemyImageView)
+            .view("EnemyRun1.png")
             .with(new Player(player.getComponent(Player.class).x, player.getComponent(Player.class).y,1))
             .buildAndAttach();
         }
@@ -404,6 +404,8 @@ public class Main extends GameApplication {
         input.addAction(lPressed, KeyCode.L);
 
         input.addAction(rPressed, KeyCode.R);
+
+        input.addAction(gPressed, KeyCode.G);
 
         //input.addAction(specialPressed, KeyCode.BACK_SLASH);
         

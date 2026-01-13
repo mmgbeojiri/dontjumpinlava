@@ -205,7 +205,7 @@ public class Player extends Component {
         
         //image.setFitWidth(size);
         image.toFront();
-        debug(image);
+        //debug(image);
         imageEntity.getViewComponent().clearChildren();
         imageEntity.getViewComponent().addChild(image);
     }
@@ -221,7 +221,7 @@ public class Player extends Component {
         image.setTranslateX(-(width-(size*32))/2);
         //image.setFitWidth(size);
         image.toFront();
-        debug(image);
+        //debug(image);
         imageEntity.getViewComponent().clearChildren();
         imageEntity.getViewComponent().addChild(image);
     }
@@ -238,7 +238,7 @@ public class Player extends Component {
         image.setTranslateX(-(width-(size*32))/2);
         //image.setFitWidth(size);
         image.toFront();
-        debug(image);
+        //debug(image);
 
         
         imageEntity.getViewComponent().clearChildren();
