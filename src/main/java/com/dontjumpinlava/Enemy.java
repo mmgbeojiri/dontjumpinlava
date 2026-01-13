@@ -42,10 +42,11 @@ public class Enemy extends Component {
     int hitSmall = 1;
 
     String type = "";
-    public Enemy(double x, double y, double size) {
+    public Enemy(double x, double y, double size, String type) {
         this.x = x;
         this.y = y;
         this.size = size;
+        this.type = type;
     }
     @Override
     public void onAdded() {
@@ -209,7 +210,7 @@ public class Enemy extends Component {
         imageEntity.setY(scratchY + Globals.cameraY);
         //System.out.println(playeraction);
 
-        changeImage(costume);
+        changeImage(costume, 35, 32);
     }
 
     @Override
@@ -220,8 +221,7 @@ public class Enemy extends Component {
              
             
 
-            Globals.playerX = this.x;
-            Globals.playerY = this.y;
+
 
             scratchX = this.x + Globals.width/2 - size/2 ;
             scratchY = -this.y +  Globals.height/2 - size/2;

@@ -227,7 +227,7 @@ public class Main extends GameApplication {
         protected void onActionBegin(){
             FXGL.entityBuilder().at(player.getComponent(Player.class).x, player.getComponent(Player.class).y)
             .view("EnemyRun1.png")
-            .with(new Player(player.getComponent(Player.class).x, player.getComponent(Player.class).y,1))
+            .with(new Enemy(player.getComponent(Player.class).x, player.getComponent(Player.class).y,1, "Op"))
             .buildAndAttach();
         }
     };
