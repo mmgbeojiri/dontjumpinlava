@@ -78,6 +78,11 @@ public class Main extends GameApplication {
     int foundIndex;
     String brush = "Air.png";
     int spawnIndex = -1;
+
+    Image enemyImage = new Image("assets/textures/EnemyRun1.png", 64, 64, true, true);
+    ImageView enemyImageView = new ImageView(enemyImage);
+
+
     public void updateSpawnIndex() {
         spawnIndex = Globals.tileGrid.indexOf("PlayerSpawn.png"); 
     //System.out.println("SpawnIndex: " + spawnIndex);
@@ -216,6 +221,17 @@ public class Main extends GameApplication {
         @Override
         protected void onActionEnd() {Globals.keyDown = 0;}
     };
+
+    UserAction gPressed = new UserAction("G") {
+        @Override
+        protected void onActionBegin(){
+            FXGL.entityBuilder().at(player.getComponent(Player.class).x, player.getComponent(Player.class).y)
+            .view(enemyImageView)
+            .with(new Player(player.getComponent(Player.class).x, player.getComponent(Player.class).y,1))
+            .buildAndAttach();
+        }
+    };
+
     UserAction ePressed = new UserAction("E") {
         @Override 
         protected void onActionBegin() {
