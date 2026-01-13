@@ -42,11 +42,13 @@ public class Enemy extends Component {
     int hitSmall = 1;
 
     String type = "";
+
     public Enemy(double x, double y, double size, String type) {
         this.x = x;
         this.y = y;
         this.size = size;
         this.type = type;
+        this.dx = 0.5;   
     }
     @Override
     public void onAdded() {
@@ -136,7 +138,8 @@ public class Enemy extends Component {
         if ( solid > 0) {
             
 
-                this.dx = 0;
+                this.dx *= -1;
+
         
         }
     }
@@ -213,11 +216,34 @@ public class Enemy extends Component {
         changeImage(costume, 35, 32);
     }
 
+    public void moveEnemy() {
+        if (this.type.equalsIgnoreCase("Op")) {
+            this.dy -= 0.3;
+            if (this.dy < -22) {
+                this.dy = -22;
+            }
+            moveSpriteY();
+             
+
+            if (this.dx < 1) {
+                this.dx += 0.1;
+            }
+
+            if (this.dx > -1) {
+                this.dx -= 0.1;
+            }
+            //System.out.println(this.dx);
+            moveSpriteX();
+        }
+
+
+    }
+
     @Override
     public void onUpdate(double tpf) {
-        
-            moveSpriteX();
-            moveSpriteY();       
+            moveEnemy();
+            
+              
              
             
 
