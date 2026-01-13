@@ -216,6 +216,8 @@ public class Enemy extends Component {
         changeImage(costume, 35, 32);
     }
 
+    double frame = 0;
+
     public void moveEnemy() {
         if (this.type.equalsIgnoreCase("Op")) {
             this.dy -= 0.3;
@@ -232,8 +234,11 @@ public class Enemy extends Component {
             if (this.dx > -1) {
                 this.dx -= 0.1;
             }
-            //System.out.println(this.dx);
+            System.out.println(costume);
             moveSpriteX();
+            frame += 0.25;
+
+            costume = "EnemyRun" + ((int) Math.floor(frame%3) + 1) + ".png";
         }
 
 
