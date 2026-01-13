@@ -1,7 +1,11 @@
 package com.dontjumpinlava;
+import java.io.InputStream;
+
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.component.Component;
 
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 public class Enemy extends Component { 
         double x; 
     double y;
@@ -36,6 +40,18 @@ public class Enemy extends Component {
     int jumping = 99;
 
     int hitSmall = 1;
+
+    String type = "";
+    public Enemy(double x, double y, double size) {
+        this.x = x;
+        this.y = y;
+        this.size = size;
+    }
+    @Override
+    public void onAdded() {
+        this.imageEntity = entity;
+    }
+    
 
     public void getTile(double x, double y) {
         tileGridX = Math.floor(x/32)+1;
@@ -137,5 +153,82 @@ public class Enemy extends Component {
                 this.dy = 0;
 
         }
+    }
+    public void changeImage(String texture){
+        ImageView image = new ImageView();
+        InputStream ris = getClass().getResourceAsStream("/assets/textures/"+texture);
+        Image img = new Image(ris);
+        image.setImage(img);
+        image.setPreserveRatio(true);
+        image.setSmooth(true);
+        image.setFitWidth(size*32);
+        
+        //image.setFitWidth(size);
+        image.toFront();
+        imageEntity.getViewComponent().clearChildren();
+        imageEntity.getViewComponent().addChild(image);
+    }
+
+    public void changeImage(String texture, double width){
+        ImageView image = new ImageView();
+        InputStream ris = getClass().getResourceAsStream("/assets/textures/"+texture);
+        Image img = new Image(ris);
+        image.setImage(img);
+        image.setPreserveRatio(true);
+        image.setSmooth(true);
+        image.setFitWidth(width);
+        image.setTranslateX(-(width-(size*32))/2);
+        //image.setFitWidth(size);
+        image.toFront();
+        imageEntity.getViewComponent().clearChildren();
+        imageEntity.getViewComponent().addChild(image);
+    }
+
+    public void changeImage(String texture, double width, double height){
+        ImageView image = new ImageView();
+        InputStream ris = getClass().getResourceAsStream("/assets/textures/"+texture);
+        Image img = new Image(ris);
+        image.setImage(img);
+        image.setPreserveRatio(false);
+        image.setSmooth(true);
+        image.setFitWidth(width);
+        image.setFitHeight(height);
+        image.setTranslateX(-(width-(size*32))/2);
+        //image.setFitWidth(size);
+        image.toFront();
+
+        
+        imageEntity.getViewComponent().clearChildren();
+        imageEntity.getViewComponent().addChild(image);
+    }
+
+    String costume = "EnemyRun1.png";
+
+    public void paintSprite(){
+        imageEntity.setX(scratchX - Globals.cameraX);
+        imageEntity.setY(scratchY + Globals.cameraY);
+        //System.out.println(playeraction);
+
+        changeImage(costume);
+    }
+
+    @Override
+    public void onUpdate(double tpf) {
+        
+            moveSpriteX();
+            moveSpriteY();       
+             
+            
+
+            Globals.playerX = this.x;
+            Globals.playerY = this.y;
+
+            scratchX = this.x + Globals.width/2 - size/2 ;
+            scratchY = -this.y +  Globals.height/2 - size/2;
+
+            if (!type.equals("")){
+                paintSprite();
+            }
+        
     }
 }
