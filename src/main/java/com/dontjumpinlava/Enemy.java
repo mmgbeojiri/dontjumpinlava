@@ -43,6 +43,9 @@ public class Enemy extends Component {
 
     String type = "";
 
+    int enemyWidth = 32;
+    int enemyHeight = 32;
+
     public Enemy(double x, double y, double size, String type) {
         this.x = x;
         this.y = y;
@@ -206,19 +209,20 @@ public class Enemy extends Component {
         imageEntity.getViewComponent().addChild(image);
     }
 
-    String costume = "EnemyRun1.png";
+    String costume = "EnemyStand.png";
 
     public void paintSprite(){
         imageEntity.setX(scratchX - Globals.cameraX);
         imageEntity.setY(scratchY + Globals.cameraY);
         //System.out.println(playeraction);
 
-        changeImage(costume, 32);
+        changeImage(costume, enemyWidth, enemyHeight);
     }
 
     double frame = 0;
 
     public void moveEnemy() {
+
         if (this.type.equalsIgnoreCase("Op")) {
             this.dy -= 0.3;
             if (this.dy < -22) {
@@ -234,11 +238,26 @@ public class Enemy extends Component {
             if (this.dx > -1) {
                 this.dx -= 0.1;
             }
+
+            if (this.dx > 0) {
+                costume = "EnemyRightRun.png";
+                enemyWidth = 40;
+            } else if (this.dx < 0) {
+                costume = "EnemyLeftRun.png";
+                enemyWidth = 40;
+            } else {
+                costume = "EnemyStand.png";
+            }
+
+            if (this.dy < 0) {
+                enemyHeight = 32 + this.dy/10;
+            }
+            
             System.out.println(costume);
             moveSpriteX();
             frame += 0.25;
 
-            costume = "EnemyRun" + ((int) Math.floor(frame%3) + 1) + ".png";
+            
         }
 
 
