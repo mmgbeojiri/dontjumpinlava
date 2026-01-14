@@ -43,8 +43,8 @@ public class Enemy extends Component {
 
     String type = "";
 
-    int enemyWidth = 32;
-    int enemyHeight = 32;
+    double enemyWidth = 32;
+    double enemyHeight = 32;
 
     public Enemy(double x, double y, double size, String type) {
         this.x = x;
@@ -238,20 +238,23 @@ public class Enemy extends Component {
             if (this.dx > -1) {
                 this.dx -= 0.1;
             }
+            enemyWidth = 32;
+            enemyWidth = 32;
+            costume = "EnemyStand.png";
+            if (falling < 4) {
+                enemyWidth = 32-(dy*0.5);
+                enemyHeight = 32+(dy*0.5);
+            }
 
             if (this.dx > 0) {
                 costume = "EnemyRightRun.png";
-                enemyWidth = 40;
+                enemyWidth = 35;
             } else if (this.dx < 0) {
                 costume = "EnemyLeftRun.png";
-                enemyWidth = 40;
-            } else {
-                costume = "EnemyStand.png";
-            }
-
-            if (this.dy < 0) {
-                enemyHeight = 32 + this.dy/10;
-            }
+                enemyWidth = 35;
+            } 
+            
+           
             
             System.out.println(costume);
             moveSpriteX();
