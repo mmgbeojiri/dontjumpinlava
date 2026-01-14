@@ -222,7 +222,12 @@ public class Enemy extends Component {
     double frame = 0;
 
     public void moveEnemy() {
-
+        if (this.type.equalsIgnoreCase("Squish")) {
+            frame += 0.1;
+            if (frame > 10) {
+                imageEntity.removeFromWorld();
+            }
+        }
         if (this.type.equalsIgnoreCase("Op")) {
             this.dy -= 0.3;
             if (this.dy < -22) {
@@ -248,23 +253,37 @@ public class Enemy extends Component {
 
             if (this.dx > 0) {
                 costume = "EnemyRightRun.png";
-                enemyWidth = 35;
+                enemyWidth = 37;
             } else if (this.dx < 0) {
                 costume = "EnemyLeftRun.png";
-                enemyWidth = 35;
+                enemyWidth = 37;
             } 
             
            
             
-            System.out.println(costume);
             moveSpriteX();
             frame += 0.25;
+
+            if (Math.abs(Globals.playerX - this.x) < this.entityHitbox && Math.abs(Globals.playerY - this.y) < entityHitbox) {
+                if (Globals.bopY > 0) {
+                    type = "squish";
+                    costume = "EnemySquashed.png";
+                    translateDown = 22;
+                    enemyWidth = 40;
+                    enemyHeight = 20;
+                    frame=0;
+                }
+            }
+            
 
             
         }
 
 
     }
+
+    int entityHitbox = 50;
+    double translateDown = 0;
 
     @Override
     public void onUpdate(double tpf) {
@@ -277,7 +296,7 @@ public class Enemy extends Component {
 
 
             scratchX = this.x + Globals.width/2 - size/2 ;
-            scratchY = -this.y +  Globals.height/2 - size/2;
+            scratchY = -this.y +  Globals.height/2 - size/2 + (translateDown);
 
             if (!type.equals("")){
                 paintSprite();

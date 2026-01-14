@@ -226,7 +226,7 @@ public class Main extends GameApplication {
         @Override
         protected void onActionBegin(){
             FXGL.entityBuilder().at(player.getComponent(Player.class).x, player.getComponent(Player.class).y)
-            .view("EnemyRun1.png")
+            .view("EnemyRightRun.png")
             .with(new Enemy(player.getComponent(Player.class).x, player.getComponent(Player.class).y,1, "Op"))
             .buildAndAttach();
         }
@@ -642,6 +642,12 @@ public class Main extends GameApplication {
             handleGodMode();
             movePlayerEditor();
         } else {
+            if (player.getComponent(Player.class).falling > 2 && player.getComponent(Player.class).dy < -1) {
+                Globals.bopY = player.getComponent(Player.class).y;
+            } else {
+                Globals.bopY = 0;
+            }
+
             handleKeysLeftRight();
             handleKeysJump();
             checkAroundPlayer(); 
