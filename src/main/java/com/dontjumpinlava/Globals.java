@@ -87,4 +87,5 @@ public class Globals {
     public static int keyDown = 0; // same here
 
     public static double bopY = 0;
+    public static double bouncePlayer = 0;
 }

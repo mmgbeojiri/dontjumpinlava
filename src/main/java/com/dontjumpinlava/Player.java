@@ -292,6 +292,13 @@ public class Player extends Component {
                 moveSpriteX();
                 moveSpriteY();       
             } 
+
+            if (Globals.bouncePlayer > 0) {
+                Globals.bouncePlayer -= 1;
+                this.dy = 6;
+                falling = 4;
+                jumping = 1;
+            }
             
 
             Globals.playerX = this.x;

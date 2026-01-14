@@ -272,6 +272,7 @@ public class Enemy extends Component {
                     enemyWidth = 40;
                     enemyHeight = 20;
                     frame=0;
+                    Globals.bouncePlayer = 5;
                 }
             }
             
