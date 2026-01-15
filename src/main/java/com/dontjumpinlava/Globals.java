@@ -52,7 +52,7 @@ public class Globals {
     public static int readIndex = 0;
     public static char letter; 
 
-    public static int levelNumber = 1;
+    public static int levelNumber = 3;
 
     public static Scanner Input = new Scanner(System.in); 
 
