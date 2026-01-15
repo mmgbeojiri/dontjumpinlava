@@ -43,6 +43,8 @@ public class Player extends Component {
 
     int translateDown=0;
     boolean debounce = true;
+    boolean ableToWallJump = false;
+    int direction = 1;
 
     public Player(double x, double y, double size) {
         this.x = x;
@@ -109,6 +111,12 @@ public class Player extends Component {
         //System.out.println("Tile Grid X: "+tileGridX + " Tile Grid Y: "+ tileGridY + " Tile: " + underTile + "\tTile Shape: "+ shapeOfTile);
     }
 
+    void checkWallJump() {
+        if (falling > 10 || jumping > 10) {
+            ableToWallJump = true;
+            Globals.terminalVelocity = 1;
+        }
+    }
     
     public void fixCollisionAtPoint(double x, double y, String part) {
     
@@ -140,12 +148,14 @@ public class Player extends Component {
         }
         if (fixdx < 0) {
             this.x += -fixdx;
+            checkWallJump();
         }
         if (fixdy > 0) {
             this.y += -fixdy;
         }
         if (fixdx > 0) {
             this.x += -fixdx;
+            checkWallJump();
         }
 
 
@@ -169,10 +179,10 @@ public class Player extends Component {
 
     public void moveSpriteX(){
         this.x += this.dx;
+        Globals.terminalVelocity = 22;
+        ableToWallJump = false;
         fixCollisionInDirection(this.dx, 0);
         if ( solid > 0) {
-            
-
                 this.dx = 0;
         
         }
@@ -310,6 +320,8 @@ public class Player extends Component {
     @Override
     public void onUpdate(double tpf) {
         if (Globals.levelStart){
+            //System.out.println("Ability to Wall Jump: " + ableToWallJump);
+            System.out.println("Direction: " + direction);
             if (!Globals.editor){
                 moveSpriteX();
                 moveSpriteY();       

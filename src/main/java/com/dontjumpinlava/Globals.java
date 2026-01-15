@@ -88,5 +88,6 @@ public class Globals {
 
     public static double bopY = 0;
     public static double bouncePlayer = 0;
+    public static int terminalVelocity = 22;
 
 }

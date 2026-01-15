@@ -480,7 +480,7 @@ public class Main extends GameApplication {
         }
         player.getComponent(Player.class).playerframe +=1;
     }
-
+    
     public void handleKeysJump() {
 
         
@@ -489,8 +489,8 @@ public class Main extends GameApplication {
                         -0.3
         ); 
 
-        if (player.getComponent(Player.class).dy < -22) {
-            player.getComponent(Player.class).setVelY(-22);
+        if (player.getComponent(Player.class).dy < -Globals.terminalVelocity) {
+            player.getComponent(Player.class).setVelY(-Globals.terminalVelocity);
         }
         if (keyUp == 1) {
             if ((player.getComponent(Player.class).falling < 10)
