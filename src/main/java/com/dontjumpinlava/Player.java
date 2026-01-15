@@ -179,6 +179,11 @@ public class Player extends Component {
 
     public void moveSpriteX(){
         this.x += this.dx;
+        if (this.dx > 0) {
+            direction = 1;
+        } else if (this.dx < 0) {
+            direction = -1;
+        };
         Globals.terminalVelocity = 22;
         ableToWallJump = false;
         fixCollisionInDirection(this.dx, 0);
@@ -263,6 +268,16 @@ public class Player extends Component {
         imageEntity.setX(scratchX - Globals.cameraX);
         imageEntity.setY(scratchY + Globals.cameraY);
         //System.out.println(playeraction);
+
+        if (ableToWallJump) {
+            if (direction < 0 ) {
+            changeImage("HangOn2.png", 32, 40);
+            } else {
+                changeImage("Hang.png", 32, 40);
+            }
+            return;
+        }
+
         if (falling > 4) {
             /*
             if (this.dy > 0){
@@ -321,7 +336,7 @@ public class Player extends Component {
     public void onUpdate(double tpf) {
         if (Globals.levelStart){
             //System.out.println("Ability to Wall Jump: " + ableToWallJump);
-            System.out.println("Direction: " + direction);
+            //System.out.println("Direction: " + direction);
             if (!Globals.editor){
                 moveSpriteX();
                 moveSpriteY();       

@@ -492,15 +492,20 @@ public class Main extends GameApplication {
         if (player.getComponent(Player.class).dy < -Globals.terminalVelocity) {
             player.getComponent(Player.class).setVelY(-Globals.terminalVelocity);
         }
-        if (keyUp == 1) {
-            if ((player.getComponent(Player.class).falling < 10)
-             || (player.getComponent(Player.class).jumping > 0)) {
+
+        if (keyUp == 1) { // key space is pressed
+            if ((player.getComponent(Player.class).ableToWallJump)) {
+                player.getComponent(Player.class).dy = 8;
+                player.getComponent(Player.class).dx = 10 * -player.getComponent(Player.class).direction;
+            }
+            if ((player.getComponent(Player.class).falling < 10) || (player.getComponent(Player.class).jumping > 0)) {
             
                 player.getComponent(Player.class).changeJumping(1);
                 if (player.getComponent(Player.class).jumping < 15) {
                     player.getComponent(Player.class).setVelY(6); 
                 }
         }
+
         } else {
             player.getComponent(Player.class).setJumping(0);
         }
