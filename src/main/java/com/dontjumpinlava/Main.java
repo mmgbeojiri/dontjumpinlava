@@ -495,7 +495,10 @@ public class Main extends GameApplication {
 
         if (keyUp == 1) { // key space is pressed
             if ((player.getComponent(Player.class).ableToWallJump)) {
-                player.getComponent(Player.class).dy = 8;
+                player.getComponent(Player.class).changeJumping(1);
+                if (player.getComponent(Player.class).jumping < 15) {
+                    player.getComponent(Player.class).setVelY(6); 
+                }
                 player.getComponent(Player.class).dx = 10 * -player.getComponent(Player.class).direction;
             }
             if ((player.getComponent(Player.class).falling < 10) || (player.getComponent(Player.class).jumping > 0)) {
