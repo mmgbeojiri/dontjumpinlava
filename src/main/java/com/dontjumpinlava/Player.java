@@ -41,6 +41,9 @@ public class Player extends Component {
 
     int hitSmall = 1;
 
+    int translateDown=0;
+    boolean debounce = true;
+
     public Player(double x, double y, double size) {
         this.x = x;
         this.y = y;
@@ -266,6 +269,24 @@ public class Player extends Component {
             return;
         }
 
+        
+        if (Globals.keyDown > 0) {
+            System.out.println("Crouch");
+            translateDown = -16;
+            Globals.deacceleration = 0.99;
+            if (debounce) {
+            this.dx += 2 * Math.signum(dx);
+            debounce = false; 
+            }
+
+            changeImage("Crouch.png", 32, 16);
+            return;
+        } else {
+            debounce = true;
+            translateDown = 0;
+            Globals.deacceleration = 0.4;
+        }
+
         if (playeraction.equalsIgnoreCase("turn")) {
             changeImage("player.png", 32, 32);
             return;
@@ -305,7 +326,7 @@ public class Player extends Component {
             Globals.playerY = this.y;
 
             scratchX = this.x + Globals.width/2 - size/2 ;
-            scratchY = -this.y +  Globals.height/2 - size/2;
+            scratchY = -this.y +  Globals.height/2 - size/2 - translateDown;
 
             paintSprite();
         }

@@ -439,19 +439,19 @@ public class Main extends GameApplication {
         player.getComponent(Player.class).playeraction = "walk"; 
         keyWalk = (keyRight - keyLeft);
 
-        if (keyWalk == 0) {
-            if (player.getComponent(Player.class).falling < 10) {
-                            if (player.getComponent(Player.class).dx > 0.4) {
-                player.getComponent(Player.class).changeVelX(-0.4);
-            } else if (player.getComponent(Player.class).dx < -0.4) {
-                player.getComponent(Player.class).changeVelX(0.4);
-            } else {
-                player.getComponent(Player.class).setVelX(
-                        0
-                );
-                player.getComponent(Player.class).playerframe = 0;
+        if (keyWalk == 0) { // player not pressing keys
+            if (player.getComponent(Player.class).falling < 10) { // if the character isnt falling
+                if (player.getComponent(Player.class).dx > 0.4) {
+                    player.getComponent(Player.class).changeVelX(-0.4);
+                } else if (player.getComponent(Player.class).dx < -0.4) {
+                    player.getComponent(Player.class).changeVelX(0.4);
+                } else {
+                    player.getComponent(Player.class).setVelX(
+                            0
+                    );
+                    player.getComponent(Player.class).playerframe = 0;
+                }
             }
-        }
 
         } else {
             if (keyWalk * player.getComponent(Player.class).dx < 10) {
