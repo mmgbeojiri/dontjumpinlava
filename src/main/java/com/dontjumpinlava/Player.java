@@ -269,7 +269,7 @@ public class Player extends Component {
             return;
         }
 
-        
+        /*
         if (Globals.keyDown > 0) {
             System.out.println("Crouch");
             translateDown = -16;
@@ -286,6 +286,7 @@ public class Player extends Component {
             translateDown = 0;
             Globals.deacceleration = 0.4;
         }
+        */
 
         if (playeraction.equalsIgnoreCase("turn")) {
             changeImage("player.png", 32, 32);
