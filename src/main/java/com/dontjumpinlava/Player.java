@@ -112,9 +112,11 @@ public class Player extends Component {
     }
 
     void checkWallJump() {
+        if (Globals.keyWalk == direction) { // if player is touching keys
         if (falling > 10 || jumping > 10) {
             ableToWallJump = true;
             Globals.terminalVelocity = 1;
+        }
         }
     }
     

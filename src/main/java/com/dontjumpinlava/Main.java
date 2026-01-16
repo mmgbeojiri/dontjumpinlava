@@ -67,7 +67,7 @@ public class Main extends GameApplication {
     
     int keyE = 0;
 
-    int keyWalk = 0;
+    
 
     String levelPath = "level.dat";
 
@@ -437,9 +437,9 @@ public class Main extends GameApplication {
 
     public void handleKeysLeftRight() {
         player.getComponent(Player.class).playeraction = "walk"; 
-        keyWalk = (keyRight - keyLeft);
+        Globals.keyWalk = (keyRight - keyLeft);
 
-        if (keyWalk == 0) { // player not pressing keys
+        if (Globals.keyWalk == 0) { // player not pressing keys
             if (player.getComponent(Player.class).falling < 10) { // if the character isnt falling
                 if (player.getComponent(Player.class).dx > 0.4) {
                     player.getComponent(Player.class).changeVelX(-0.4);
@@ -454,10 +454,10 @@ public class Main extends GameApplication {
             }
 
         } else {
-            if (keyWalk * player.getComponent(Player.class).dx < 10) {
-                if (keyWalk * player.getComponent(Player.class).dx < 0) {
+            if (Globals.keyWalk * player.getComponent(Player.class).dx < 10) {
+                if (Globals.keyWalk * player.getComponent(Player.class).dx < 0) {
                 player.getComponent(Player.class).changeVelX(
-                        keyWalk * 0.8
+                        Globals.keyWalk * 0.8
                 );
 
                 if (player.getComponent(Player.class).falling < 10){
@@ -467,7 +467,7 @@ public class Main extends GameApplication {
 
             } else {
                 player.getComponent(Player.class).changeVelX(
-                        keyWalk * 0.4
+                        Globals.keyWalk * 0.4
                 );
             }
 
