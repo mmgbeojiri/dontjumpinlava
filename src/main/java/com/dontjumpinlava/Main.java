@@ -225,6 +225,7 @@ public class Main extends GameApplication {
     int enemyx;
     int enemyy;
     void spawnTile(String tileType) {
+        int spawnIndex = Globals.tileIndex;
         enemyx = (Math.floor((spawnIndex-2)/Globals.gridHeight) * 32)-32;
         enemyy = ((Globals.gridHeight - 1) - (spawnIndex % Globals.gridHeight)) * 32;
         if (tileType.equals("Enemy")) {
