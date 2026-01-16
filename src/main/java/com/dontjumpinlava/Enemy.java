@@ -93,9 +93,7 @@ public class Enemy extends Component {
             if ((!part.equalsIgnoreCase("feet")) || Math.ceil(mody) - this.dy < 32) { // mody - fixdy < 32 
                 return;
             }
-            if(Globals.keyDown > 0) {
-                return;
-            }
+
             
             
             
@@ -263,6 +261,7 @@ public class Enemy extends Component {
             
             moveSpriteX();
             frame += 0.25;
+            paintSprite();
 
             if (Math.abs(Globals.playerX - this.x) < this.entityHitbox && Math.abs(Globals.playerY - this.y) < entityHitbox) {
                 if (Globals.bopY > 0) {
