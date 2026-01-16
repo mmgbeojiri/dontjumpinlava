@@ -347,7 +347,7 @@ public class Player extends Component {
             if (Globals.bouncePlayer > 0) {
                 Globals.bouncePlayer -= 1;
                 this.dy = 6;
-                falling = 4;
+                falling = 10;
                 jumping = 1;
             }
             

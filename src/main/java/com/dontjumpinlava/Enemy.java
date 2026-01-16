@@ -268,10 +268,10 @@ public class Enemy extends Component {
                 if (Globals.bopY > 0) {
                     type = "squish";
                     costume = "EnemySquashed.png";
-                    translateDown = 22;
-                    enemyWidth = 40;
-                    enemyHeight = 20;
-                    frame=0;
+                    translateDown = 16;
+                    enemyWidth = 48;
+                    enemyHeight = 16;
+                    frame = 0;
                     Globals.bouncePlayer = 5;
                 }
             }
