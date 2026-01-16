@@ -280,7 +280,7 @@ public class Player extends Component {
             return;
         }
 
-        if (falling > 4) {
+        if (falling > 4 || Globals.editor) { // we want THIS to be what happens when you fly in editor
             /*
             if (this.dy > 0){
                 changeImage("fall.png");
