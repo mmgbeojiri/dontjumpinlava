@@ -222,13 +222,22 @@ public class Main extends GameApplication {
         protected void onActionEnd() {Globals.keyDown = 0;}
     };
 
+    int enemyx;
+    int enemyy;
+    void spawnTile(String tileType) {
+        enemyx = (Math.floor((spawnIndex-2)/Globals.gridHeight) * 32)-32;
+        enemyy = ((Globals.gridHeight - 1) - (spawnIndex % Globals.gridHeight)) * 32;
+        if (tileType.equals("Enemy")) {
+            FXGL.entityBuilder().at(player.getComponent(Player.class).x, player.getComponent(Player.class).y)
+            .view("EnemyRightRun.png")
+            .with(new Enemy(enemyx, enemyy,1, "Op"))
+            .buildAndAttach();
+        }
+    }
     UserAction gPressed = new UserAction("G") {
         @Override
         protected void onActionBegin(){
-            FXGL.entityBuilder().at(player.getComponent(Player.class).x, player.getComponent(Player.class).y)
-            .view("EnemyRightRun.png")
-            .with(new Enemy(player.getComponent(Player.class).x, player.getComponent(Player.class).y,1, "Op"))
-            .buildAndAttach();
+            spawnTile("Enemy");
         }
     };
 

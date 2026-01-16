@@ -45,13 +45,8 @@ public class Enemy extends Component {
 
     double enemyWidth = 32;
     double enemyHeight = 32;
-    void spawnTile(String tileType) {
-        x = (Math.floor((spawnIndex-2)/Globals.gridHeight) * 32)-32;
-        y = ((Globals.gridHeight - 1) - (spawnIndex % Globals.gridHeight)) * 32;
-        if (tileType.equals("Enemy")) {
-            
-        }
-    }
+    int spawnIndex = -1;
+    
     public Enemy(double x, double y, double size, String type) {
         this.x = x;
         this.y = y;
