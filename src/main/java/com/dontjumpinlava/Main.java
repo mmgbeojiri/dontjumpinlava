@@ -330,7 +330,7 @@ public class Main extends GameApplication {
     String[] stoneList = {"Stone.png", "Bedrock.png", "Nonsolid.png"};
     String[] waterList = {"Water.png", "WaterTop1.png"};
     String[] misaList = {"Rail.png", "WaterGlass.png", "PlayerSpawn.png"};
-    String[] enemyList = {"EnemySpawn.png"};
+    String[] enemyList = {"EnemyStand.png"};
 
     public void changeBrush(String strung) {  Globals.chosenBrush = strung; System.out.println("Set chosen brush to: " + strung);}
 
@@ -403,7 +403,7 @@ public class Main extends GameApplication {
         input.addAction(two, KeyCode.DIGIT2);
         input.addAction(three, KeyCode.DIGIT3);
         input.addAction(four, KeyCode.DIGIT4);
-        input.addAction(four, KeyCode.DIGIT5);
+        input.addAction(five, KeyCode.DIGIT5);
 
         input.addAction(lPressed, KeyCode.L);
 
