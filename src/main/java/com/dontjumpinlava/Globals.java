@@ -47,12 +47,12 @@ public class Globals {
     public static final String atoz = "abcdefghijklmnopqrstuvwxyz";
 
     public static String[] blockID = {"Bedrock.png", "Air.png", "Grass.png", "Dirt.png", "CompactGrass.png", "CompactDirt.png","Stone.png","Nonsolid.png",
-    "Rail.png","Water.png","WaterTop1.png","WaterTop2.png","WaterGlass.png", "PlayerSpawn.png"};
+    "Rail.png","Water.png","WaterTop1.png","WaterTop2.png","WaterGlass.png", "PlayerSpawn.png", "EnemyStand.png"};
 
     public static int readIndex = 0;
     public static char letter; 
 
-    public static int levelNumber = 1;
+    public static int levelNumber = 3;
 
     public static Scanner Input = new Scanner(System.in); 
 
@@ -60,7 +60,7 @@ public class Globals {
 
     public static boolean doneLoading = false;
 
-    public static String[] tileShape = {"#", "", "=", "", "#", "#","#","=", "#","","","","",""};
+    public static String[] tileShape = {"#", "", "=", "", "#", "#","#","=", "#","","","","","",""};
 
     public static String getIDfromBlock(String tile) {
         for (int i = 0; i < Globals.blockID.length; i++) {

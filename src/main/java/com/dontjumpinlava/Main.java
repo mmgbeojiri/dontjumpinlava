@@ -330,7 +330,7 @@ public class Main extends GameApplication {
     String[] stoneList = {"Stone.png", "Bedrock.png", "Nonsolid.png"};
     String[] waterList = {"Water.png", "WaterTop1.png"};
     String[] misaList = {"Rail.png", "WaterGlass.png", "PlayerSpawn.png"};
-
+    String[] enemyList = {"EnemySpawn.png"};
 
     public void changeBrush(String strung) {  Globals.chosenBrush = strung; System.out.println("Set chosen brush to: " + strung);}
 
@@ -349,6 +349,9 @@ public class Main extends GameApplication {
                 break;
             case 4:
                 loadedList = misaList;
+                break;
+            case 5: 
+                loadedList = enemyList;
                 break;
             default:
                 loadedList = grassList;
@@ -371,7 +374,7 @@ public class Main extends GameApplication {
     UserAction two = new UserAction("Dirt") { @Override protected void onActionBegin() {nextBrush(2);}};
     UserAction three = new UserAction("Stone") { @Override protected void onActionBegin() {nextBrush(3); }};
     UserAction four  = new UserAction("Bedrock") { @Override protected void onActionBegin() {nextBrush(4);}};
-
+    UserAction five  = new UserAction("Enemy") { @Override protected void onActionBegin() {nextBrush(5);}};
     UserAction qPressed  = new UserAction("Eyedrop") { @Override protected void onActionBegin() {changeBrush(underTile);}};
     
     
@@ -400,6 +403,7 @@ public class Main extends GameApplication {
         input.addAction(two, KeyCode.DIGIT2);
         input.addAction(three, KeyCode.DIGIT3);
         input.addAction(four, KeyCode.DIGIT4);
+        input.addAction(four, KeyCode.DIGIT5);
 
         input.addAction(lPressed, KeyCode.L);
 
