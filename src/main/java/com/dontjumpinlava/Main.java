@@ -88,14 +88,25 @@ public class Main extends GameApplication {
     //System.out.println("SpawnIndex: " + spawnIndex);
     };
 
+    void entitySetup() {
+        
+    }
+
     public void callDoneLoadingOnAllBlocks() {
         updateSpawnIndex();
+
         for (Entity entity : FXGL.getGameWorld().getEntities()) {
             if (entity.hasComponent(Block.class)) {
                 entity.getComponent(Block.class).doneLoading();
             // Do something with the entity or its component
                 };
+
+                if (entity.hasComponent(Enemy.class)) {
+                    entity.removeFromWorld();
+                }
             };
+
+            entitySetup()
 
 
         

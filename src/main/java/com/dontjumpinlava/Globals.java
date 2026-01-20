@@ -91,4 +91,7 @@ public class Globals {
     public static double bouncePlayer = 0;
     public static int terminalVelocity = 22;
 
+    public static ArrayList<Integer> objectIndex = new ArrayList<>();
+    public static ArrayList<String> objectType = new ArrayList<>();
+
 }
