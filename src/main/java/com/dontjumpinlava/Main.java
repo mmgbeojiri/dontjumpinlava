@@ -581,7 +581,11 @@ public class Main extends GameApplication {
         if (foundIndex > -1) {
             Globals.objectIndex.remove(foundIndex);
             Globals.objectType.remove(foundIndex);
+        } else {
+            Globals.objectIndex.add(foundIndex);
+            Globals.objectType.add(brush);
         }
+        entitySetup();
     }
 
     public void movePlayerEditor(){
