@@ -87,7 +87,13 @@ public class Main extends GameApplication {
         spawnIndex = Globals.tileGrid.indexOf("PlayerSpawn.png"); 
     //System.out.println("SpawnIndex: " + spawnIndex);
     };
-
+    void entityClear() {
+        for (Entity entity : FXGL.getGameWorld().getEntities()) {
+            if (entity.hasComponent(Enemy.class)) {
+                entity.removeFromWorld();
+            }
+        };
+    }
     void entitySetup() {
         for (int i = 0; i < Globals.objectIndex.size(); i++) {
             enemySpawnIndex = Globals.objectIndex.get(i);
@@ -585,6 +591,7 @@ public class Main extends GameApplication {
             Globals.objectIndex.add(foundIndex);
             Globals.objectType.add(brush);
         }
+        entityClear();
         entitySetup();
     }
 
