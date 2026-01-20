@@ -576,7 +576,12 @@ public class Main extends GameApplication {
         if (!brush.equalsIgnoreCase("Air.png")) {
             return;
         }
-        brush = "Air.png";
+        brush = Globals.chosenBrush;
+        foundIndex = Globals.objectIndex.indexOf(tileIndex);
+        if (foundIndex > -1) {
+            Globals.objectIndex.remove(foundIndex);
+            Globals.objectType.remove(foundIndex);
+        }
     }
 
     public void movePlayerEditor(){
