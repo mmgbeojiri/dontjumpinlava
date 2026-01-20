@@ -89,7 +89,10 @@ public class Main extends GameApplication {
     };
 
     void entitySetup() {
-        
+        for (int i = 0; i < Globals.objectIndex.size(); i++) {
+            enemySpawnIndex = Globals.objectIndex.get(i);
+            spawnType(Globals.objectType.get(i));
+        }
     }
 
     public void callDoneLoadingOnAllBlocks() {
@@ -235,10 +238,11 @@ public class Main extends GameApplication {
 
     double enemyx;
     double enemyy;
+    double enemySpawnIndex;
     void spawnType(String tileType) {
-        double spawnIndex = tileIndex; // lets make this a local varaible
-        enemyx = (Math.floor((spawnIndex-2)/Globals.gridHeight) * 32)-32;
-        enemyy = ((Globals.gridHeight - 1) - (spawnIndex % Globals.gridHeight)) * 32;
+        enemySpawnIndex = tileIndex; // lets make this a local varaible
+        enemyx = (Math.floor((enemySpawnIndex-2)/Globals.gridHeight) * 32)-32;
+        enemyy = ((Globals.gridHeight - 1) - (enemySpawnIndex % Globals.gridHeight)) * 32;
         if (tileType.equalsIgnoreCase("Enemy")) {
             FXGL.entityBuilder().at(enemyx, enemyy)
             .view("EnemyRightRun.png")
