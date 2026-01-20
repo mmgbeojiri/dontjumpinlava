@@ -109,7 +109,7 @@ public class Main extends GameApplication {
                 }
             };
 
-            entitySetup()
+            entitySetup();
 
 
         
@@ -572,6 +572,13 @@ public class Main extends GameApplication {
         //System.out.println("Tile Grid X: "+tileGridX + " Tile Grid Y"+ tileGridY + " Tile: " + underTile);
     }
 
+    void paintEntity() {
+        if (!brush.equalsIgnoreCase("Air.png")) {
+            return;
+        }
+        brush = "Air.png";
+    }
+
     public void movePlayerEditor(){
         if (Globals.editor == false) {
             return;
@@ -585,6 +592,13 @@ public class Main extends GameApplication {
         if (!Globals.mouseDown) {
             return;
         }
+         if (Arrays.asList(enemyList).contains(Globals.chosenBrush)){
+            System.out.println("WE GOT ONE");
+            return;
+            
+        }
+
+
         if (Globals.mousePressed) {
             Globals.mousePressed = false;
             System.out.println("Undertile: " + underTile + "\tBrush: " + Globals.chosenBrush);
@@ -594,6 +608,7 @@ public class Main extends GameApplication {
                 brush = Globals.chosenBrush;
             }
         }
+       
         if (brush.equalsIgnoreCase("PlayerSpawn.png")) {
             foundIndex = Globals.tileGrid.indexOf(brush);
             if (foundIndex > -1) {
