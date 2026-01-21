@@ -219,6 +219,7 @@ public class Enemy extends Component {
     }
 
     double frame = 0;
+    boolean firstFrame = true;
 
     public void moveEnemy() {
         if (Globals.editor || this.type.equalsIgnoreCase("")){
@@ -231,6 +232,21 @@ public class Enemy extends Component {
                 imageEntity.removeFromWorld();
             }
         }
+        if (firstFrame) {
+            
+            if (Math.abs(this.x - Globals.cameraX) > 260) {
+                return;
+            }
+            if (Math.abs(this.y - Globals.cameraY) > 200) {
+                return;
+            }
+            if (this.x > Globals.playerX) {
+                this.dx = -0.1;
+            } else {
+                this.dx = 0.1;
+            }
+        }
+        
         if (this.type.equalsIgnoreCase("Op")) {
             this.dy -= 0.3;
             if (this.dy < -22) {
@@ -266,6 +282,7 @@ public class Enemy extends Component {
             
             moveSpriteX();
             frame += 0.25;
+            firstFrame = false;
             paintSprite();
 
             if (Math.abs(Globals.playerX - this.x) < this.entityHitbox && Math.abs(Globals.playerY - this.y) < entityHitbox) {
