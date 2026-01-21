@@ -221,6 +221,10 @@ public class Enemy extends Component {
     double frame = 0;
 
     public void moveEnemy() {
+        if (Globals.editor || this.type.equalsIgnoreCase("")){
+            return;
+        }
+
         if (this.type.equalsIgnoreCase("Squish")) {
             frame += 0.1;
             if (frame > 10) {
