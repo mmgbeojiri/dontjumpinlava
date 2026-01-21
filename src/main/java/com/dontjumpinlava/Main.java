@@ -94,14 +94,18 @@ public class Main extends GameApplication {
         .collect(java.util.stream.Collectors.toList())
         .forEach(Entity::removeFromWorld);
     }
-    void entitySetup() {
+    void spawnLoop() {
         for (int i = 0; i < Globals.objectIndex.size(); i++) {
             enemySpawnIndex = Globals.objectIndex.get(i);
             spawnType(Globals.objectType.get(i));
+            System.out.println("Creating an enemy: "+i + "at index: "+ Globals.objectIndex.get(i));
             
         }
     }
-    void
+    void entitySetup() {
+        spawnLoop();
+    }
+
 
     public void callDoneLoadingOnAllBlocks() {
         updateSpawnIndex();
@@ -246,10 +250,11 @@ public class Main extends GameApplication {
     double enemyy;
     double enemySpawnIndex;
     void spawnType(String tileType) {
-        enemySpawnIndex = tileIndex; // lets make this a local varaible
+        
         enemyx = (Math.floor((enemySpawnIndex-2)/Globals.gridHeight) * 32)-32;
         enemyy = ((Globals.gridHeight - 1) - (enemySpawnIndex % Globals.gridHeight)) * 32;
         if (tileType.equalsIgnoreCase("EnemyStand.png")||tileType.equalsIgnoreCase("Enemy")) {
+            System.out.println("Enemy spawned at \tX:"+ enemyx+"\tY:"+enemyy);
             FXGL.entityBuilder().at(enemyx, enemyy)
             .view("EnemyStand.png")
             .with(new Enemy(enemyx, enemyy,1, "Op"))
