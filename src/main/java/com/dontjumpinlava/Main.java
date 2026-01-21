@@ -76,6 +76,7 @@ public class Main extends GameApplication {
     String underTile;
     
     int foundIndex;
+    int enemyFoundIndex;
     String brush = "Air.png";
     int spawnIndex = -1;
 
@@ -88,18 +89,19 @@ public class Main extends GameApplication {
     //System.out.println("SpawnIndex: " + spawnIndex);
     };
     void entityClear() {
-        for (Entity entity : FXGL.getGameWorld().getEntities()) {
-            if (entity.hasComponent(Enemy.class)) {
-                entity.removeFromWorld();
-            }
-        };
+        FXGL.getGameWorld().getEntities().stream()
+        .filter(e -> e.hasComponent(Enemy.class))
+        .collect(java.util.stream.Collectors.toList())
+        .forEach(Entity::removeFromWorld);
     }
     void entitySetup() {
         for (int i = 0; i < Globals.objectIndex.size(); i++) {
             enemySpawnIndex = Globals.objectIndex.get(i);
             spawnType(Globals.objectType.get(i));
+            
         }
     }
+    void
 
     public void callDoneLoadingOnAllBlocks() {
         updateSpawnIndex();
@@ -110,11 +112,9 @@ public class Main extends GameApplication {
             // Do something with the entity or its component
                 };
 
-                if (entity.hasComponent(Enemy.class)) {
-                    entity.removeFromWorld();
-                }
+               
             };
-
+            entityClear();
             entitySetup();
 
 
@@ -249,13 +249,12 @@ public class Main extends GameApplication {
         enemySpawnIndex = tileIndex; // lets make this a local varaible
         enemyx = (Math.floor((enemySpawnIndex-2)/Globals.gridHeight) * 32)-32;
         enemyy = ((Globals.gridHeight - 1) - (enemySpawnIndex % Globals.gridHeight)) * 32;
-        if (tileType.equalsIgnoreCase("Enemy")) {
+        if (tileType.equalsIgnoreCase("EnemyStand.png")||tileType.equalsIgnoreCase("Enemy")) {
             FXGL.entityBuilder().at(enemyx, enemyy)
-            .view("EnemyRightRun.png")
+            .view("EnemyStand.png")
             .with(new Enemy(enemyx, enemyy,1, "Op"))
             .buildAndAttach();
         }
-        System.out.println("Made Enemy at: " + enemyx + "\t" + enemyy);
     }
     UserAction gPressed = new UserAction("G") {
         @Override
@@ -583,16 +582,24 @@ public class Main extends GameApplication {
             return;
         }
         brush = Globals.chosenBrush;
-        foundIndex = Globals.objectIndex.indexOf(tileIndex);
-        if (foundIndex > -1) {
-            Globals.objectIndex.remove(foundIndex);
-            Globals.objectType.remove(foundIndex);
+        enemyFoundIndex = Globals.objectIndex.indexOf(tileIndex);
+        if (enemyFoundIndex > -1) {
+            Globals.objectIndex.remove(enemyFoundIndex);
+            Globals.objectType.remove(enemyFoundIndex);
+            System.out.println("Removed type: " + brush + " from index: "+enemyFoundIndex);
+
         } else {
-            Globals.objectIndex.add(foundIndex);
+
+            Globals.objectIndex.add((int)tileIndex);
             Globals.objectType.add(brush);
+            System.out.println("Added type: " + brush + " to index: "+enemyFoundIndex);
         }
         entityClear();
         entitySetup();
+
+        System.out.println("objectIndex: \t"+Globals.objectIndex);
+        System.out.println("ObjectType: \t"+Globals.objectType);
+
     }
 
     public void movePlayerEditor(){
@@ -606,17 +613,18 @@ public class Main extends GameApplication {
         getTile(Globals.mouseX + (Globals.cameraX - Globals.twoForty), Globals.height - (Globals.mouseY-(Globals.cameraY-Globals.oneEighty)));
 
         if (!Globals.mouseDown) {
+            brush = "Air.png";
             return;
         }
          if (Arrays.asList(enemyList).contains(Globals.chosenBrush)){
-            System.out.println("WE GOT ONE");
+            
+            paintEntity();
             return;
             
         }
 
 
-        if (Globals.mousePressed) {
-            Globals.mousePressed = false;
+        if (brush.equalsIgnoreCase("Air.png")) {
             System.out.println("Undertile: " + underTile + "\tBrush: " + Globals.chosenBrush);
             if (underTile.equalsIgnoreCase(Globals.chosenBrush)) {
                 brush = "Air.png";
