@@ -1044,6 +1044,7 @@ public class Main extends GameApplication {
     void encodeObjects() {
         writeValue(Integer.toString(Globals.objectIndex.size()), '_');
         for (int i = 0; i < Globals.objectIndex.size(); i++) {
+            System.out.println(Globals.objectIndex.size() + "objectIndex: "+ Globals.objectIndex + "Object Type"+Globals.objectType);
             writeValue(Integer.toString(Globals.objectIndex.get(i)), '_');
             writeValue(Globals.objectType.get(i), '_');
 
