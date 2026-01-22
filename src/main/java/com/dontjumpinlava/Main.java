@@ -374,7 +374,7 @@ public class Main extends GameApplication {
     public void nextBrush(int key) {
         int index = 0;
         String[] loadedList;
-        switch(key) {
+        switch (key) {
             case 1:
               loadedList = grassList;
               break;
@@ -1041,12 +1041,21 @@ public class Main extends GameApplication {
 
     }
 
+    void encodeObjects() {
+        writeValue(Integer.toString(Globals.objectIndex.size()), '_');
+        for (int i = 0; i < Globals.objectIndex.size(); i++) {
+            writeValue(Integer.toString(Globals.objectIndex.get(i)), '_');
+            writeValue(Globals.objectType.get(i), '_');
+
+        }
+    }
+
     public void encodeLevel(int levelNumber) {
         Globals.levelStore = "";
 
         writeValue("1", '_');
         encodeTileGrid();
-
+        encodeObjects();
         String savePath = "stupid.txt";
 
        try {writeStringToFileLine(savePath, levelNumber, Globals.levelStore);} catch (IOException e) {
@@ -1093,6 +1102,16 @@ public class Main extends GameApplication {
         
 
         return value;
+    }
+
+    void decodeObjects() {
+        Globals.objectIndex.clear();
+        Globals.objectType.clear();
+        int objectListLength = Integer.parseInt(readValue());
+        for (int i = 0; i < objectListLength; i++) {
+            Globals.objectIndex.add(Integer.valueOf(readValue()));
+            Globals.objectType.add(readValue());
+        }
     }
 
     void decodeTileGrid() {
@@ -1153,6 +1172,7 @@ public class Main extends GameApplication {
         }*/
         
         decodeTileGrid();
+        decodeObjects();
 
 
     }
