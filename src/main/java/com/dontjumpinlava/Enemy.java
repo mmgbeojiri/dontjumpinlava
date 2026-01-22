@@ -233,17 +233,18 @@ public class Enemy extends Component {
             }
         }
         if (firstFrame) {
-            
-            if (Math.abs(this.x - Globals.cameraX) > 260) {
+            System.out.println(Math.abs(this.x - Globals.cameraX));
+            if (Math.abs(this.x - Globals.cameraX) > Globals.width/2) {
+                
                 return;
             }
-            if (Math.abs(this.y - Globals.cameraY) > 200) {
+            if (Math.abs(this.y - Globals.cameraY) > Globals.height/2) {
                 return;
             }
             if (this.x > Globals.playerX) {
-                this.dx = -0.1;
+                this.dx = -1;
             } else {
-                this.dx = 0.1;
+                this.dx = 1;
             }
         }
         
