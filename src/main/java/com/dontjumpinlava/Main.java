@@ -1095,25 +1095,7 @@ public class Main extends GameApplication {
         return value;
     }
 
-    public void decodeLevel(int levelNumber) {
-        try {
-            Globals.levelStore = readLineFromFile("stupid.txt", levelNumber);
-
-            if (Globals.levelStore == null) {
-                Globals.tileGrid.clear();
-                generateNewLevel();
-                return;
-            }
-            
-        } catch (Error e) {
-            e.printStackTrace();
-        }
-        Globals.readIndex = 0;
-        
-        readValue();
-        /*if (!readValue().equalsIgnoreCase("1")) {
-            return;
-        }*/
+    void decodeTileGrid() {
         Globals.tileGrid.clear(); // scary!
         Globals.gridWidth = Integer.valueOf(readValue());
         Globals.gridHeight = Integer.valueOf(readValue());
@@ -1145,6 +1127,29 @@ public class Main extends GameApplication {
         Globals.tileIndex = 0;
 
         callDoneLoadingOnAllBlocks();
+    }
+
+    public void decodeLevel(int levelNumber) {
+        try {
+            Globals.levelStore = readLineFromFile("stupid.txt", levelNumber);
+
+            if (Globals.levelStore == null) {
+                Globals.tileGrid.clear();
+                generateNewLevel();
+                return;
+            }
+            
+        } catch (Error e) {
+            e.printStackTrace();
+        }
+        Globals.readIndex = 0;
+        
+        readValue();
+        /*if (!readValue().equalsIgnoreCase("1")) {
+            return;
+        }*/
+        
+        decodeTileGrid();
 
 
     }
