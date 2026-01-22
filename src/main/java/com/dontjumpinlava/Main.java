@@ -1095,6 +1095,9 @@ public class Main extends GameApplication {
             if(Globals.letter == ' ') {
                 break;
             } 
+            if (Globals.letter == '.') {
+                break;
+            }
             value += Globals.letter;
             readLetter();
         }
@@ -1107,7 +1110,13 @@ public class Main extends GameApplication {
     void decodeObjects() {
         Globals.objectIndex.clear();
         Globals.objectType.clear();
-        int objectListLength = Integer.parseInt(readValue());
+        int objectListLength = 0;
+        try {
+            objectListLength = Integer.parseInt(readValue());
+        } catch (NumberFormatException e) {
+            
+            return;
+        }
         for (int i = 0; i < objectListLength; i++) {
             Globals.objectIndex.add(Integer.valueOf(readValue()));
             Globals.objectType.add(readValue());
