@@ -999,12 +999,7 @@ public class Main extends GameApplication {
     }
 
     
-
-
-    public void encodeLevel(int levelNumber) {
-        Globals.levelStore = "";
-
-        writeValue("1", '_');
+    void encodeTileGrid() {
         writeValue(Integer.toString(Globals.gridWidth), '_');
         writeValue(Integer.toString(Globals.gridHeight), '_');
         
@@ -1040,29 +1035,25 @@ public class Main extends GameApplication {
         //writeValue(tile, '_');
         //writeValue(Integer.toString(length), '_');
 
+        
+
+
+
+    }
+
+    public void encodeLevel(int levelNumber) {
+        Globals.levelStore = "";
+
+        writeValue("1", '_');
+        encodeTileGrid();
+
         String savePath = "stupid.txt";
 
-        /*try (FileOutputStream fos = new FileOutputStream(savePath)) {
-            // Convert the string to bytes using UTF-8 encoding
-            byte[] bytes = Globals.levelStore.getBytes(StandardCharsets.UTF_8);
-
-            // Write the bytes to the FileOutputStream
-            fos.write(bytes);
-
-            System.out.println("String successfully written to " + savePath);
-
-        } catch (IOException e) {
-            System.err.println("An error occurred while writing to the file: " + e.getMessage());
-        }*/
        try {writeStringToFileLine(savePath, levelNumber, Globals.levelStore);} catch (IOException e) {
             System.err.println("An error occurred while writing to the file: " + e.getMessage());
         }
 
         Globals.levelStore = "";
-
-
-
-
         
     }
 
