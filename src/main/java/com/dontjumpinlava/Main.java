@@ -1113,12 +1113,15 @@ public class Main extends GameApplication {
             value = Globals.getIDfromBlock("Air.png");
           }
           for (int i = 0; i < Globals.atoz.indexOf(Globals.letter)+1; i++) {
-              if (Globals.tileIndex > (Globals.gridHeight * Globals.gridWidth)-1) {
-                  Globals.tileIndex += (1 - (Globals.gridWidth*Globals.gridHeight));
-              }
-              //System.out.println("TileIndex:" + Globals.tileIndex);
               Globals.tileGrid.set(Globals.tileIndex, Globals.getBlockFromID(value));
               Globals.tileIndex += Globals.gridHeight;
+              if (Globals.tileIndex > (Globals.gridHeight * Globals.gridWidth)-1) {
+                  Globals.tileIndex += (1 - (Globals.gridWidth*Globals.gridHeight));
+                    if (Globals.tileIndex > Globals.gridHeight) {
+                        return;
+                    }
+                }
+              //System.out.println("TileIndex:" + Globals.tileIndex);
               
               
           }
