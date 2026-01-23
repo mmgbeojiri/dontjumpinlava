@@ -1044,7 +1044,6 @@ public class Main extends GameApplication {
     void encodeObjects() {
         writeValue(Integer.toString(Globals.objectIndex.size()), '_');
         for (int i = 0; i < Globals.objectIndex.size(); i++) {
-            System.out.println(Globals.objectIndex.size() + "objectIndex: "+ Globals.objectIndex + "Object Type"+Globals.objectType);
             writeValue(Integer.toString(Globals.objectIndex.get(i)), '_');
             writeValue(Globals.objectType.get(i), '_');
 
@@ -1109,8 +1108,6 @@ public class Main extends GameApplication {
     }
 
     void decodeObjects() {
-        Globals.objectIndex.clear();
-        Globals.objectType.clear();
         int objectListLength = 0;
         try {
             objectListLength = Integer.parseInt(readValue());
@@ -1118,10 +1115,15 @@ public class Main extends GameApplication {
             
             return;
         }
+        Globals.objectIndex.clear();
+        Globals.objectType.clear();
         for (int i = 0; i < objectListLength; i++) {
             Globals.objectIndex.add(Integer.valueOf(readValue()));
             Globals.objectType.add(readValue());
+            
         }
+        System.out.println("Object Index\t" + Globals.objectIndex);
+        System.out.println("Object Type\t" + Globals.objectType);
     }
 
     void decodeTileGrid() {
@@ -1177,9 +1179,9 @@ public class Main extends GameApplication {
         Globals.readIndex = 0;
         
         readValue();
-        /*if (!readValue().equalsIgnoreCase("1")) {
+        if (!readValue().equalsIgnoreCase("1")) {
             return;
-        }*/
+        }
         
         decodeTileGrid();
         decodeObjects();
