@@ -1166,7 +1166,7 @@ public class Main extends GameApplication {
     public void decodeLevel(int levelNumber) {
         try {
             Globals.levelStore = readLineFromFile("stupid.txt", levelNumber);
-
+            
             if (Globals.levelStore == null) {
                 Globals.tileGrid.clear();
                 generateNewLevel();
@@ -1178,7 +1178,8 @@ public class Main extends GameApplication {
         }
         Globals.readIndex = 0;
         
-        readValue();
+        
+        System.out.println(Globals.levelStore);
         if (!readValue().equalsIgnoreCase("1")) {
             return;
         }
