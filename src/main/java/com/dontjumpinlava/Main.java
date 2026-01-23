@@ -1126,7 +1126,7 @@ public class Main extends GameApplication {
         System.out.println("Object Type\t" + Globals.objectType);
     }
 
-    void decodeTileGrid() {
+        void decodeTileGrid() {
         Globals.tileGrid.clear(); // scary!
         Globals.gridWidth = Integer.valueOf(readValue());
         Globals.gridHeight = Integer.valueOf(readValue());
@@ -1153,8 +1153,8 @@ public class Main extends GameApplication {
                     }
                 }
               //System.out.println("TileIndex:" + Globals.tileIndex);
-              
-              
+
+
           }
         }
 
