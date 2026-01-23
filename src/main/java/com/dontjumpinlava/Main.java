@@ -1090,14 +1090,14 @@ public class Main extends GameApplication {
             ascii = (int) Globals.letter;
             
             if (ascii > 65) {
-                break;
+                if (!(Globals.letter == '.')) {
+                    break;
+                }
             }
             if(Globals.letter == ' ') {
                 break;
             } 
-            if (Globals.letter == '.') {
-                break;
-            }
+            
             value += Globals.letter;
             readLetter();
         }
