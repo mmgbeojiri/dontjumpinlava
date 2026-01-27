@@ -1152,8 +1152,17 @@ public class Main extends GameApplication {
               Globals.tileIndex += Globals.gridHeight;
 
                 if (Globals.tileIndex > (Globals.gridWidth*Globals.gridHeight)-1) {
+
+                    System.out.println("Tileindex is " + 
+                    Globals.tileIndex +
+                    " so we will subtract by: " + 
+                    (1 - (Globals.gridWidth*Globals.gridHeight))
+                     + " to get " + 
+                    (Globals.tileIndex + (1 - (Globals.gridWidth*Globals.gridHeight)))
+                    );
+
                     Globals.tileIndex += (1 - (Globals.gridWidth*Globals.gridHeight));
-                        if (Globals.tileIndex > Globals.gridHeight) {
+                        if (Globals.tileIndex >= Globals.gridHeight) {
                             return;
                         }
                 }
