@@ -98,7 +98,7 @@ public class Main extends GameApplication {
         for (int i = 0; i < Globals.objectIndex.size(); i++) {
             enemySpawnIndex = Globals.objectIndex.get(i);
             spawnType(Globals.objectType.get(i));
-            System.out.println("Creating an enemy: "+i + "at index: "+ Globals.objectIndex.get(i));
+            //System.out.println("Creating an enemy: "+i + "at index: "+ Globals.objectIndex.get(i));
             
         }
     }
@@ -254,7 +254,7 @@ public class Main extends GameApplication {
         enemyx = (Math.floor((enemySpawnIndex-2)/Globals.gridHeight) * 32)-32;
         enemyy = ((Globals.gridHeight - 1) - (enemySpawnIndex % Globals.gridHeight)) * 32;
         if (tileType.equalsIgnoreCase("EnemyStand.png")||tileType.equalsIgnoreCase("Enemy")) {
-            System.out.println("Enemy spawned at \tX:"+ enemyx+"\tY:"+enemyy);
+            //System.out.println("Enemy spawned at \tX:"+ enemyx+"\tY:"+enemyy);
             FXGL.entityBuilder().at(enemyx, enemyy)
             .view("EnemyStand.png")
             .with(new Enemy(enemyx, enemyy,1, "Op"))
@@ -1124,7 +1124,7 @@ public class Main extends GameApplication {
         System.out.println("Object Type\t" + Globals.objectType);
     }
 
-        void decodeTileGrid() {
+    void decodeTileGrid() {
         Globals.tileGrid.clear(); // scary!
         Globals.gridWidth = Integer.valueOf(readValue());
         Globals.gridHeight = Integer.valueOf(readValue());
@@ -1158,7 +1158,7 @@ public class Main extends GameApplication {
 
         Globals.tileIndex = 0;
 
-        callDoneLoadingOnAllBlocks();
+        
     }
 
     public void decodeLevel(int levelNumber) {
@@ -1184,6 +1184,7 @@ public class Main extends GameApplication {
         
         decodeTileGrid();
         decodeObjects();
+        callDoneLoadingOnAllBlocks();
 
 
     }
