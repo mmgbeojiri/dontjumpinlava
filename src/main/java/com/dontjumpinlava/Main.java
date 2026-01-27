@@ -1150,11 +1150,12 @@ public class Main extends GameApplication {
           for (int i = 0; i < Globals.atoz.indexOf(Globals.letter)+1; i++) {
               Globals.tileGrid.set(Globals.tileIndex, Globals.getBlockFromID(value));
               Globals.tileIndex += Globals.gridHeight;
-              if (Globals.tileIndex > (Globals.gridHeight * Globals.gridWidth)-1) {
-                  Globals.tileIndex += (1 - (Globals.gridWidth*Globals.gridHeight));
-                    if (Globals.tileIndex > Globals.gridHeight) {
-                        return;
-                    }
+
+                if (Globals.tileIndex > (Globals.gridWidth*Globals.gridHeight)-1) {
+                    Globals.tileIndex += (1 - (Globals.gridWidth*Globals.gridHeight));
+                        if (Globals.tileIndex > Globals.gridHeight) {
+                            return;
+                        }
                 }
               //System.out.println("TileIndex:" + Globals.tileIndex);
 
