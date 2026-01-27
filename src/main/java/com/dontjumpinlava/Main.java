@@ -1113,6 +1113,9 @@ public class Main extends GameApplication {
             
             return;
         }
+        //we're not catching a numberformat, we reach the end of the list.
+        //the list format is 1_100_40_9bzztbzzt8zbbztt_352_EnemyStand.png
+        // we want to reach this (352) value in line 1111.
         Globals.objectIndex.clear();
         Globals.objectType.clear();
         for (int i = 0; i < objectListLength; i++) {
@@ -1132,15 +1135,18 @@ public class Main extends GameApplication {
         for (int i = 0; i < Globals.gridHeight * Globals.gridWidth; i++) {
             Globals.tileGrid.add("");
         };
+        
 
         Globals.tileIndex = 0;
 
         String value;
         while (Globals.readIndex < Globals.levelStore.length()) {
           value = readValue();
+          
           if (value.equalsIgnoreCase("")) {
-            value = Globals.getIDfromBlock("Air.png");
-          }
+              value = Globals.getIDfromBlock("Air.png");
+            }
+        System.out.println("Readindex: " + Globals.readIndex + "\tValue: " + value + "\tBlock: "+ Globals.getBlockFromID(value) + "\tIndex: " + Globals.tileIndex);
           for (int i = 0; i < Globals.atoz.indexOf(Globals.letter)+1; i++) {
               Globals.tileGrid.set(Globals.tileIndex, Globals.getBlockFromID(value));
               Globals.tileIndex += Globals.gridHeight;
