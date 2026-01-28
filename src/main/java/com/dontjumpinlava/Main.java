@@ -1114,14 +1114,14 @@ public class Main extends GameApplication {
             return;
         }
         //we're not catching a numberformat, we reach the end of the list.
-        //the list format is 1_100_40_9bzztbzzt8zbbztt_352_EnemyStand.png
+        //the list format is 1_100_40_9bzztbzzt8zbbztt_67_EnemyStand.png
         // we want to reach this (352) value in line 1111.
         Globals.objectIndex.clear();
         Globals.objectType.clear();
         for (int i = 0; i < objectListLength; i++) {
-            int value = Integer.valueOf(readValue());
+            int value = Integer.valueOf(readValue()); // this line reads the 67 section
             Globals.objectIndex.add(value);
-            String objectTypeValue = readValue();
+            String objectTypeValue = readValue(); // This line is not reading the "EnemyStand.png" and is returning "".
             Globals.objectType.add(objectTypeValue);
             
         }
