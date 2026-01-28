@@ -1080,30 +1080,42 @@ public class Main extends GameApplication {
         Globals.readIndex++;
         return character;
     }
+public String readValue() {
+    return readValue(false);
+}
 
-    public String readValue() {
-        String value = "";
-        int ascii = (int) Globals.letter;
-        readLetter();
-        while (true){ // ascii value below 65 means its number
-            
-            ascii = (int) Globals.letter;
-            
-            if (ascii > 65) {
-               break;
-            }
-            if(Globals.letter == ' ' || Globals.letter == '.') {
+public String readValue(boolean multipleCharacters) {
+    StringBuilder value = new StringBuilder();
+
+    // read first character into Globals.letter (consumes one char)
+    readLetter();
+
+    while (true) {
+        char c = Globals.letter;
+
+        // If multipleCharacters mode: read until '_' (separator) or space or end
+        if (multipleCharacters) {
+            if (c == '_' || c == ' ') {
                 break;
-            } 
-            
-            value += Globals.letter;
-            readLetter();
+            }
+        } else {
+            // default mode: stop at underscore, run-length marker (Globals.atoz), or space
+            if (c == '_' || Globals.atoz.indexOf(c) >= 0 || c == ' ') {
+                break;
+            }
         }
 
-        
+        value.append(c);
 
-        return value;
+        // advance to next char; if we've reached or passed end, stop
+        if (Globals.readIndex >= Globals.levelStore.length()) {
+            break;
+        }
+        readLetter();
     }
+
+    return value.toString();
+}
 
     void decodeObjects() {
         int objectListLength = 0;
@@ -1121,7 +1133,7 @@ public class Main extends GameApplication {
         for (int i = 0; i < objectListLength; i++) {
             int value = Integer.valueOf(readValue()); // this line reads the 67 section
             Globals.objectIndex.add(value);
-            String objectTypeValue = readValue(); // This line is not reading the "EnemyStand.png" and is returning "".
+            String objectTypeValue = readValue(true); // This line is not reading the "EnemyStand.png" and is returning "".
             Globals.objectType.add(objectTypeValue);
             
         }
