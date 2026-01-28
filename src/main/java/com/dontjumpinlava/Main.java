@@ -1119,8 +1119,10 @@ public class Main extends GameApplication {
         Globals.objectIndex.clear();
         Globals.objectType.clear();
         for (int i = 0; i < objectListLength; i++) {
-            Globals.objectIndex.add(Integer.valueOf(readValue()));
-            Globals.objectType.add(readValue());
+            int value = Integer.valueOf(readValue());
+            Globals.objectIndex.add(value);
+            String objectTypeValue = readValue();
+            Globals.objectType.add(objectTypeValue);
             
         }
         System.out.println("Object Index\t" + Globals.objectIndex);
@@ -1151,7 +1153,7 @@ public class Main extends GameApplication {
               Globals.tileGrid.set(Globals.tileIndex, Globals.getBlockFromID(value));
               Globals.tileIndex += Globals.gridHeight;
 
-                if (Globals.tileIndex > (Globals.gridWidth*Globals.gridHeight)-1) {
+                if (Globals.tileIndex > (Globals.gridWidth * Globals.gridHeight) - 1) {
 
                     System.out.println("Tileindex is " + 
                     Globals.tileIndex +
