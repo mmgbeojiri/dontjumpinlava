@@ -1160,20 +1160,20 @@ public String readValue(boolean multipleCharacters) {
           if (value.equalsIgnoreCase("")) {
               value = Globals.getIDfromBlock("Air.png");
             }
-        System.out.println("Readindex: " + Globals.readIndex + "\tValue: " + value + "\tBlock: "+ Globals.getBlockFromID(value) + "\tIndex: " + Globals.tileIndex);
+        //System.out.println("Readindex: " + Globals.readIndex + "\tValue: " + value + "\tBlock: "+ Globals.getBlockFromID(value) + "\tIndex: " + Globals.tileIndex);
           for (int i = 0; i < Globals.atoz.indexOf(Globals.letter)+1; i++) {
               Globals.tileGrid.set(Globals.tileIndex, Globals.getBlockFromID(value));
               Globals.tileIndex += Globals.gridHeight;
 
                 if (Globals.tileIndex > (Globals.gridWidth * Globals.gridHeight) - 1) {
 
-                    System.out.println("Tileindex is " + 
+                    /*System.out.println("Tileindex is " + 
                     Globals.tileIndex +
                     " so we will subtract by: " + 
                     (1 - (Globals.gridWidth*Globals.gridHeight))
                      + " to get " + 
                     (Globals.tileIndex + (1 - (Globals.gridWidth*Globals.gridHeight)))
-                    );
+                    );*/
 
                     Globals.tileIndex += (1 - (Globals.gridWidth*Globals.gridHeight));
                         if (Globals.tileIndex > Globals.gridHeight - 1) {
