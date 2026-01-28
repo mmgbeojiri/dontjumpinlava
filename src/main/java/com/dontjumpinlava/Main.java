@@ -1162,7 +1162,7 @@ public class Main extends GameApplication {
                     );
 
                     Globals.tileIndex += (1 - (Globals.gridWidth*Globals.gridHeight));
-                        if (Globals.tileIndex > Globals.gridHeight) {
+                        if (Globals.tileIndex > Globals.gridHeight - 1) {
                             return;
                         }
                 }
