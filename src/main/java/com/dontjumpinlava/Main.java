@@ -301,6 +301,7 @@ public class Main extends GameApplication {
             
             Globals.levelNumber = answer;
             decodeLevel(Globals.levelNumber);
+            resetPlayer();
             Globals.levelStart = true;
             
         }
