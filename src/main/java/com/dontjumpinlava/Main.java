@@ -587,7 +587,9 @@ public class Main extends GameApplication {
             return;
         }
         brush = Globals.chosenBrush;
-        enemyFoundIndex = Globals.objectIndex.indexOf(tileIndex);
+        System.out.println(tileIndex);
+        enemyFoundIndex = Globals.objectIndex.indexOf((int) tileIndex);
+        System.out.println("Enemy Found Index: " + enemyFoundIndex);
         if (enemyFoundIndex > -1) {
             Globals.objectIndex.remove(enemyFoundIndex);
             Globals.objectType.remove(enemyFoundIndex);
@@ -669,6 +671,7 @@ public class Main extends GameApplication {
 
 
     public void resetPlayer() {
+        System.out.println("Reset Player!");
         Globals.playerHeight = 16;
         Globals.playerWidth = 16;
         if (spawnIndex > -1) {
