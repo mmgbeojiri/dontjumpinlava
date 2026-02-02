@@ -1141,8 +1141,8 @@ public String readValue(boolean multipleCharacters) {
             Globals.objectType.add(objectTypeValue);
             
         }
-        System.out.println("Object Index\t" + Globals.objectIndex);
-        System.out.println("Object Type\t" + Globals.objectType);
+        //System.out.println("Object Index\t" + Globals.objectIndex);
+        //System.out.println("Object Type\t" + Globals.objectType);
     }
 
     void decodeTileGrid() {
@@ -1211,7 +1211,7 @@ public String readValue(boolean multipleCharacters) {
         Globals.readIndex = 0;
         
         
-        System.out.println(Globals.levelStore);
+        //System.out.println(Globals.levelStore);
         if (!readValue().equalsIgnoreCase("1")) {
             return;
         }
