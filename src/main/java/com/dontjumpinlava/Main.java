@@ -871,20 +871,29 @@ public class Main extends GameApplication {
         setup();
     }
 
+    public void limitCameraEdgeX(int x){
+        if (Globals.cameraX < x){ 
+            Globals.cameraX = x;
+        }
+        
+    }
+
     public void moveCamera() {
         Globals.cameraX = Globals.playerX;
         Globals.cameraY += (Globals.playerY - Globals.cameraY)/4;
-
+        if (Globals.editor) {
+            limitCameraEdgeX(Globals.twoForty);
+        } else {
+            limitCameraEdgeX(Globals.twoForty+32);
+        }
        
-        if (Globals.cameraX < Globals.twoForty){ 
-            Globals.cameraX = Globals.twoForty ;
+        if (Globals.cameraX > ((Globals.gridWidth*(32))-Globals.width/2 - 32)) { 
+            Globals.cameraX = ((Globals.gridWidth*(32))-Globals.width/2 - 32);
         }
         if (Globals.cameraY < Globals.oneEighty){ 
             Globals.cameraY = Globals.oneEighty;
         }
-        if (Globals.cameraX > ((Globals.gridWidth*(32))-Globals.width/2 - 32)) { 
-            Globals.cameraX = ((Globals.gridWidth*(32))-Globals.width/2 - 32);
-        }
+        
         if (Globals.cameraY > (Globals.gridHeight*32) - (Globals.height/2) - 32) { 
             Globals.cameraY = (Globals.gridHeight*32) - (Globals.height/2) - 32 ;
         }
