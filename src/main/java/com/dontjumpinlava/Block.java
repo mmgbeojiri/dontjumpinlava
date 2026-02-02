@@ -202,7 +202,7 @@ public class Block extends Component {
     @Override
     public void onUpdate(double tpf) {
 
-
+            
         
             if (Math.abs(x - Globals.cameraX) > (Globals.cloneCountX*16)){
                 if (x < Globals.cameraX) {

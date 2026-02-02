@@ -295,9 +295,11 @@ public class Enemy extends Component {
                     enemyHeight = 16;
                     frame = 0;
                     Globals.bouncePlayer = 5;
-                }
-            }
+                } /*else {
+                    System.out.println("Player Died!");
+                }*/
             
+            } 
 
             
         }
