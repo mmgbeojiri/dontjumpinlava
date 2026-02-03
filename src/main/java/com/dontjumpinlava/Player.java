@@ -320,6 +320,11 @@ public class Player extends Component {
             return;
         }
 
+        if (playeraction.equalsIgnoreCase("loselife")) {
+            changeImage("player.png", 32, 32);
+            return;
+        }
+
         if ((this.dx) > 1) {
             changeImage("run.png", 35, 32);
             return;
@@ -332,14 +337,25 @@ public class Player extends Component {
 
         changeImage("player.png");
     }
-
+    boolean alive = true;
     public void loseLife() {
+        alive = false;
         System.out.println("Player Died!" + Math.random());
+        playeraction = "loselife";
+        for (int i = 0; i < 50; i++) {
+            Globals.playerX = this.x;
+            Globals.playerY = this.y;
+
+            scratchX = this.x + Globals.width/2 - size/2 ;
+            scratchY = -this.y +  Globals.height/2 - size/2 - translateDown;
+
+            paintSprite();
+        }
     }
 
     @Override
     public void onUpdate(double tpf) {
-        if (Globals.levelStart){
+        if (Globals.levelStart && alive){
             //System.out.println("Ability to Wall Jump: " + ableToWallJump);
             //System.out.println("Direction: " + direction);
             if (!Globals.editor){
