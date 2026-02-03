@@ -61,6 +61,8 @@ public class Block extends Component {
 
         imageEntity.getViewComponent().clearChildren();
         imageEntity.getViewComponent().addChild(imageview);
+
+        doneLoading();
     }
 
     private void stupid(int ti) {
