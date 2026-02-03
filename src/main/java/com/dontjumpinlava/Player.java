@@ -337,12 +337,28 @@ public class Player extends Component {
 
         changeImage("player.png");
     }
-    boolean alive = true;
     public void loseLife() {
+        int tpf = 16;
         Globals.levelStart = false;
-        System.out.println("Player Died!" + Math.random());
         playeraction = "loselife";
         for (int i = 0; i < 50; i++) {
+            Thread.sleep(16);
+            Globals.playerX = this.x;
+            Globals.playerY = this.y;
+            
+            scratchX = this.x + Globals.width/2 - size/2 ;
+            scratchY = -this.y +  Globals.height/2 - size/2 - translateDown;
+            
+            paintSprite();
+        }
+        dy = 15;
+        System.out.println("Player Died!" + Math.random());
+        while (scratchY < Globals.height) {
+            System.out.println(scratchY);
+            Thread.sleep(16);
+            dy -= 1;
+            y += dy;
+
             Globals.playerX = this.x;
             Globals.playerY = this.y;
 
@@ -351,11 +367,12 @@ public class Player extends Component {
 
             paintSprite();
         }
+        //Globals.levelStart = true;
     }
 
     @Override
     public void onUpdate(double tpf) {
-        if (Globals.levelStart && alive){
+        if (Globals.levelStart){
             //System.out.println("Ability to Wall Jump: " + ableToWallJump);
             //System.out.println("Direction: " + direction);
             if (!Globals.editor){
