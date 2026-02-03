@@ -295,9 +295,9 @@ public class Enemy extends Component {
                     enemyHeight = 16;
                     frame = 0;
                     Globals.bouncePlayer = 5;
-                } /*else {
-                    System.out.println("Player Died!");
-                }*/
+                } else {
+                    System.out.println("Player Died!" + Math.random());
+                }
             
             } 
 
@@ -307,7 +307,7 @@ public class Enemy extends Component {
 
     }
 
-    int entityHitbox = 50;
+    int entityHitbox = 32;
     double translateDown = 0;
 
     @Override
