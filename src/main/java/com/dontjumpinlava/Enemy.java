@@ -319,6 +319,7 @@ public class Enemy extends Component {
 
     @Override
     public void onUpdate(double tpf) {
+        if (Globals.levelStart) {
             moveEnemy();
             
               
@@ -333,6 +334,6 @@ public class Enemy extends Component {
             if (!type.equals("")){
                 paintSprite();
             }
-        
+        }
     }
 }

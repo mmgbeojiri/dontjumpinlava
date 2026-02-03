@@ -339,7 +339,7 @@ public class Player extends Component {
     }
     boolean alive = true;
     public void loseLife() {
-        alive = false;
+        Globals.levelStart = false;
         System.out.println("Player Died!" + Math.random());
         playeraction = "loselife";
         for (int i = 0; i < 50; i++) {
