@@ -333,6 +333,9 @@ public class Player extends Component {
         changeImage("player.png");
     }
 
+    public void loseLife() {
+        System.out.println("Player Died!" + Math.random());
+    }
 
     @Override
     public void onUpdate(double tpf) {

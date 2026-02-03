@@ -1,6 +1,7 @@
 package com.dontjumpinlava;
 import java.io.InputStream;
 
+import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.component.Component;
 
@@ -296,10 +297,16 @@ public class Enemy extends Component {
                     frame = 0;
                     Globals.bouncePlayer = 5;
                 } else {
-                    System.out.println("Player Died!" + Math.random());
+                    for (Entity entity : FXGL.getGameWorld().getEntities()) {
+                        if (entity.hasComponent(Player.class)) {
+                            entity.getComponent(Player.class).loseLife();
+                            break;
+                        };
+
+                    };
                 }
-            
-            } 
+
+            }
 
             
         }
