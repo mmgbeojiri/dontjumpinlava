@@ -342,7 +342,7 @@ public class Player extends Component {
         Globals.levelStart = false;
         playeraction = "loselife";
         for (int i = 0; i < 50; i++) {
-            Thread.sleep(16);
+            //Thread.sleep(16);
             Globals.playerX = this.x;
             Globals.playerY = this.y;
             
@@ -355,7 +355,7 @@ public class Player extends Component {
         System.out.println("Player Died!" + Math.random());
         while (scratchY < Globals.height) {
             System.out.println(scratchY);
-            Thread.sleep(16);
+            
             dy -= 1;
             y += dy;
 
