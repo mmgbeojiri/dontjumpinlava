@@ -347,12 +347,12 @@ public class Player extends Component {
     boolean dying = false;
     public void loseLife() {
         int tpf = 16;
-        //Globals.levelStart = false;
+        Globals.levelStart = false;
         playeraction = "loselife";
         for (int i = 0; i < 50; i++) {
             //Thread.sleep(16);
             try {
-                Thread.sleep(16); // Pause for 100 milliseconds and 500,000 nanoseconds
+                Thread.sleep(tpf); // Pause for 100 milliseconds and 500,000 nanoseconds
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
             }
@@ -369,13 +369,13 @@ public class Player extends Component {
     @Override
     public void onUpdate(double tpf) {
         if (dying) {
-            dy -= 60.0 * tpf; // tweak gravity strength as needed
+            dy -= 15.0 * tpf; // tweak gravity strength as needed
             y += dy * tpf * 60.0; // scale so dy feels like "pixels per frame" style
              System.out.println(y);
             paintSprite();
 
             // stopping condition (adjust as desired)
-            if (y < -4000) {
+            if (y < -Globals.height) {
                 dying = false;
                 
                 // TODO: respawn or reset level here (e.g., reset y/x, Globals.levelStart = true)
