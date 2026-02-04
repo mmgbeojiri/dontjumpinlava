@@ -267,8 +267,15 @@ public class Player extends Component {
 
 
     public void paintSprite(){
+        Globals.playerX = this.x;
+        Globals.playerY = this.y;
+
+        scratchX = this.x + Globals.width/2 - size/2 ;
+        scratchY = -this.y +  Globals.height/2 - size/2 - translateDown;
+
         imageEntity.setX(scratchX - Globals.cameraX);
         imageEntity.setY(scratchY + Globals.cameraY);
+
         //System.out.println(playeraction);
 
         if (ableToWallJump) {
@@ -343,43 +350,48 @@ public class Player extends Component {
         playeraction = "loselife";
         for (int i = 0; i < 50; i++) {
             //Thread.sleep(16);
-            Globals.playerX = this.x;
-            Globals.playerY = this.y;
+            try {
+                Thread.sleep(16); // Pause for 100 milliseconds and 500,000 nanoseconds
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+
             
-            scratchX = this.x + Globals.width/2 - size/2 ;
-            scratchY = -this.y +  Globals.height/2 - size/2 - translateDown;
             
             paintSprite();
         }
         dy = 15;
-        System.out.println("Player Died!" + Math.random());
-        while (scratchY < Globals.height) {
-            System.out.println(scratchY);
+        while (y < -4000) {
+            System.out.println("Player falling!");
+            try {
+                Thread.sleep(16); // Pause for 100 milliseconds and 500,000 nanoseconds
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+
+            System.out.println(y);
             
             dy -= 1;
             y += dy;
-
-            Globals.playerX = this.x;
-            Globals.playerY = this.y;
-
-            scratchX = this.x + Globals.width/2 - size/2 ;
-            scratchY = -this.y +  Globals.height/2 - size/2 - translateDown;
-
             paintSprite();
+
+
+
         }
         //Globals.levelStart = true;
     }
 
     @Override
     public void onUpdate(double tpf) {
+     
         if (Globals.levelStart){
             //System.out.println("Ability to Wall Jump: " + ableToWallJump);
             //System.out.println("Direction: " + direction);
-            if (!Globals.editor){
+            
+               if (!Globals.editor){
                 moveSpriteX();
                 moveSpriteY();       
             } 
-
             if (Globals.bouncePlayer > 0) {
                 Globals.bouncePlayer -= 1;
                 this.dy = 6;
@@ -388,11 +400,7 @@ public class Player extends Component {
             }
             
 
-            Globals.playerX = this.x;
-            Globals.playerY = this.y;
-
-            scratchX = this.x + Globals.width/2 - size/2 ;
-            scratchY = -this.y +  Globals.height/2 - size/2 - translateDown;
+            
 
             paintSprite();
         }

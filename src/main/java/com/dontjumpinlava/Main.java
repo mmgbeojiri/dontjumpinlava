@@ -749,7 +749,7 @@ public class Main extends GameApplication {
     protected void onUpdate(double tpf) {
         Globals.timer += tpf;
         if (Globals.levelStart) {
-        movePlayer();
+            movePlayer();
         }
         //System.out.println(1/tpf);
 
