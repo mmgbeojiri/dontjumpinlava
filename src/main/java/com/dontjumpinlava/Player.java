@@ -344,9 +344,10 @@ public class Player extends Component {
 
         changeImage("player.png");
     }
+    boolean dying = false;
     public void loseLife() {
         int tpf = 16;
-        Globals.levelStart = false;
+        //Globals.levelStart = false;
         playeraction = "loselife";
         for (int i = 0; i < 50; i++) {
             //Thread.sleep(16);
@@ -361,29 +362,26 @@ public class Player extends Component {
             paintSprite();
         }
         dy = 15;
-        while (y < -4000) {
-            System.out.println("Player falling!");
-            try {
-                Thread.sleep(16); // Pause for 100 milliseconds and 500,000 nanoseconds
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-            }
-
-            System.out.println(y);
-            
-            dy -= 1;
-            y += dy;
-            paintSprite();
-
-
-
-        }
+        dying = true;
         //Globals.levelStart = true;
     }
 
     @Override
     public void onUpdate(double tpf) {
-     
+        if (dying) {
+            dy -= 60.0 * tpf; // tweak gravity strength as needed
+            y += dy * tpf * 60.0; // scale so dy feels like "pixels per frame" style
+             System.out.println(y);
+            paintSprite();
+
+            // stopping condition (adjust as desired)
+            if (y < -4000) {
+                dying = false;
+                
+                // TODO: respawn or reset level here (e.g., reset y/x, Globals.levelStart = true)
+            }
+            return;
+        }
         if (Globals.levelStart){
             //System.out.println("Ability to Wall Jump: " + ableToWallJump);
             //System.out.println("Direction: " + direction);
@@ -402,7 +400,7 @@ public class Player extends Component {
 
             
 
-            paintSprite();
         }
+        paintSprite();
     }
 }
