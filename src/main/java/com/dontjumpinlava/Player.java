@@ -361,7 +361,7 @@ public class Player extends Component {
             
             paintSprite();
         }
-        dy = 15;
+        dy = 6;
         dying = true;
         //Globals.levelStart = true;
     }
