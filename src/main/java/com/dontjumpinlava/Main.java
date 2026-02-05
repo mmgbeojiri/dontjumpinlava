@@ -710,7 +710,8 @@ public class Main extends GameApplication {
     public void checkAroundPlayer() {
         //System.out.println(player.getComponent(Player.class).y);
         if (player.getComponent(Player.class).y < 0) {
-            resetPlayer();
+            //resetPlayer();
+            player.getComponent(Player.class).loseLife();
         }
         getTile(player.getComponent(Player.class).x+48, player.getComponent(Player.class).y+32);
         
