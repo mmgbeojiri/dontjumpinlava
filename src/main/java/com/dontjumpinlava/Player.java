@@ -377,9 +377,28 @@ public class Player extends Component {
             // stopping condition (adjust as desired)
             if (y < -Globals.height) {
                 dying = false;
+
+                for (int i = 0; i < 50; i++) {
+            //Thread.sleep(16);
+            try {
+                Thread.sleep(16); // Pause for 100 milliseconds and 500,000 nanoseconds
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+
+            
+            
+        }
+        Globals.resetplayerhook = true;
+        Globals.levelStart = true;
                 
                 // TODO: respawn or reset level here (e.g., reset y/x, Globals.levelStart = true)
             }
+            paintSprite();
+            
+            
+
+
             return;
         }
         if (Globals.levelStart){

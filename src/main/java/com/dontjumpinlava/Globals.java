@@ -95,4 +95,5 @@ public class Globals {
     public static ArrayList<String> objectType = new ArrayList<>();
 
 
+    public static boolean resetplayerhook = false;
 }

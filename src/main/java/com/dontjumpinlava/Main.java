@@ -750,7 +750,9 @@ public class Main extends GameApplication {
         Globals.timer += tpf;
         if (Globals.levelStart) {
             movePlayer();
-        }
+        } 
+        if (Globals.resetplayerhook) {resetPlayer(); Globals.resetplayerhook = false;}
+        
         //System.out.println(1/tpf);
 
         //Globals.cameraX = Math.sin(memoryWaster)*100;
