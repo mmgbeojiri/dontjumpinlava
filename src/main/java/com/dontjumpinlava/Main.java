@@ -751,7 +751,7 @@ public class Main extends GameApplication {
         if (Globals.levelStart) {
             movePlayer();
         } 
-        if (Globals.resetplayerhook) {resetPlayer(); Globals.resetplayerhook = false;}
+        if (Globals.resetplayerhook) {decodeLevel(Globals.levelNumber); resetPlayer(); Globals.levelStart = true; Globals.resetplayerhook = false;}
         
         //System.out.println(1/tpf);
 

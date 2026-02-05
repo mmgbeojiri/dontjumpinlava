@@ -390,7 +390,7 @@ public class Player extends Component {
             
         }
         Globals.resetplayerhook = true;
-        Globals.levelStart = true;
+        //Globals.levelStart = true;
                 
                 // TODO: respawn or reset level here (e.g., reset y/x, Globals.levelStart = true)
             }
