@@ -633,7 +633,7 @@ public class Main extends GameApplication {
 
 
         if (brush.equalsIgnoreCase("Air.png")) {
-            //System.out.println("Undertile: " + underTile + "\tBrush: " + Globals.chosenBrush);
+            System.out.println("Undertile: " + underTile + "\tBrush: " + Globals.chosenBrush);
             if (underTile.equalsIgnoreCase(Globals.chosenBrush)) {
                 brush = "Air.png";
             } else {
