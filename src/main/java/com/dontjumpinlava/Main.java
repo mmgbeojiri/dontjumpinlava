@@ -357,11 +357,11 @@ public class Main extends GameApplication {
     };
     UserAction mouseClicked = new UserAction("Click") {
         @Override
-        protected void onActionBegin() {Globals.mousePressed = true;}
-        @Override 
-        protected void onAction() {Globals.mouseDown = true;}
+        protected void onActionBegin() {Globals.mousePressed = true; Globals.mouseDown = true;}
+        //@Override 
+        //protected void onAction() {Globals.mouseDown = true;}
         @Override
-        protected void onActionEnd() {Globals.mouseDown = false;}
+        protected void onActionEnd() {Globals.mousePressed = false; Globals.mouseDown = false;}
     };
 
     String[] grassList = {"Grass.png", "Dirt.png", "CompactGrass.png", "CompactDirt.png"};
@@ -621,24 +621,26 @@ public class Main extends GameApplication {
         getTile(Globals.mouseX + (Globals.cameraX - Globals.twoForty), Globals.height - (Globals.mouseY-(Globals.cameraY-Globals.oneEighty)));
 
         if (!Globals.mouseDown) {
-            brush = "Air.png";
+            brush = "";
             return;
         }
-         if (Arrays.asList(enemyList).contains(Globals.chosenBrush)){
-            
+         if (Arrays.asList(enemyList).contains(Globals.chosenBrush)){  
             paintEntity();
             return;
-            
         }
 
 
-        if (brush.equalsIgnoreCase("Air.png")) {
-            System.out.println("Undertile: " + underTile + "\tBrush: " + Globals.chosenBrush);
+        if (brush.equalsIgnoreCase("")) {
+            //System.out.println("Undertile: " + underTile + "\tBrush: " + Globals.chosenBrush);
             if (underTile.equalsIgnoreCase(Globals.chosenBrush)) {
                 brush = "Air.png";
+                //System.out.print("Remove!");
             } else {
                 brush = Globals.chosenBrush;
+                //System.out.print("Add!");
             }
+
+            
         }
        
         if (brush.equalsIgnoreCase("PlayerSpawn.png")) {
@@ -646,16 +648,11 @@ public class Main extends GameApplication {
             if (foundIndex > -1) {
                 Globals.tileGrid.set(foundIndex, "Air.png");
             }
-
-            
+            updateSpawnIndex();
         }
-        try {
 
+        try {
             Globals.tileGrid.set((int)tileIndex, brush);
-            //writeLevelData();
-            if (brush.equalsIgnoreCase("PlayerSpawn.png")) {
-                updateSpawnIndex();
-            }
            
         } catch (Error e) {
             e.printStackTrace();
